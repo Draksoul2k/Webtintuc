@@ -90,22 +90,22 @@ print(f"Extracted {len(unique_baomoi)} unique articles with images.")
 
 # 3. Choose the top 20 Báo Mới articles and categorize them dynamically
 baomoi_articles_final = []
-categories_pool = ["Giải trí", "Sức khỏe", "Photo", "Video", "Infographic", "Longform"]
+categories_pool = ["Giải trí", "Sức khỏe", "Photo", "Video", "Infographic", "Longform", "Quốc tế", "Công nghệ", "Dịch vụ"]
 for idx, art in enumerate(unique_baomoi[:20]):
     title_lower = art['title'].lower()
     
     # Classify based on keyword or index
     category = "Giải trí"
-    if "sức khỏe" in title_lower or "y học" in title_lower or "bệnh" in title_lower or "thuốc" in title_lower or "dịch" in title_lower:
+    if "quốc tế" in title_lower or "thế giới" in title_lower or "brazil" in title_lower or "pháp" in title_lower or "đức" in title_lower or "nga" in title_lower or "mỹ" in title_lower or "nhật" in title_lower or "hàn" in title_lower:
+        category = "Quốc tế"
+    elif "công nghệ" in title_lower or "sim" in title_lower or "khóa" in title_lower or "bay" in title_lower or "taxi" in title_lower or "mg2" in title_lower or "xe điện" in title_lower or "hatchback" in title_lower or "phần mềm" in title_lower or "số hóa" in title_lower:
+        category = "Công nghệ"
+    elif "dịch vụ" in title_lower or "du lịch" in title_lower or "khách sạn" in title_lower or "vận tải" in title_lower or "nhà hàng" in title_lower or "tuyến xe" in title_lower or "vé xe" in title_lower:
+        category = "Dịch vụ"
+    elif "sức khỏe" in title_lower or "y học" in title_lower or "bệnh" in title_lower or "thuốc" in title_lower or "tim mạch" in title_lower or "bổ" in title_lower:
         category = "Sức khỏe"
-    elif "ảnh" in title_lower or "chùm ảnh" in title_lower:
-        category = "Photo"
-    elif "video" in title_lower or "clip" in title_lower:
-        category = "Video"
-    elif "infographic" in title_lower:
-        category = "Infographic"
-    elif "chuyên sâu" in title_lower or "longform" in title_lower or len(art['title']) > 55:
-        category = "Longform"
+    elif "chèo" in title_lower or "văn nghệ" in title_lower or "hát" in title_lower or "nhạc" in title_lower or "giải trí" in title_lower or "world cup" in title_lower or "bóng đá" in title_lower or "yamal" in title_lower or "haaland" in title_lower or "messi" in title_lower or "bán kết" in title_lower or "cá độ" in title_lower:
+        category = "Giải trí"
     else:
         # Distribute remaining articles across the categories
         category = categories_pool[idx % len(categories_pool)]
@@ -398,6 +398,206 @@ for file_path in files:
       const body = """
             content, count_view = re.subn(pattern_view, replacement_view, content)
             print(f"  Regex viewArticleDetails update: {count_view}")
+
+        # Update hostname condition for click interceptors
+        content = content.replace("window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'", "!window.location.hostname.includes('.blogspot.com')")
+        print("  Updated hostname check condition to allow github.io local filtering!")
+
+        # Update category mapping in JavaScript to map Quoc te and Cong nghe too
+        old_mapping = """          // Map Blogspot label names to local categories if they differ
+          if (category.toLowerCase().includes('di tich') || category.toLowerCase().includes('di tích')) category = 'Di tích';
+          else if (category.toLowerCase().includes('dac san') || category.toLowerCase().includes('đặc sản')) category = 'Đặc sản';
+          else if (category.toLowerCase().includes('lang nghe') || category.toLowerCase().includes('làng nghề')) category = 'Làng nghề';
+          else if (category.toLowerCase().includes('danh nhan') || category.toLowerCase().includes('danh nhân')) category = 'Danh nhân';
+          else if (category.toLowerCase().includes('suc khoe') || category.toLowerCase().includes('sức khỏe')) category = 'Sức khỏe';"""
+
+        new_mapping = """          // Map Blogspot label names to local categories if they differ
+          if (category.toLowerCase().includes('di tich') || category.toLowerCase().includes('di tích')) category = 'Di tích';
+          else if (category.toLowerCase().includes('dac san') || category.toLowerCase().includes('đặc sản')) category = 'Đặc sản';
+          else if (category.toLowerCase().includes('lang nghe') || category.toLowerCase().includes('làng nghề')) category = 'Làng nghề';
+          else if (category.toLowerCase().includes('danh nhan') || category.toLowerCase().includes('danh nhân')) category = 'Danh nhân';
+          else if (category.toLowerCase().includes('suc khoe') || category.toLowerCase().includes('sức khỏe')) category = 'Sức khỏe';
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';"""
+
+        if old_mapping in content:
+            content = content.replace(old_mapping, new_mapping)
+
+        # Update Dịch vụ sub-nav links from '#' to '/search/label/Dịch vụ'
+        old_subnav = """              <ul class="sub-nav">
+                <li><a href="#">Tour du lịch</a></li>
+                <li><a href="#">Khách sạn</a></li>
+                <li><a href="#">Vận tải</a></li>
+                <li><a href="#">Nhà hàng</a></li>
+              </ul>"""
+
+        new_subnav = """              <ul class="sub-nav">
+                <li><a href="/search/label/Dịch vụ">Tour du lịch</a></li>
+                <li><a href="/search/label/Dịch vụ">Khách sạn</a></li>
+                <li><a href="/search/label/Dịch vụ">Vận tải</a></li>
+                <li><a href="/search/label/Dịch vụ">Nhà hàng</a></li>
+              </ul>"""
+
+        content = content.replace(old_subnav, new_subnav)
+        
+        # Add image to cards in filterCategory(category)
+        old_card_filter = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title">${art.title}</h3>
+                  <p class="card-desc">${art.desc}</p>
+                </div>
+              </div>"""
+
+        new_card_filter = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+                </div>
+              </div>"""
+
+        content = content.replace(old_card_filter, new_card_filter)
+
+        # Add image to cards in handleSearch(event)
+        old_card_search = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title">${art.title}</h3>
+                  <p class="card-desc">${art.desc}</p>
+                </div>
+              </div>"""
+
+        new_card_search = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+                </div>
+              </div>"""
+
+        content = content.replace(old_card_search, new_card_search)
+
+        # --------------------------------------------------
+        # FINAL CUSTOM FRONTEND PATCHES (CORS / MENU / CARDS)
+        # --------------------------------------------------
+        # 1. Update hostname condition for click interceptors
+        content = content.replace(
+            "window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:'",
+            "!window.location.hostname.includes('.blogspot.com')"
+        )
+        content = content.replace(
+            "window.location.hostname === \"localhost\" || window.location.hostname === \"127.0.0.1\" || window.location.protocol === \"file:\"",
+            "!window.location.hostname.includes('.blogspot.com')"
+        )
+
+        # 2. Update category mapping in JavaScript to map Quoc te and Cong nghe too
+        old_mapping = """          // Map Blogspot label names to local categories if they differ
+          if (category.toLowerCase().includes('di tich') || category.toLowerCase().includes('di tích')) category = 'Di tích';
+          else if (category.toLowerCase().includes('dac san') || category.toLowerCase().includes('đặc sản')) category = 'Đặc sản';
+          else if (category.toLowerCase().includes('lang nghe') || category.toLowerCase().includes('làng nghề')) category = 'Làng nghề';
+          else if (category.toLowerCase().includes('danh nhan') || category.toLowerCase().includes('danh nhân')) category = 'Danh nhân';
+          else if (category.toLowerCase().includes('suc khoe') || category.toLowerCase().includes('sức khỏe')) category = 'Sức khỏe';"""
+
+        new_mapping = """          // Map Blogspot label names to local categories if they differ
+          if (category.toLowerCase().includes('di tich') || category.toLowerCase().includes('di tích')) category = 'Di tích';
+          else if (category.toLowerCase().includes('dac san') || category.toLowerCase().includes('đặc sản')) category = 'Đặc sản';
+          else if (category.toLowerCase().includes('lang nghe') || category.toLowerCase().includes('làng nghề')) category = 'Làng nghề';
+          else if (category.toLowerCase().includes('danh nhan') || category.toLowerCase().includes('danh nhân')) category = 'Danh nhân';
+          else if (category.toLowerCase().includes('suc khoe') || category.toLowerCase().includes('sức khỏe')) category = 'Sức khỏe';
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';"""
+
+        content = content.replace(old_mapping, new_mapping)
+        content = content.replace(old_mapping.replace('\\r\\n', '\\n'), new_mapping)
+
+        # 3. Update Dịch vụ sub-nav links from '#' to '/search/label/Dịch vụ'
+        old_subnav = """              <ul class="sub-nav">
+                <li><a href="#">Tour du lịch</a></li>
+                <li><a href="#">Khách sạn</a></li>
+                <li><a href="#">Vận tải</a></li>
+                <li><a href="#">Nhà hàng</a></li>
+              </ul>"""
+
+        new_subnav = """              <ul class="sub-nav">
+                <li><a href="/search/label/Dịch vụ">Tour du lịch</a></li>
+                <li><a href="/search/label/Dịch vụ">Khách sạn</a></li>
+                <li><a href="/search/label/Dịch vụ">Vận tải</a></li>
+                <li><a href="/search/label/Dịch vụ">Nhà hàng</a></li>
+              </ul>"""
+
+        content = content.replace(old_subnav, new_subnav)
+        content = content.replace(old_subnav.replace('\\r\\n', '\\n'), new_subnav)
+        
+        # 4. Add image to cards in filterCategory(category)
+        old_card_filter = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title">${art.title}</h3>
+                  <p class="card-desc">${art.desc}</p>
+                </div>
+              </div>"""
+
+        new_card_filter = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+                </div>
+              </div>"""
+
+        content = content.replace(old_card_filter, new_card_filter)
+        content = content.replace(old_card_filter.replace('\\r\\n', '\\n'), new_card_filter)
+
+        # 5. Add image to cards in handleSearch(event)
+        old_card_search = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title">${art.title}</h3>
+                  <p class="card-desc">${art.desc}</p>
+                </div>
+              </div>"""
+
+        new_card_search = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+                <div class="card-content" style="padding: 20px;">
+                  <div class="card-meta">
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+                  </div>
+                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+                </div>
+              </div>"""
+
+        content = content.replace(old_card_search, new_card_search)
+        content = content.replace(old_card_search.replace('\\r\\n', '\\n'), new_card_search)
 
         with open(file_path, "w", encoding="utf-8") as f:
             f.write(content)
