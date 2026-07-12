@@ -1,1653 +1,6600 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
+
+
 <!DOCTYPE html>
+
+
+
 <html dir='ltr' lang='vi' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+
+
+
 <head>
+
+
+
 <script>
+
+
+
   window.onerror = function(message, source, lineno, colno, error) {
+
+
+
     var div = document.createElement('div');
+
+
+
     div.style.position = 'fixed';
+
+
+
     div.style.top = '0';
+
+
+
     div.style.left = '0';
+
+
+
     div.style.width = '100%';
+
+
+
     div.style.backgroundColor = '#EF4444';
+
+
+
     div.style.color = '#FFFFFF';
+
+
+
     div.style.padding = '15px';
+
+
+
     div.style.zIndex = '999999';
+
+
+
     div.style.fontFamily = 'monospace';
+
+
+
     div.style.fontSize = '14px';
+
+
+
     div.style.lineHeight = '1.5';
+
+
+
     div.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+
+
+
     div.innerHTML = '<strong>[JS ERROR DETECTED]</strong> ' + message + '<br><small>File: ' + source + ' | Line: ' + lineno + ':' + colno + '</small>';
+
+
+
     document.body.appendChild(div);
+
+
+
     return false;
+
+
+
   };
+
+
+
 </script>
+
+
+
   <!-- self-contained SVG favicon to eliminate 404 console error -->
+
+
+
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📰</text></svg>">
+
+
+
   <meta charset="UTF-8" />
+
+
+
   <meta content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=5' name='viewport'/>
+
+
+
   
+
+
+
   <!-- Blogger Page Title -->
-  <title>Tỉnh Hưng Yên | Tin tức Hưng Yên | Hưng Yên 24h</title>
+
+
+
+  <title>Tin tức Hưng Yên | Hưng Yên 24h</title>
+
+
+
   
+
+
+
   <!-- CDNs for icons, fonts, and slider -->
+
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css" />
+
+
+
   
+
+
+
   <!-- Empty Blogger Skin to satisfy Blogger XML compiler requirements -->
+
+
+
   <b:skin><![CDATA[
+
+
+
     /* Empty skin for Blogger compilation. All actual CSS is in the style tag below. */
+
+
+
   ]]></b:skin>
 
+
+
+
+
+
+
   <!-- Custom CSS styled with CDATA wrapped in CSS comments for cross-browser & Blogger compatibility -->
+
+
+
   <style type="text/css">
+
+
+
     /*<![CDATA[*/
+
+
+
     /* Google Fonts */
+
+
+
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
+
+
+
+
+
+
     :root {
+
+
+
       --primary: #0098d1;
+
+
+
       --primary-dark: #0077a3;
+
+
+
       --secondary: #04416D;
+
+
+
       --accent: #FBE547;
+
+
+
       --accent-dark: #d9c43b;
+
+
+
       --bg-body: #F8FAFC;
+
+
+
       --bg-card: #FFFFFF;
+
+
+
       --bg-header: #FFFFFF;
+
+
+
       --bg-top-header: #04416D;
+
+
+
       --text-main: #1E293B;
+
+
+
       --text-muted: #64748B;
+
+
+
       --text-light: #FFFFFF;
+
+
+
       --border-color: #E2E8F0;
+
+
+
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+
+
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+
+
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+
+
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+
+
     }
+
+
+
+
+
+
 
     [data-theme="dark"] {
+
+
+
       --bg-body: #0F172A;
+
+
+
       --bg-card: #1E293B;
+
+
+
       --bg-header: #1E293B;
+
+
+
       --bg-top-header: #0F172A;
+
+
+
       --text-main: #F1F5F9;
+
+
+
       --text-muted: #94A3B8;
+
+
+
       --border-color: #334155;
+
+
+
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+
+
+
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+
+
+
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+
+
+
     }
+
+
+
+
+
+
 
     /* Reset Styles */
+
+
+
     * {
+
+
+
       box-sizing: border-box;
+
+
+
       margin: 0;
+
+
+
       padding: 0;
+
+
+
     }
+
+
+
+
+
+
 
     body {
+
+
+
       font-family: 'Inter', sans-serif;
+
+
+
       background-color: var(--bg-body);
+
+
+
       color: var(--text-main);
+
+
+
       line-height: 1.6;
+
+
+
       transition: var(--transition);
+
+
+
       max-width: 100%;
+
+
+
       overflow-x: hidden;
+
+
+
     }
+
+
+
+
+
+
 
     a {
+
+
+
       color: inherit;
+
+
+
       text-decoration: none;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     img {
+
+
+
       max-width: 100%;
+
+
+
       height: auto;
+
+
+
       object-fit: cover;
+
+
+
     }
+
+
+
+
+
+
 
     ul {
+
+
+
       list-style: none;
+
+
+
     }
+
+
+
+
+
+
 
     button, input {
+
+
+
       font-family: inherit;
+
+
+
     }
+
+
+
+
+
+
 
     /* Global Container */
+
+
+
     .container {
+
+
+
       width: 100%;
+
+
+
       max-width: 1260px;
+
+
+
       padding: 0 20px;
+
+
+
       margin: 0 auto;
+
+
+
     }
+
+
+
+
+
+
 
     /* Top Header */
+
+
+
     .top-header {
+
+
+
       background-color: var(--bg-top-header);
+
+
+
       color: var(--text-light);
+
+
+
       padding: 10px 0;
+
+
+
       font-size: 0.85rem;
+
+
+
       border-bottom: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .container {
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       align-items: center;
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .time {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 10px;
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .time i {
+
+
+
       color: var(--accent);
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .social-head-foo {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .btn-send {
+
+
+
       background-color: var(--primary);
+
+
+
       color: var(--text-light);
+
+
+
       padding: 6px 12px;
+
+
+
       border-radius: 4px;
+
+
+
       font-weight: 500;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 6px;
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .btn-send:hover {
+
+
+
       background-color: var(--primary-dark);
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .social-icon {
+
+
+
       font-size: 1.1rem;
+
+
+
       opacity: 0.8;
+
+
+
     }
+
+
+
+
+
+
 
     .top-header .social-icon:hover {
+
+
+
       opacity: 1;
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     /* Header */
+
+
+
     .header {
+
+
+
       background-color: var(--bg-header);
+
+
+
       padding: 15px 0;
+
+
+
       box-shadow: var(--shadow-sm);
+
+
+
       position: sticky;
+
+
+
       top: 0;
+
+
+
       z-index: 100;
+
+
+
       transition: var(--transition);
+
+
+
       border-bottom: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .header .container {
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       align-items: center;
+
+
+
       gap: 20px;
+
+
+
     }
+
+
+
+
+
+
 
     .logo-container {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
     }
+
+
+
     .logo {
+
+
+
       display: block;
+
+
+
     }
+
+
+
     .logo.mobile {
+
+
+
       display: none;
+
+
+
     }
+
+
+
     .logo img, .logo.mobile img {
+
+
+
       height: 48px;
+
+
+
       width: auto;
+
+
+
       display: block;
+
+
+
     }
+
+
+
     @media (max-width: 768px) {
+
+
+
       .logo {
+
+
+
         display: none;
+
+
+
       }
+
+
+
       .logo.mobile {
+
+
+
         display: block;
+
+
+
       }
+
+
+
       .logo.mobile img {
+
+
+
         height: 38px;
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     .logo-text {
+
+
+
       font-size: 1.8rem;
+
+
+
       font-weight: 800;
+
+
+
       color: var(--secondary);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 8px;
+
+
+
     }
+
+
+
+
+
+
 
     [data-theme="dark"] .logo-text {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .logo-text span {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .logo-text i {
+
+
+
       font-size: 1.5rem;
+
+
+
     }
+
+
+
+
+
+
 
     /* Nav Menu */
+
+
+
     .nav-container {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 20px;
+
+
+
       flex-grow: 1;
+
+
+
       justify-content: center;
+
+
+
     }
+
+
+
+
+
+
 
     .main-nav {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 25px;
+
+
+
     }
+
+
+
+
+
+
 
     .main-nav > li {
+
+
+
       position: relative;
+
+
+
     }
+
+
+
+
+
+
 
     .main-nav > li > a {
+
+
+
       font-weight: 600;
+
+
+
       font-size: 0.95rem;
+
+
+
       padding: 8px 0;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 5px;
+
+
+
       position: relative;
+
+
+
     }
+
+
+
+
+
+
 
     .main-nav > li > a::after {
+
+
+
       content: '';
+
+
+
       position: absolute;
+
+
+
       bottom: 0;
+
+
+
       left: 0;
+
+
+
       width: 0;
+
+
+
       height: 2px;
+
+
+
       background-color: var(--primary);
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .main-nav > li:hover > a {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .main-nav > li:hover > a::after {
+
+
+
       width: 100%;
+
+
+
     }
+
+
+
+
+
+
 
     /* Dropdown Menus */
+
+
+
     .sub-nav {
+
+
+
       position: absolute;
+
+
+
       top: 100%;
+
+
+
       left: 0;
+
+
+
       background-color: var(--bg-card);
+
+
+
       box-shadow: var(--shadow-lg);
+
+
+
       border-radius: 8px;
+
+
+
       min-width: 220px;
+
+
+
       padding: 10px 0;
+
+
+
       opacity: 0;
+
+
+
       visibility: hidden;
+
+
+
       transform: translateY(10px);
+
+
+
       transition: var(--transition);
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       z-index: 10;
+
+
+
     }
+
+
+
+
+
+
 
     .main-nav > li:hover .sub-nav {
+
+
+
       opacity: 1;
+
+
+
       visibility: visible;
+
+
+
       transform: translateY(0);
+
+
+
     }
+
+
+
+
+
+
 
     .sub-nav a {
+
+
+
       display: block;
+
+
+
       padding: 10px 20px;
+
+
+
       font-size: 0.9rem;
+
+
+
       font-weight: 500;
+
+
+
     }
+
+
+
+
+
+
 
     .sub-nav a:hover {
+
+
+
       background-color: var(--bg-body);
+
+
+
       color: var(--primary);
+
+
+
       padding-left: 25px;
+
+
+
     }
+
+
+
+
+
+
 
     /* Search & Tools */
+
+
+
     .header-tools {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .search-box {
+
+
+
       position: relative;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
     }
+
+
+
+
+
+
 
     .search-box input {
+
+
+
       padding: 8px 12px 8px 35px;
+
+
+
       border-radius: 20px;
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       background-color: var(--bg-body);
+
+
+
       color: var(--text-main);
+
+
+
       outline: none;
+
+
+
       font-size: 0.9rem;
+
+
+
       width: 180px;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .search-box input:focus {
+
+
+
       width: 240px;
+
+
+
       border-color: var(--primary);
+
+
+
       background-color: var(--bg-card);
+
+
+
     }
+
+
+
+
+
+
 
     .search-box i {
+
+
+
       position: absolute;
+
+
+
       left: 12px;
+
+
+
       color: var(--text-muted);
+
+
+
       pointer-events: none;
+
+
+
     }
+
+
+
+
+
+
 
     .theme-toggle {
+
+
+
       background: none;
+
+
+
       border: none;
+
+
+
       cursor: pointer;
+
+
+
       font-size: 1.2rem;
+
+
+
       color: var(--text-main);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       justify-content: center;
+
+
+
       width: 35px;
+
+
+
       height: 35px;
+
+
+
       border-radius: 50%;
+
+
+
       background-color: var(--bg-body);
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .theme-toggle:hover {
+
+
+
       background-color: var(--border-color);
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .menu-mobile-btn {
+
+
+
       display: none;
+
+
+
       background: none;
+
+
+
       border: none;
+
+
+
       font-size: 1.5rem;
+
+
+
       color: var(--text-main);
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     /* Trending Section */
+
+
+
     .trending-section {
+
+
+
       background-color: var(--bg-card);
+
+
+
       padding: 12px 0;
+
+
+
       border-bottom: 1px solid var(--border-color);
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .trending-wrapper {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 15px;
+
+
+
       overflow: hidden;
+
+
+
     }
+
+
+
+
+
+
 
     .trending-title {
+
+
+
       background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+
+
+
       color: var(--text-light);
+
+
+
       padding: 4px 12px;
+
+
+
       border-radius: 4px;
+
+
+
       font-weight: 700;
+
+
+
       font-size: 0.8rem;
+
+
+
       text-transform: uppercase;
+
+
+
       letter-spacing: 0.05em;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 6px;
+
+
+
       white-space: nowrap;
+
+
+
       z-index: 2;
+
+
+
     }
+
+
+
+
+
+
 
     .trending-ticker-container {
+
+
+
       flex-grow: 1;
+
+
+
       min-width: 0;
+
+
+
       overflow: hidden;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       z-index: 1;
+
+
+
     }
+
+
+
+
+
+
 
     .trending-ticker {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 30px;
+
+
+
       animation: ticker 25s linear infinite;
+
+
+
       white-space: nowrap;
+
+
+
     }
+
+
+
+
+
+
 
     .trending-ticker:hover {
+
+
+
       animation-play-state: paused;
+
+
+
     }
+
+
+
+
+
+
 
     .trending-ticker a {
+
+
+
       font-size: 0.9rem;
+
+
+
       font-weight: 500;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 8px;
+
+
+
     }
+
+
+
+
+
+
 
     .trending-ticker a::before {
+
+
+
       content: '✦';
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .trending-ticker a:hover {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     @keyframes ticker {
+
+
+
       0% { transform: translateX(0); }
+
+
+
       100% { transform: translateX(-50%); }
+
+
+
     }
+
+
+
+
+
+
 
     /* Ad Banner Spaces */
+
+
+
     
 
+
+
+
+
+
+
     /* Main Content Layout Grid */
+
+
+
     .main-layout {
+
+
+
       padding: 30px 0;
+
+
+
     }
+
+
+
+
+
+
 
     .main-layout-grid {
+
+
+
       display: grid;
+
+
+
       grid-template-columns: minmax(0, 1fr) 300px;
+
+
+
       gap: 30px;
+
+
+
       width: 100%;
+
+
+
     }
+
+
+
+
+
+
 
     .primary-content {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 35px;
+
+
+
       min-width: 0;
+
+
+
       width: 100%;
+
+
+
       overflow: hidden;
+
+
+
     }
+
+
+
+
+
+
 
     /* Category Block Title */
+
+
+
     .block-title {
+
+
+
       font-size: 1.3rem;
+
+
+
       font-weight: 800;
+
+
+
       color: var(--secondary);
+
+
+
       border-bottom: 2px solid var(--border-color);
+
+
+
       padding-bottom: 8px;
+
+
+
       margin-bottom: 20px;
+
+
+
       position: relative;
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       align-items: center;
+
+
+
     }
+
+
+
+
+
+
 
     [data-theme="dark"] .block-title {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .block-title::after {
+
+
+
       content: '';
+
+
+
       position: absolute;
+
+
+
       bottom: -2px;
+
+
+
       left: 0;
+
+
+
       width: 80px;
+
+
+
       height: 2px;
+
+
+
       background-color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .block-title a.see-more {
+
+
+
       font-size: 0.8rem;
+
+
+
       font-weight: 600;
+
+
+
       color: var(--primary);
+
+
+
       text-transform: uppercase;
+
+
+
     }
+
+
+
+
+
+
 
     /* Cards */
+
+
+
     .card {
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-radius: 12px;
+
+
+
       box-shadow: var(--shadow-sm);
+
+
+
       overflow: hidden;
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       transition: var(--transition);
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     .card:hover {
+
+
+
       box-shadow: var(--shadow-lg);
+
+
+
       border-color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .featured-editorial {
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-radius: 12px;
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       padding: 20px;
+
+
+
       cursor: pointer;
+
+
+
       transition: var(--transition);
+
+
+
       display: flex;
+
+
+
       gap: 20px;
+
+
+
       align-items: flex-start;
+
+
+
     }
+
+
+
     @media (max-width: 768px) {
+
+
+
       .featured-editorial {
+
+
+
         flex-direction: column;
+
+
+
         gap: 15px;
+
+
+
       }
+
+
+
       .editorial-img-container {
+
+
+
         width: 100% !important;
+
+
+
         height: 180px !important;
+
+
+
       }
+
+
+
     }
+
+
+
     .featured-editorial:hover {
+
+
+
       box-shadow: var(--shadow-md);
+
+
+
       transform: translateY(-2px);
+
+
+
     }
+
+
+
     .editorial-title {
+
+
+
       font-size: 1.6rem;
+
+
+
       font-weight: 800;
+
+
+
       color: var(--text-main);
+
+
+
       line-height: 1.3;
+
+
+
       margin-bottom: 12px;
+
+
+
     }
+
+
+
     .editorial-img-container {
+
+
+
       width: 220px;
+
+
+
       height: 140px;
+
+
+
       flex-shrink: 0;
+
+
+
       border-radius: 8px;
+
+
+
       overflow: hidden;
+
+
+
       background-color: var(--border-color);
+
+
+
       position: relative;
+
+
+
     }
+
+
+
     .editorial-img-container img {
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       object-fit: cover;
+
+
+
       display: block;
+
+
+
     }
+
+
+
     .editorial-content {
+
+
+
       flex-grow: 1;
+
+
+
       min-width: 0; /* Prevent flex blowout */
+
+
+
     }
+
+
+
     .editorial-desc {
+
+
+
       font-size: 1rem;
+
+
+
       color: var(--text-muted);
+
+
+
       line-height: 1.6;
+
+
+
       margin-bottom: 20px;
+
+
+
     }
+
+
+
+
+
+
 
         .card-thumb {
+
+
+
       position: relative;
+
+
+
       overflow: hidden;
+
+
+
       height: 130px; /* Small fixed height */
+
+
+
       width: 100%;
+
+
+
       background-color: var(--border-color);
+
+
+
     }
+
+
+
     .card-thumb img {
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       object-fit: cover;
+
+
+
       display: block;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .card-label {
+
+
+
       position: absolute;
+
+
+
       top: 12px;
+
+
+
       left: 12px;
+
+
+
       background-color: var(--primary);
+
+
+
       color: var(--text-light);
+
+
+
       padding: 3px 10px;
+
+
+
       border-radius: 4px;
+
+
+
       font-size: 0.75rem;
+
+
+
       font-weight: 700;
+
+
+
       text-transform: uppercase;
+
+
+
       z-index: 2;
+
+
+
     }
+
+
+
+
+
+
 
     .card-content {
+
+
+
       padding: 15px;
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 10px;
+
+
+
       flex-grow: 1;
+
+
+
     }
+
+
+
+
+
+
 
     .card-meta {
+
+
+
       font-size: 0.75rem;
+
+
+
       color: var(--text-muted);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 10px;
+
+
+
     }
+
+
+
+
+
+
 
     .card-meta span {
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 4px;
+
+
+
     }
+
+
+
+
+
+
 
     .card-title {
+
+
+
       font-size: 1.05rem;
+
+
+
       font-weight: 700;
+
+
+
       line-height: 1.4;
+
+
+
       color: var(--text-main);
+
+
+
     }
+
+
+
+
+
+
 
     .card-title:hover {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .card-desc {
+
+
+
       font-size: 0.88rem;
+
+
+
       color: var(--text-muted);
+
+
+
       display: -webkit-box;
+
+
+
       -webkit-line-clamp: 2;
+
+
+
       -webkit-box-orient: vertical;
+
+
+
       overflow: hidden;
+
+
+
     }
+
+
+
+
+
+
 
     /* 1. Featured Section Layout */
+
+
+
     .featured-grid {
+
+
+
       display: grid;
+
+
+
       grid-template-columns: 1.2fr 0.8fr;
+
+
+
       gap: 25px;
+
+
+
     }
+
+
+
+
+
+
 
     .featured-main .card-title {
+
+
+
       font-size: 1.35rem;
+
+
+
     }
+
+
+
+
+
+
 
     .featured-main .card-desc {
+
+
+
       -webkit-line-clamp: 3;
+
+
+
     }
+
+
+
+
+
+
 
     .related-links-list {
+
+
+
       margin-top: 15px;
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 10px;
+
+
+
       padding-top: 15px;
+
+
+
       border-top: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .related-links-list a {
+
+
+
       font-size: 0.92rem;
+
+
+
       font-weight: 600;
+
+
+
       display: flex;
+
+
+
       gap: 8px;
+
+
+
       align-items: flex-start;
+
+
+
       line-height: 1.4;
+
+
+
     }
+
+
+
+
+
+
 
     .related-links-list a::before {
+
+
+
       content: '●';
+
+
+
       color: var(--primary);
+
+
+
       font-size: 0.7rem;
+
+
+
       margin-top: 5px;
+
+
+
     }
+
+
+
+
+
+
 
     .related-links-list a:hover {
+
+
+
       color: var(--primary);
+
+
+
       transform: translateX(5px);
+
+
+
     }
+
+
+
+
+
+
 
     .featured-sub {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 25px;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-list {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-item {
+
+
+
       display: flex;
+
+
+
       gap: 12px;
+
+
+
       align-items: center;
+
+
+
       padding-bottom: 12px;
+
+
+
       border-bottom: 1px dashed var(--border-color);
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-item:last-child {
+
+
+
       border-bottom: none;
+
+
+
       padding-bottom: 0;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-img {
+
+
+
       width: 70px;
+
+
+
       height: 70px;
+
+
+
       border-radius: 6px;
+
+
+
       overflow: hidden;
+
+
+
       flex-shrink: 0;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-img img {
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       object-fit: cover;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-info {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 5px;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-title {
+
+
+
       font-size: 0.88rem;
+
+
+
       font-weight: 600;
+
+
+
       line-height: 1.35;
+
+
+
       display: -webkit-box;
+
+
+
       -webkit-line-clamp: 2;
+
+
+
       -webkit-box-orient: vertical;
+
+
+
       overflow: hidden;
+
+
+
     }
+
+
+
+
+
+
 
     .news-mini-item:hover .news-mini-title {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     /* 2. Swiper Slider News */
+
+
+
     .swiper-container {
+
+
+
       margin-left: auto;
+
+
+
       margin-right: auto;
+
+
+
       position: relative;
+
+
+
       overflow: hidden;
+
+
+
       list-style: none;
+
+
+
       padding: 0;
+
+
+
       z-index: 1;
+
+
+
     }
+
+
+
     .swiper-wrapper {
+
+
+
       position: relative;
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       z-index: 1;
+
+
+
       display: flex;
+
+
+
       transition-property: transform;
+
+
+
       box-sizing: content-box;
+
+
+
     }
+
+
+
     .swiper-slide {
+
+
+
       flex-shrink: 0;
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       position: relative;
+
+
+
       transition-property: transform;
+
+
+
     }
+
+
+
+
+
+
 
     .slider-section {
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-radius: 12px;
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       padding: 20px;
+
+
+
       margin-bottom: 10px;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .slider-header {
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       align-items: center;
+
+
+
       margin-bottom: 20px;
+
+
+
     }
+
+
+
+
+
+
 
     .slider-title {
+
+
+
       font-size: 1.2rem;
+
+
+
       font-weight: 800;
+
+
+
       color: var(--secondary);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 8px;
+
+
+
     }
+
+
+
+
+
+
 
     [data-theme="dark"] .slider-title {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .slider-nav {
+
+
+
       display: flex;
+
+
+
       gap: 8px;
+
+
+
     }
+
+
+
+
+
+
 
     .slider-btn {
+
+
+
       width: 32px;
+
+
+
       height: 32px;
+
+
+
       border-radius: 50%;
+
+
+
       background-color: var(--bg-body);
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       color: var(--text-main);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       justify-content: center;
+
+
+
       cursor: pointer;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .slider-btn:hover {
+
+
+
       background-color: var(--primary);
+
+
+
       color: var(--text-light);
+
+
+
       border-color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     /* Label Block Grid (Di tích / Đặc sản) */
+
+
+
     .label-block-grid {
+
+
+
       display: grid;
+
+
+
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+
+
+
       gap: 25px;
+
+
+
       width: 100%;
+
+
+
     }
+
+
+
+
+
+
 
     .label-block-left {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .label-block-right {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .label-block-right .news-mini-item {
+
+
+
       padding: 12px;
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-radius: 8px;
+
+
+
       border: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .label-block-right .news-mini-item:hover {
+
+
+
       border-color: var(--primary);
+
+
+
       box-shadow: var(--shadow-sm);
+
+
+
     }
+
+
+
+
+
+
 
     .label-block-right .news-mini-img {
+
+
+
       width: 90px;
+
+
+
       height: 60px;
+
+
+
     }
+
+
+
+
+
+
 
     /* 3. Multimedia Section (Dark Zone) */
+
+
+
     .multimedia-section {
+
+
+
       background-color: #0F172A;
+
+
+
       color: #F1F5F9;
+
+
+
       padding: 40px 0;
+
+
+
       border-radius: 16px;
+
+
+
       margin-bottom: 10px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-header {
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       align-items: center;
+
+
+
       border-bottom: 1px solid #1E293B;
+
+
+
       padding-bottom: 15px;
+
+
+
       margin-bottom: 25px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-title {
+
+
+
       font-size: 1.5rem;
+
+
+
       font-weight: 800;
+
+
+
       color: var(--primary);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 10px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-tabs {
+
+
+
       display: flex;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-tab {
+
+
+
       background: none;
+
+
+
       border: none;
+
+
+
       color: #94A3B8;
+
+
+
       font-weight: 600;
+
+
+
       font-size: 0.9rem;
+
+
+
       cursor: pointer;
+
+
+
       padding: 6px 16px;
+
+
+
       border-radius: 20px;
+
+
+
       transition: var(--transition);
+
+
+
       border: 1px solid #1E293B;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-tab:hover, .multimedia-tab.active {
+
+
+
       color: #FFFFFF;
+
+
+
       background-color: var(--primary);
+
+
+
       border-color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-grid {
+
+
+
       display: grid;
+
+
+
       grid-template-columns: 1.2fr 0.8fr;
+
+
+
       gap: 25px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-left .card {
+
+
+
       background-color: #1E293B;
+
+
+
       border-color: #334155;
+
+
+
       color: #F1F5F9;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-left .card-title {
+
+
+
       color: #FFFFFF;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-left .card-desc {
+
+
+
       color: #94A3B8;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-right {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 15px;
+
+
+
       max-height: 420px;
+
+
+
       overflow-y: auto;
+
+
+
       padding-right: 8px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-right::-webkit-scrollbar {
+
+
+
       width: 6px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-right::-webkit-scrollbar-thumb {
+
+
+
       background-color: #334155;
+
+
+
       border-radius: 4px;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-item {
+
+
+
       display: flex;
+
+
+
       gap: 12px;
+
+
+
       align-items: center;
+
+
+
       background-color: #1E293B;
+
+
+
       padding: 10px;
+
+
+
       border-radius: 8px;
+
+
+
       border: 1px solid #334155;
+
+
+
       cursor: pointer;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-item:hover {
+
+
+
       border-color: var(--primary);
+
+
+
       background-color: #0F172A;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-item img {
+
+
+
       width: 80px;
+
+
+
       height: 80px;
+
+
+
       border-radius: 6px;
+
+
+
       flex-shrink: 0;
+
+
+
       object-fit: cover;
+
+
+
     }
+
+
+
+
+
+
 
     .multimedia-item-title {
+
+
+
       font-size: 0.88rem;
+
+
+
       font-weight: 600;
+
+
+
       color: #FFFFFF;
+
+
+
       line-height: 1.35;
+
+
+
     }
+
+
+
+
+
+
 
     /* Sidebar Styles */
+
+
+
     .sidebar-wrapper {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 30px;
+
+
+
     }
+
+
+
+
+
+
 
     .sidebar-widget {
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-radius: 12px;
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       padding: 20px;
+
+
+
       box-shadow: var(--shadow-sm);
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .sidebar-widget-title {
+
+
+
       font-size: 1.1rem;
+
+
+
       font-weight: 700;
+
+
+
       color: var(--secondary);
+
+
+
       border-left: 4px solid var(--primary);
+
+
+
       padding-left: 10px;
+
+
+
       margin-bottom: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     [data-theme="dark"] .sidebar-widget-title {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     /* Enterprise Stock Search widget */
+
+
+
     .enterprise-widget form {
+
+
+
       position: relative;
+
+
+
       display: flex;
+
+
+
       gap: 8px;
+
+
+
     }
+
+
+
+
+
+
 
     .enterprise-widget input {
+
+
+
       flex-grow: 1;
+
+
+
       padding: 8px 12px;
+
+
+
       border-radius: 6px;
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       background-color: var(--bg-body);
+
+
+
       color: var(--text-main);
+
+
+
       font-size: 0.85rem;
+
+
+
       outline: none;
+
+
+
     }
+
+
+
+
+
+
 
     .enterprise-widget button {
+
+
+
       background-color: var(--primary);
+
+
+
       color: var(--text-light);
+
+
+
       border: none;
+
+
+
       padding: 8px 15px;
+
+
+
       border-radius: 6px;
+
+
+
       cursor: pointer;
+
+
+
       font-weight: 600;
+
+
+
       font-size: 0.85rem;
+
+
+
     }
+
+
+
+
+
+
 
     .enterprise-suggest {
+
+
+
       position: absolute;
+
+
+
       top: 100%;
+
+
+
       left: 0;
+
+
+
       right: 0;
+
+
+
       background-color: var(--bg-card);
+
+
+
       box-shadow: var(--shadow-lg);
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       border-radius: 6px;
+
+
+
       margin-top: 5px;
+
+
+
       max-height: 200px;
+
+
+
       overflow-y: auto;
+
+
+
       z-index: 10;
+
+
+
       display: none;
+
+
+
     }
+
+
+
+
+
+
 
     .enterprise-suggest li {
+
+
+
       padding: 8px 12px;
+
+
+
       font-size: 0.85rem;
+
+
+
       cursor: pointer;
+
+
+
       border-bottom: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .enterprise-suggest li:hover {
+
+
+
       background-color: var(--bg-body);
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     /* Footer */
+
+
+
     footer {
+
+
+
       background-color: #0F172A;
+
+
+
       color: #94A3B8;
+
+
+
       padding: 60px 0 30px;
+
+
+
       border-top: 1px solid #1E293B;
+
+
+
       margin-top: 40px;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-grid {
+
+
+
       display: grid;
+
+
+
       grid-template-columns: 1.2fr 0.8fr 1fr;
+
+
+
       gap: 40px;
+
+
+
       margin-bottom: 40px;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-col {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 20px;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-logo {
+
+
+
       font-size: 1.6rem;
+
+
+
       font-weight: 800;
+
+
+
       color: #FFFFFF;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-logo span {
+
+
+
       color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     .footer-about {
+
+
+
       font-size: 0.9rem;
+
+
+
       line-height: 1.6;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-title {
+
+
+
       color: #FFFFFF;
+
+
+
       font-size: 1.1rem;
+
+
+
       font-weight: 700;
+
+
+
       margin-bottom: 5px;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-links {
+
+
+
       display: grid;
+
+
+
       grid-template-columns: 1fr 1fr;
+
+
+
       gap: 10px 20px;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-links a {
+
+
+
       font-size: 0.88rem;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-links a:hover {
+
+
+
       color: #FFFFFF;
+
+
+
       transform: translateX(3px);
+
+
+
     }
+
+
+
+
+
+
 
     .footer-contact {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 12px;
+
+
+
       font-size: 0.9rem;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-contact-item {
+
+
+
       display: flex;
+
+
+
       gap: 10px;
+
+
+
       align-items: flex-start;
+
+
+
     }
+
+
+
+
+
+
 
     .footer-contact-item i {
+
+
+
       color: var(--primary);
+
+
+
       margin-top: 3px;
+
+
+
     }
+
+
+
+
+
+
 
     /* Subscribe Form */
+
+
+
     .subscribe-form {
+
+
+
       display: flex;
+
+
+
       gap: 8px;
+
+
+
       margin-top: 10px;
+
+
+
     }
+
+
+
+
+
+
 
     .subscribe-form input {
+
+
+
       flex-grow: 1;
+
+
+
       padding: 10px 15px;
+
+
+
       border-radius: 6px;
+
+
+
       border: 1px solid #1E293B;
+
+
+
       background-color: #1E293B;
+
+
+
       color: #FFFFFF;
+
+
+
       outline: none;
+
+
+
       font-size: 0.85rem;
+
+
+
     }
+
+
+
+
+
+
 
     .subscribe-form button {
+
+
+
       background-color: var(--primary);
+
+
+
       color: #FFFFFF;
+
+
+
       border: none;
+
+
+
       padding: 10px 20px;
+
+
+
       border-radius: 6px;
+
+
+
       cursor: pointer;
+
+
+
       font-weight: 600;
+
+
+
       font-size: 0.85rem;
+
+
+
     }
+
+
+
+
+
+
 
     .subscribe-form button:hover {
+
+
+
       background-color: var(--primary-dark);
+
+
+
     }
+
+
+
+
+
+
 
     .footer-bottom {
+
+
+
       border-top: 1px solid #1E293B;
+
+
+
       padding-top: 25px;
+
+
+
       text-align: center;
+
+
+
       font-size: 0.82rem;
+
+
+
     }
+
+
+
+
+
+
 
     /* Article Detail Modal */
+
+
+
     .modal {
+
+
+
       position: fixed;
+
+
+
       top: 0;
+
+
+
       left: 0;
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       background-color: rgba(15, 23, 42, 0.85);
+
+
+
       z-index: 1000;
+
+
+
       display: flex;
+
+
+
       justify-content: center;
+
+
+
       align-items: center;
+
+
+
       opacity: 0;
+
+
+
       visibility: hidden;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .modal.show {
+
+
+
       opacity: 1;
+
+
+
       visibility: visible;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-content {
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-radius: 16px;
+
+
+
       width: 90%;
+
+
+
       max-width: 800px;
+
+
+
       max-height: 90vh;
+
+
+
       overflow-y: auto;
+
+
+
       position: relative;
+
+
+
       box-shadow: var(--shadow-lg);
+
+
+
       transform: scale(0.9);
+
+
+
       transition: var(--transition);
+
+
+
       border: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .modal.show .modal-content {
+
+
+
       transform: scale(1);
+
+
+
     }
+
+
+
+
+
+
 
     .modal-close {
+
+
+
       position: absolute;
+
+
+
       top: 15px;
+
+
+
       right: 15px;
+
+
+
       width: 35px;
+
+
+
       height: 35px;
+
+
+
       border-radius: 50%;
+
+
+
       background-color: var(--bg-body);
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       justify-content: center;
+
+
+
       cursor: pointer;
+
+
+
       font-size: 1.1rem;
+
+
+
       z-index: 10;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .modal-close:hover {
+
+
+
       background-color: #EF4444;
+
+
+
       color: #FFFFFF;
+
+
+
       border-color: #EF4444;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-body {
+
+
+
       padding: 30px;
+
+
+
     }
+
+
+
+
+
+
 
         .modal-image {
+
+
+
       max-width: 420px;
+
+
+
       height: 240px;
+
+
+
       margin: 15px auto;
+
+
+
       border-radius: 8px;
+
+
+
       overflow: hidden;
+
+
+
       background-color: var(--border-color);
+
+
+
     }
+
+
+
     .modal-image img {
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       object-fit: cover;
+
+
+
       display: block;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-meta {
+
+
+
       font-size: 0.85rem;
+
+
+
       color: var(--text-muted);
+
+
+
       display: flex;
+
+
+
       gap: 15px;
+
+
+
       margin-bottom: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-category {
+
+
+
       background-color: var(--primary);
+
+
+
       color: #FFFFFF;
+
+
+
       padding: 2px 8px;
+
+
+
       border-radius: 4px;
+
+
+
       font-weight: 700;
+
+
+
       text-transform: uppercase;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-title {
+
+
+
       font-size: 1.8rem;
+
+
+
       font-weight: 800;
+
+
+
       color: var(--text-main);
+
+
+
       line-height: 1.35;
+
+
+
       margin-bottom: 20px;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-desc {
+
+
+
       font-size: 1.1rem;
+
+
+
       font-weight: 500;
+
+
+
       color: var(--text-muted);
+
+
+
       line-height: 1.6;
+
+
+
       border-left: 4px solid var(--primary);
+
+
+
       padding-left: 15px;
+
+
+
       margin-bottom: 20px;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-text {
+
+
+
       font-size: 1.02rem;
+
+
+
       color: var(--text-main);
+
+
+
       line-height: 1.7;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-text p {
+
+
+
       margin-bottom: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-share {
+
+
+
       margin-top: 30px;
+
+
+
       padding-top: 20px;
+
+
+
       border-top: 1px solid var(--border-color);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-share-title {
+
+
+
       font-weight: 700;
+
+
+
       font-size: 0.9rem;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-share-btn {
+
+
+
       width: 35px;
+
+
+
       height: 35px;
+
+
+
       border-radius: 50%;
+
+
+
       background-color: var(--bg-body);
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       justify-content: center;
+
+
+
       color: var(--text-main);
+
+
+
       border: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .modal-share-btn.fb:hover {
+
+
+
       background-color: #3B5998;
+
+
+
       color: #FFFFFF;
+
+
+
     }
+
+
+
+
+
+
 
     .modal-share-btn.tw:hover {
+
+
+
       background-color: #1DA1F2;
+
+
+
       color: #FFFFFF;
+
+
+
     }
+
+
+
+
+
+
 
     /* Floating elements */
+
+
+
     .to-top {
+
+
+
       position: fixed;
+
+
+
       bottom: 25px;
+
+
+
       right: 25px;
+
+
+
       width: 45px;
+
+
+
       height: 45px;
+
+
+
       border-radius: 50%;
+
+
+
       background-color: var(--primary);
+
+
+
       color: #FFFFFF;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       justify-content: center;
+
+
+
       cursor: pointer;
+
+
+
       box-shadow: var(--shadow-md);
+
+
+
       opacity: 0;
+
+
+
       visibility: hidden;
+
+
+
       transition: var(--transition);
+
+
+
       z-index: 99;
+
+
+
     }
+
+
+
+
+
+
 
     .to-top.show {
+
+
+
       opacity: 1;
+
+
+
       visibility: visible;
+
+
+
     }
+
+
+
+
+
+
 
     .to-top:hover {
+
+
+
       background-color: var(--primary-dark);
+
+
+
       transform: translateY(-3px);
+
+
+
     }
+
+
+
+
+
+
 
     /* Skeleton Loading Placeholder */
+
+
+
     .skeleton-loader {
+
+
+
       animation: skeleton-pulse 1.5s ease-in-out infinite;
+
+
+
       background-color: var(--border-color);
+
+
+
       border-radius: 4px;
+
+
+
     }
+
+
+
+
+
+
 
     @keyframes skeleton-pulse {
+
+
+
       0% { opacity: 0.6; }
+
+
+
       50% { opacity: 1; }
+
+
+
       100% { opacity: 0.6; }
+
+
+
     }
+
+
+
+
+
+
 
     /* Notification Popup */
+
+
+
     .toast {
+
+
+
       position: fixed;
+
+
+
       bottom: 30px;
+
+
+
       left: 30px;
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-left: 4px solid var(--primary);
+
+
+
       box-shadow: var(--shadow-lg);
+
+
+
       padding: 15px 25px;
+
+
+
       border-radius: 6px;
+
+
+
       display: flex;
+
+
+
       align-items: center;
+
+
+
       gap: 12px;
+
+
+
       z-index: 1000;
+
+
+
       transform: translateY(100px);
+
+
+
       opacity: 0;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .toast.show {
+
+
+
       transform: translateY(0);
+
+
+
       opacity: 1;
+
+
+
     }
+
+
+
+
+
+
 
     .toast i {
+
+
+
       color: var(--primary);
+
+
+
       font-size: 1.2rem;
+
+
+
     }
+
+
+
+
+
+
 
     .toast-content {
+
+
+
       font-size: 0.9rem;
+
+
+
       font-weight: 600;
+
+
+
     }
+
+
+
+
+
+
 
     /* Dynamic Feed Filter Title Info */
+
+
+
     .filter-header-info {
+
+
+
       background-color: var(--bg-card);
+
+
+
       border-left: 4px solid var(--primary);
+
+
+
       padding: 15px;
+
+
+
       border-radius: 0 8px 8px 0;
+
+
+
       margin-bottom: 25px;
+
+
+
       box-shadow: var(--shadow-sm);
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       align-items: center;
+
+
+
     }
+
+
+
+
+
+
 
     .filter-header-info h2 {
+
+
+
       font-size: 1.15rem;
+
+
+
       font-weight: 700;
+
+
+
     }
+
+
+
+
+
+
 
     .filter-header-info button {
+
+
+
       background-color: var(--bg-body);
+
+
+
       border: 1px solid var(--border-color);
+
+
+
       padding: 5px 12px;
+
+
+
       border-radius: 4px;
+
+
+
       cursor: pointer;
+
+
+
       font-size: 0.8rem;
+
+
+
       font-weight: 600;
+
+
+
     }
+
+
+
+
+
+
 
     .filter-header-info button:hover {
+
+
+
       background-color: var(--primary);
+
+
+
       color: #FFFFFF;
+
+
+
       border-color: var(--primary);
+
+
+
     }
+
+
+
+
+
+
 
     /* Responsive Styles */
+
+
+
     @media (max-width: 1024px) {
+
+
+
       .main-layout-grid {
+
+
+
         grid-template-columns: 1fr;
+
+
+
       }
+
+
+
       .nav-container {
+
+
+
         display: none; /* Hide desktop nav */
+
+
+
       }
+
+
+
       .menu-mobile-btn {
+
+
+
         display: block;
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     @media (max-width: 768px) {
+
+
+
       .featured-grid, .label-block-grid, .multimedia-grid {
+
+
+
         grid-template-columns: 1fr;
+
+
+
       }
+
+
+
+
+
+
 
       .footer-grid {
+
+
+
         grid-template-columns: 1fr;
+
+
+
         gap: 30px;
+
+
+
       }
+
+
+
       .top-header {
+
+
+
         display: none;
+
+
+
       }
+
+
+
       .modal-image {
+
+
+
         height: 200px;
+
+
+
       }
+
+
+
       .modal-body {
+
+
+
         padding: 20px;
+
+
+
       }
+
+
+
       .modal-title {
+
+
+
         font-size: 1.4rem;
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     /* Mobile Nav Active */
+
+
+
     .mobile-menu-drawer {
+
+
+
       position: fixed;
+
+
+
       top: 0;
+
+
+
       left: -280px;
+
+
+
       width: 280px;
+
+
+
       height: 100%;
+
+
+
       background-color: var(--bg-card);
+
+
+
       z-index: 1000;
+
+
+
       box-shadow: var(--shadow-lg);
+
+
+
       padding: 30px 20px;
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 25px;
+
+
+
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+
+
       border-right: 1px solid var(--border-color);
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-menu-drawer.open {
+
+
+
       transform: translateX(280px);
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-menu-overlay {
+
+
+
       position: fixed;
+
+
+
       top: 0;
+
+
+
       left: 0;
+
+
+
       width: 100%;
+
+
+
       height: 100%;
+
+
+
       background-color: rgba(0, 0, 0, 0.5);
+
+
+
       z-index: 999;
+
+
+
       opacity: 0;
+
+
+
       visibility: hidden;
+
+
+
       transition: var(--transition);
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-menu-overlay.open {
+
+
+
       opacity: 1;
+
+
+
       visibility: visible;
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-menu-close {
+
+
+
       align-self: flex-end;
+
+
+
       font-size: 1.3rem;
+
+
+
       cursor: pointer;
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-nav-links {
+
+
+
       display: flex;
+
+
+
       flex-direction: column;
+
+
+
       gap: 15px;
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-nav-links a {
+
+
+
       font-weight: 600;
+
+
+
       font-size: 1rem;
+
+
+
       padding: 8px 0;
+
+
+
       border-bottom: 1px solid var(--border-color);
+
+
+
       display: block;
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-nav-links .dropdown-toggle {
+
+
+
       display: flex;
+
+
+
       justify-content: space-between;
+
+
+
       align-items: center;
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-submenu {
+
+
+
       padding-left: 15px;
+
+
+
       margin-top: 5px;
+
+
+
       display: none;
+
+
+
     }
+
+
+
+
+
+
 
     .mobile-submenu a {
+
+
+
       font-size: 0.9rem;
+
+
+
       font-weight: 500;
+
+
+
       border-bottom: none;
+
+
+
       padding: 6px 0;
+
+
+
     }
+
+
+
     /*]]>*/
+
+
+
   
+
+
+
 </style>
+
+
+
 </head>
+
+
+
 <body>
 
+
+
+
+
+
+
   <!-- Top Header -->
+
+
+
   <section class="top-header">
+
+
+
     <div class="container">
+
+
+
       <p class="time">
+
+
+
         <i class="far fa-calendar-alt"></i>
+
+
+
         <span id="current-date">Chủ nhật, ngày 10 tháng 7 năm 2026</span>
+
+
+
       </p>
+
+
+
       <div class="social-head-foo">
+
+
+
         <a class="btn-send" class="btn-send" href="/p/gui-bai-viet.html">
+
+
+
           <i class="fas fa-paper-plane"></i> Gửi bài viết
+
+
+
         </a>
+
+
+
         <a class="social-icon" href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
+
+
         <a class="social-icon" href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+
+
+
         <a class="social-icon" href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+
+
+
       </div>
+
+
+
     </div>
+
+
+
   </section>
 
+
+
+
+
+
+
   <!-- Header -->
+
+
+
   <header class="header">
+
+
+
     <div class="container">
+
+
+
       <button class="menu-mobile-btn" id="open-mobile-menu">
+
+
+
         <i class="fas fa-bars"></i>
+
+
+
       </button>
+
+
+
       
-            <div class="logo-container">
+
+
+
+                  <div class="logo-container">
         <a class="logo mobile" href="#" title="Tỉnh Hưng Yên | Tin tức Hưng Yên | Hưng Yên 24h">
           <img alt="Tỉnh Hưng Yên | Tin tức Hưng Yên | Hưng Yên 24h" src="https://manghungyen.com/THY-logo-m.png"/>
         </a>
@@ -1656,1697 +6603,5677 @@
         </a>
       </div>
 
+
+
+
+
+
+
       <!-- Desktop Navigation -->
+
+
+
       <div class="nav-container">
+
+
+
         <nav>
+
+
+
           <ul class="main-nav">
+
+
+
             <li><a href="#">Trang chủ</a></li>
+
+
+
             <li>
-              <a href="#" class="dropdown-trigger">Đất & Người Xứ Nhãn <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i></a>
+
+
+
+              <a href="#" class="dropdown-trigger">Văn hóa & Khám phá <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i></a>
+
+
+
               <ul class="sub-nav">
-                <li><a href="/search/label/Di%20tích">Di tích, lễ hội</a></li>
-                <li><a href="/search/label/%C4%90%E1%BA%B7c%20s%E1%BA%A3n">Đặc sản ẩm thực</a></li>
-                <li><a href="/search/label/L%C3%A0ng%20ngh%E1%BB%81">Làng nghề truyền thống</a></li>
+
+
+
+                <li><a href="/search/label/Di%20tích">Lịch sử - Lễ hội</a></li>
+
+
+
+                <li><a href="/search/label/%C4%90%E1%BA%B7c%20s%E1%BA%A3n">Ẩm thực vùng miền</a></li>
+
+
+
+                <li><a href="/search/label/L%C3%A0ng%20ngh%E1%BB%81">Làng nghề Việt</a></li>
+
+
+
                 <li><a href="/search/label/Danh%20nh%C3%A2n">Danh nhân</a></li>
-                <li><a href="/search/label/%C4%90i%E1%BB%83m%20%C4%91%E1%BA%BFn%20H%C6%B0ng%20Y%C3%AAn">Điểm đến Hưng Yên</a></li>
+
+
+
+                <li><a href="/search/label/%C4%90i%E1%BB%83m%20%C4%91%E1%BA%BFn%20H%C6%B0ng%20Y%C3%AAn">Điểm đến du lịch</a></li>
+
+
+
               </ul>
+
+
+
             </li>
+
+
+
             <li>
+
+
+
               <a href="#" class="dropdown-trigger">Dịch vụ <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i></a>
+
+
+
               <ul class="sub-nav">
+
+
+
                 <li><a href="/search/label/Dịch vụ">Tour du lịch</a></li>
+
+
+
                 <li><a href="/search/label/Dịch vụ">Khách sạn</a></li>
+
+
+
                 <li><a href="/search/label/Dịch vụ">Vận tải</a></li>
+
+
+
                 <li><a href="/search/label/Dịch vụ">Nhà hàng</a></li>
+
+
+
               </ul>
+
+
+
             </li>
+
+
+
             <li><a href="/search/label/Quốc tế">Quốc tế</a></li>
+
+
+
             <li><a href="/search/label/Công nghệ">Công nghệ</a></li>
+
+
+
             <li>
+
+
+
               <a href="#" class="dropdown-trigger">Multimedia <i class="fas fa-chevron-down" style="font-size: 0.75rem;"></i></a>
+
+
+
               <ul class="sub-nav">
+
+
+
                 <li><a href="/search/label/Photo">Ảnh</a></li>
+
+
+
                 <li><a href="/search/label/video">Video</a></li>
+
+
+
                 <li><a href="/search/label/infographic">Infographic</a></li>
+
+
+
                 <li><a href="/search/label/longform">Longform</a></li>
+
+
+
               </ul>
+
+
+
             </li>
+
+
+
           </ul>
+
+
+
         </nav>
+
+
+
       </div>
+
+
+
+
+
+
 
       <div class="header-tools">
+
+
+
         <div class="search-box">
+
+
+
           <i class="fas fa-search"></i>
+
+
+
           <input type="text" id="search-input" placeholder="Tìm kiếm tin tức..." onkeyup="handleSearch(event)" />
+
+
+
         </div>
+
+
+
         <button class="theme-toggle" id="theme-btn" title="Chuyển chế độ Sáng/Tối">
+
+
+
           <i class="fas fa-moon"></i>
+
+
+
         </button>
+
+
+
       </div>
+
+
+
     </div>
+
+
+
   </header>
 
+
+
+
+
+
+
   <!-- Mobile Drawer & Overlay -->
+
+
+
   <div class="mobile-menu-overlay" id="mobile-overlay"></div>
+
+
+
   <div class="mobile-menu-drawer" id="mobile-drawer">
+
+
+
     <div class="mobile-menu-close" id="close-mobile-menu">
+
+
+
       <i class="fas fa-times"></i>
+
+
+
     </div>
+
+
+
     <div class="mobile-nav-links">
+
+
+
       <a href="#" onclick="filterCategory('all'); closeMobileMenu();">Trang chủ</a>
+
+
+
       <div>
-        <a href="#" class="dropdown-toggle" onclick="toggleMobileSubmenu('sub1')">Đất & Người Xứ Nhãn <i class="fas fa-chevron-down"></i></a>
+
+
+
+        <a href="#" class="dropdown-toggle" onclick="toggleMobileSubmenu('sub1')">Văn hóa & Khám phá <i class="fas fa-chevron-down"></i></a>
+
+
+
         <div class="mobile-submenu" id="sub1">
-          <a href="#" onclick="filterCategory('Di tích'); closeMobileMenu();">Di tích, lễ hội</a>
-          <a href="#" onclick="filterCategory('Đặc sản'); closeMobileMenu();">Đặc sản ẩm thực</a>
-          <a href="#" onclick="filterCategory('Làng nghề'); closeMobileMenu();">Làng nghề truyền thống</a>
+
+
+
+          <a href="#" onclick="filterCategory('Di tích'); closeMobileMenu();">Lịch sử - Lễ hội</a>
+
+
+
+          <a href="#" onclick="filterCategory('Đặc sản'); closeMobileMenu();">Ẩm thực vùng miền</a>
+
+
+
+          <a href="#" onclick="filterCategory('Làng nghề'); closeMobileMenu();">Làng nghề Việt</a>
+
+
+
           <a href="#" onclick="filterCategory('Danh nhân'); closeMobileMenu();">Danh nhân</a>
-          <a href="#" onclick="filterCategory('Điểm đến'); closeMobileMenu();">Điểm đến Hưng Yên</a>
+
+
+
+          <a href="#" onclick="filterCategory('Điểm đến'); closeMobileMenu();">Điểm đến du lịch</a>
+
+
+
         </div>
+
+
+
       </div>
+
+
+
       <div>
+
+
+
         <a href="#" class="dropdown-toggle" onclick="toggleMobileSubmenu('sub2')">Dịch vụ <i class="fas fa-chevron-down"></i></a>
+
+
+
         <div class="mobile-submenu" id="sub2">
+
+
+
           <a href="#" onclick="filterCategory('Dịch vụ'); closeMobileMenu();">Tour du lịch</a>
+
+
+
           <a href="#" onclick="filterCategory('Dịch vụ'); closeMobileMenu();">Khách sạn</a>
+
+
+
           <a href="#" onclick="filterCategory('Dịch vụ'); closeMobileMenu();">Vận tải</a>
+
+
+
           <a href="#" onclick="filterCategory('Dịch vụ'); closeMobileMenu();">Nhà hàng</a>
+
+
+
         </div>
+
+
+
       </div>
+
+
+
       <a href="#" onclick="filterCategory('Quốc tế'); closeMobileMenu();">Quốc tế</a>
+
+
+
       <a href="#" onclick="filterCategory('Công nghệ'); closeMobileMenu();">Công nghệ</a>
+
+
+
       <div>
+
+
+
         <a href="#" class="dropdown-toggle" onclick="toggleMobileSubmenu('sub3')">Multimedia <i class="fas fa-chevron-down"></i></a>
+
+
+
         <div class="mobile-submenu" id="sub3">
+
+
+
           <a href="#" onclick="filterCategory('Photo'); closeMobileMenu();">Ảnh</a>
+
+
+
           <a href="#" onclick="filterCategory('Video'); closeMobileMenu();">Video</a>
+
+
+
           <a href="#" onclick="filterCategory('Infographic'); closeMobileMenu();">Infographic</a>
+
+
+
           <a href="#" onclick="filterCategory('Longform'); closeMobileMenu();">Longform</a>
+
+
+
         </div>
+
+
+
       </div>
+
+
+
     </div>
+
+
+
   </div>
 
+
+
+
+
+
+
   <!-- Trending Section -->
+
+
+
   <section class="trending-section">
+
+
+
     <div class="container">
+
+
+
       <div class="trending-wrapper">
+
+
+
         <div class="trending-title">
+
+
+
           <i class="fas fa-bolt"></i> Xu hướng
+
+
+
         </div>
+
+
+
         <div class="trending-ticker-container">
+
+
+
           <div class="trending-ticker" id="trending-items">
+
+
+
             <!-- Populated dynamically -->
+
+
+
           </div>
+
+
+
         </div>
+
+
+
       </div>
+
+
+
     </div>
+
+
+
   </section>
 
+
+
+
+
+
+
   <!-- Main Container -->
+
+
+
   <div class="container main-layout">
+
+
+
     <div class="main-layout-grid">
+
+
+
       
+
+
+
       <!-- Primary Left Column -->
+
+
+
       <main class="primary-content">
+
+
+
         
+
+
+
         <!-- Filter Category Header (Displays when category is filtered) -->
+
+
+
         <div id="filter-info-box" style="display: none;">
+
+
+
           <div class="filter-header-info">
+
+
+
             <h2 id="filter-title-text">Danh mục: Di tích</h2>
+
+
+
             <button onclick="filterCategory('all')">Xem tất cả</button>
+
+
+
           </div>
+
+
+
         </div>
 
+
+
+
+
+
+
         <div id="dynamic-content-area">
+
+
+
           <!-- Main Homepage Content Block (Toggled with Category filtering) -->
+
+
+
           <div id="home-blocks">
+
+
+
             
+
+
+
             <!-- Featured Block -->
+
+
+
             <section class="featured-grid mb-25">
+
+
+
               <div class="featured-main" id="featured-main-art">
+
+
+
                 <!-- Large card -->
+
+
+
               </div>
+
+
+
               <div class="featured-sub">
+
+
+
                 <div class="block-title">
+
+
+
                   <span>Giải trí</span>
+
+
+
                   <a href="#" onclick="filterCategory('Giải trí')" class="see-more">Xem thêm</a>
+
+
+
                 </div>
+
+
+
                 <div class="news-mini-list" id="featured-sub-list">
+
+
+
                   <!-- List of small items -->
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
             </section>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
             <!-- Slider Selected News (Slider 1) -->
+
+
+
             <section class="slider-section mb-25">
+
+
+
               <div class="slider-header">
+
+
+
                 <div class="slider-title">
-                  <i class="fas fa-star" style="color: var(--accent);"></i> Tin tức Hưng Yên nổi bật
+
+
+
+                  <i class="fas fa-star" style="color: var(--accent);"></i> Tin tức tổng hợp nổi bật
+
+
+
                 </div>
+
+
+
                 <div class="slider-nav">
+
+
+
                   <div class="slider-btn" id="slide1-prev"><i class="fas fa-chevron-left"></i></div>
+
+
+
                   <div class="slider-btn" id="slide1-next"><i class="fas fa-chevron-right"></i></div>
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
               <div class="swiper-container" id="swiper1">
+
+
+
                 <div class="swiper-wrapper" id="slider1-wrapper">
+
+
+
                   <!-- Swiper slides -->
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
             </section>
+
+
+
+
+
+
 
             <!-- Categories Side by Side (Di tích & Đặc sản) -->
+
+
+
             <section class="label-block-grid mb-25">
+
+
+
               <div class="label-block-left">
+
+
+
                 <div class="block-title">
+
+
+
                   <span>Di tích, Lễ hội</span>
+
+
+
                   <a href="#" onclick="filterCategory('Di tích')" class="see-more">Tất cả</a>
+
+
+
                 </div>
+
+
+
                 <div id="cat-ditich-content">
+
+
+
                   <!-- Card + mini list -->
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
               <div class="label-block-right">
+
+
+
                 <div class="block-title">
+
+
+
                   <span>Đặc sản ẩm thực</span>
+
+
+
                   <a href="#" onclick="filterCategory('Đặc sản')" class="see-more">Tất cả</a>
+
+
+
                 </div>
+
+
+
                 <div id="cat-dacsan-content" class="news-mini-list">
+
+
+
                   <!-- Mini list -->
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
             </section>
+
+
+
+
+
+
 
             <!-- Multimedia zone (Dark) -->
+
+
+
             <section class="multimedia-section mb-25">
+
+
+
               <div class="container">
+
+
+
                 <div class="multimedia-header">
+
+
+
                   <div class="multimedia-title">
+
+
+
                     <i class="fas fa-play-circle"></i> Multimedia
+
+
+
                   </div>
+
+
+
                   <div class="multimedia-tabs">
+
+
+
                     <button class="multimedia-tab active" onclick="switchMultimediaTab('Photo', this)">Ảnh</button>
+
+
+
                     <button class="multimedia-tab" onclick="switchMultimediaTab('Video', this)">Video</button>
+
+
+
                     <button class="multimedia-tab" onclick="switchMultimediaTab('Infographic', this)">Infographic</button>
+
+
+
                     <button class="multimedia-tab" onclick="switchMultimediaTab('Longform', this)">Longform</button>
+
+
+
                   </div>
+
+
+
                 </div>
+
+
+
                 <div class="multimedia-grid">
+
+
+
                   <div class="multimedia-left" id="multi-left-pane">
+
+
+
                     <!-- Featured item -->
+
+
+
                   </div>
+
+
+
                   <div class="multimedia-right" id="multi-right-pane">
+
+
+
                     <!-- List of items -->
+
+
+
                   </div>
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
             </section>
+
+
+
+
+
+
 
             <!-- Categories Side by Side (Sức khỏe & Làng nghề) -->
+
+
+
             <section class="label-block-grid mb-25">
+
+
+
               <div class="label-block-left">
+
+
+
                 <div class="block-title">
+
+
+
                   <span>Làng nghề truyền thống</span>
+
+
+
                   <a href="#" onclick="filterCategory('Làng nghề')" class="see-more">Tất cả</a>
+
+
+
                 </div>
+
+
+
                 <div id="cat-langnghe-content">
+
+
+
                   <!-- Card + mini list -->
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
               <div class="label-block-right">
+
+
+
                 <div class="block-title">
+
+
+
                   <span>Sức khỏe & Đời sống</span>
+
+
+
                   <a href="#" onclick="filterCategory('Sức khỏe')" class="see-more">Tất cả</a>
+
+
+
                 </div>
+
+
+
                 <div id="cat-suckhoe-content" class="news-mini-list">
+
+
+
                   <!-- Mini list -->
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
             </section>
+
+
+
+
+
+
 
             <!-- Slider Blog / Talk (Slider 3) -->
+
+
+
             <section class="slider-section mb-25">
+
+
+
               <div class="slider-header">
+
+
+
                 <div class="slider-title">
+
+
+
                   <i class="fas fa-comments" style="color: var(--primary);"></i> Góc nhìn & Chia sẻ
+
+
+
                 </div>
+
+
+
                 <div class="slider-nav">
+
+
+
                   <div class="slider-btn" id="slide2-prev"><i class="fas fa-chevron-left"></i></div>
+
+
+
                   <div class="slider-btn" id="slide2-next"><i class="fas fa-chevron-right"></i></div>
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
               <div class="swiper-container" id="swiper2">
+
+
+
                 <div class="swiper-wrapper" id="slider2-wrapper">
+
+
+
                   <!-- Swiper slides -->
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
             </section>
 
+
+
+
+
+
+
           </div>
+
+
+
+
+
+
 
           <!-- Dynamic Feed/Search Results List Container -->
+
+
+
           <div id="feed-results-area" style="display: none;">
+
+
+
             <div class="block-title">
+
+
+
               <span id="results-title">Kết quả tìm kiếm</span>
+
+
+
             </div>
+
+
+
             <div class="featured-sub" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;" id="results-grid">
+
+
+
               <!-- cards populated dynamically -->
+
+
+
             </div>
+
+
+
           </div>
 
+
+
+
+
+
+
         </div>
+
+
+
+
+
+
 
       </main>
 
+
+
+
+
+
+
       <!-- Sidebar Right Column -->
+
+
+
       <aside class="sidebar-wrapper">
+
+
+
         
+
+
+
         <!-- Search Enterprise Autocomplete widget -->
+
+
+
         <div class="sidebar-widget enterprise-widget">
+
+
+
           <h3 class="sidebar-widget-title">Tra cứu doanh nghiệp</h3>
+
+
+
           <form id="search-enterprise-form" onsubmit="event.preventDefault();">
+
+
+
             <input type="text" id="enterprise-input" placeholder="Nhập mã chứng khoán/tên..." onkeyup="suggestEnterprise(this.value)" autocomplete="off" />
+
+
+
             <button type="submit">Tìm</button>
+
+
+
             <ul class="enterprise-suggest" id="enterprise-suggest-list"></ul>
+
+
+
           </form>
+
+
+
         </div>
 
-        <!-- Social widget -->
-        <div class="sidebar-widget">
-          <h3 class="sidebar-widget-title">Kết nối với chúng tôi</h3>
-          <div style="border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
-            <!-- Mock Facebook embed -->
-            <div style="background-color: #3B5998; color: white; padding: 20px 15px; display: flex; align-items: center; gap: 15px;">
-              <i class="fab fa-facebook-square" style="font-size: 2.5rem;"></i>
-              <div>
-                <h4 style="font-weight: 700; font-size: 0.95rem;">Hưng Yên 24h trên Facebook</h4>
-                <p style="font-size: 0.75rem; opacity: 0.8;">124K lượt thích • 150K người theo dõi</p>
-              </div>
-            </div>
-            <div style="padding: 10px; background-color: var(--bg-card); display: flex; justify-content: space-between; align-items: center;">
-              <a href="https://facebook.com" target="_blank" style="background-color: #E7F0FE; color: #1877F2; padding: 6px 12px; border-radius: 4px; font-weight: 700; font-size: 0.8rem;">
-                <i class="fab fa-facebook"></i> Thích Trang
-              </a>
-              <a href="https://facebook.com" target="_blank" style="font-size: 0.8rem; font-weight: 600; color: var(--text-muted);">Chia sẻ</a>
-            </div>
-          </div>
-        </div>
+
+
+
+
+
 
         <!-- Ads Banner widget -->
+
+
+
         <div class="sidebar-widget" style="padding: 10px; text-align: center;">
+
+
+
           <a href="#" target="_blank">
+
+
+
             
+
+
+
           </a>
+
+
+
           <p style="font-size: 0.75rem; color: var(--text-muted);">Quảng cáo liên hệ info@tinhhungyen.com</p>
+
+
+
         </div>
 
+
+
+
+
+
+
         <!-- Popular Posts Widget -->
+
+
+
         <div class="sidebar-widget">
+
+
+
           <h3 class="sidebar-widget-title">Đọc nhiều nhất</h3>
+
+
+
           <div class="news-mini-list" id="popular-posts-list">
+
+
+
             <!-- Populated dynamically -->
+
+
+
           </div>
+
+
+
         </div>
+
+
+
+
+
+
 
       </aside>
 
+
+
+
+
+
+
     </div>
+
+
+
   </div>
+
+
+
+
+
+
 
   <!-- Footer -->
+
+
+
   <footer>
+
+
+
     <div class="container">
+
+
+
       <div class="footer-grid">
+
+
+
         <div class="footer-col">
+
+
+
                   <div class="footer-logo">
-          <a class="logo" href="#" title="Tỉnh Hưng Yên | Tin tức Hưng Yên | Hưng Yên 24h">
+
+
+
+                    <a class="logo" href="#" title="Tỉnh Hưng Yên | Tin tức Hưng Yên | Hưng Yên 24h">
             <img alt="Tỉnh Hưng Yên" src="https://manghungyen.com/THY-logo.png" style="height: 38px; display: block;"/>
           </a>
-        </div>
-          <p class="footer-about">
-            Tỉnh Hưng Yên là Trang thông tin điện tử tổng hợp, cập nhật nhanh chóng và chính xác các tin tức sự kiện, văn hóa, danh lam thắng cảnh và đặc sản xứ nhãn.
-          </p>
-          <div class="social-head-foo">
-            <a class="social-icon" href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a class="social-icon" href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a class="social-icon" href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        
-        <div class="footer-col">
-          <div class="footer-title">Chuyên mục</div>
-          <div class="footer-links">
-            <a href="#" onclick="filterCategory('Di tích')">Di tích, lễ hội</a>
-            <a href="#" onclick="filterCategory('Đặc sản')">Đặc sản ẩm thực</a>
-            <a href="#" onclick="filterCategory('Làng nghề')">Làng nghề truyền thống</a>
-            <a href="#" onclick="filterCategory('Danh nhân')">Danh nhân xứ nhãn</a>
-            <a href="#" onclick="filterCategory('Điểm đến')">Điểm đến du lịch</a>
-            <a href="#" onclick="filterCategory('Công nghệ')">Công nghệ mới</a>
-          </div>
+
+
+
         </div>
 
-        <div class="footer-col">
-          <div class="footer-title">Đăng ký nhận tin</div>
-          <p style="font-size: 0.85rem;">Nhập email của bạn để cập nhật những tin tức mới nhất về Tỉnh Hưng Yên hàng ngày.</p>
-          <form class="subscribe-form" id="email-subscribe-form" onsubmit="handleSubscribe(event)">
-            <input type="email" placeholder="Địa chỉ email của bạn..." required="required" />
-            <button type="submit">Đăng ký</button>
-          </form>
+
+
+          <p class="footer-about">
+
+
+
+            Hưng Yên 24h là Trang thông tin điện tử tổng hợp, cập nhật nhanh chóng và chính xác các tin tức sự kiện, văn hóa, danh lam thắng cảnh và đặc sản xứ nhãn.
+
+
+
+          </p>
+
+
+
+          <div class="social-head-foo">
+
+
+
+            <a class="social-icon" href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+
+
+
+            <a class="social-icon" href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+
+
+
+            <a class="social-icon" href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+
+
+
+          </div>
+
+
+
         </div>
+
+
+
+        
+
+
+
+        <div class="footer-col">
+
+
+
+          <div class="footer-title">Chuyên mục</div>
+
+
+
+          <div class="footer-links">
+
+
+
+            <a href="#" onclick="filterCategory('Di tích')">Lịch sử - Lễ hội</a>
+
+
+
+            <a href="#" onclick="filterCategory('Đặc sản')">Ẩm thực vùng miền</a>
+
+
+
+            <a href="#" onclick="filterCategory('Làng nghề')">Làng nghề Việt</a>
+
+
+
+            <a href="#" onclick="filterCategory('Danh nhân')">Danh nhân xứ nhãn</a>
+
+
+
+            <a href="#" onclick="filterCategory('Điểm đến')">Điểm đến du lịch</a>
+
+
+
+            <a href="#" onclick="filterCategory('Công nghệ')">Công nghệ mới</a>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+        <div class="footer-col">
+
+
+
+          <div class="footer-title">Đăng ký nhận tin</div>
+
+
+
+          <p style="font-size: 0.85rem;">Nhập email của bạn để cập nhật những tin tức nóng hổi mới nhất hàng ngày.</p>
+
+
+
+          <form class="subscribe-form" id="email-subscribe-form" onsubmit="handleSubscribe(event)">
+
+
+
+            <input type="email" placeholder="Địa chỉ email của bạn..." required="required" />
+
+
+
+            <button type="submit">Đăng ký</button>
+
+
+
+          </form>
+
+
+
+        </div>
+
+
+
       </div>
+
+
+
+
+
+
 
       <div class="footer-bottom">
+
+
+
         <p>© 2026 Hưng Yên 24h. Tất cả quyền được bảo lưu. Chạy thử nghiệm trên nền tảng Blogger / Blogspot.</p>
+
+
+
         <p style="opacity: 0.6; margin-top: 5px;">Ghi rõ nguồn "Hưng Yên 24h" khi phát lại thông tin từ trang web này.</p>
+
+
+
       </div>
+
+
+
     </div>
+
+
+
   </footer>
 
+
+
+
+
+
+
   <!-- Article Detail Modal -->
+
+
+
   <div class="modal" id="article-modal">
+
+
+
     <div class="modal-content">
+
+
+
       <div class="modal-close" onclick="closeArticleModal()">
+
+
+
         <i class="fas fa-times"></i>
+
+
+
       </div>
+
+
+
       <div class="modal-body" id="modal-article-body">
+
+
+
         <!-- Content injected dynamically -->
+
+
+
       </div>
+
+
+
     </div>
+
+
+
   </div>
+
+
+
+
+
+
 
   <!-- Scroll to Top -->
+
+
+
   <div class="to-top" id="scroll-btn">
+
+
+
     <i class="fas fa-chevron-up"></i>
+
+
+
   </div>
+
+
+
+
+
+
 
   <!-- Toast Notification -->
+
+
+
   <div class="toast" id="toast-notif">
+
+
+
     <i class="fas fa-check-circle"></i>
+
+
+
     <div class="toast-content" id="toast-text">Thông báo thành công</div>
+
+
+
   </div>
+
+
+
+
+
+
 
   <!-- Hidden section containing the Blogger required b:section to satisfy the compiler -->
+
+
+
   <div style="display: none;">
+
+
+
     <b:section id='main-blogger-section' class='main-blogger-section' showaddelement='yes'>
+
+
+
       <!-- Required section for blogger compilation -->
+
+
+
     </b:section>
+
+
+
   </div>
 
+
+
+
+
+
+
   <!-- Swiper and jQuery scripts -->
+
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
 
+
+
+
+
+
+
   <!-- Main Website Script Logic - Wrapped in CDATA to shield XML parser from JS tokens -->
+
+
+
   <script type='text/javascript'>
+
+
+
     //<![CDATA[
+
+
+
     // --------------------------------------------------
+
+
+
     // DATABASE: Local Mock Articles & Business List
+
+
+
     // --------------------------------------------------
+
+
+
     const mockArticles = [
       {
         id: 1,
-        title: "World Cup 2026: Na Uy vẫn chờ những điều đặc biệt ở phía trước",
-        category: "Giải trí",
+        title: "Bellingham lập cú đúp tiễn Haaland và tuyển Na Uy về nước",
+        category: "Thời sự",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w700_r16x9/2026_07_11_8_55593699/e9d7178445cfac91f5de.jpg",
-        desc: "World Cup 2026: Na Uy vẫn chờ những điều đặc biệt ở phía trước",
-        text: "<p>World Cup 2026: Na Uy vẫn chờ những điều đặc biệt ở phía trước</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w700_r16x9/2026_07_12_106_55597243/212ca320f16b1835417a.jpg",
+        desc: "Bellingham lập cú đúp tiễn Haaland và tuyển Na Uy về nước",
+        text: "<p>Bellingham lập cú đúp tiễn Haaland và tuyển Na Uy về nước</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: true,
         views: 5000,
-        sourceUrl: "https://baomoi.com/world-cup-2026-na-uy-van-cho-nhung-dieu-dac-biet-o-phia-truoc-c55593699.epi"
+        sourceUrl: "https://baomoi.com/bellingham-lap-cu-dup-tien-haaland-va-tuyen-na-uy-ve-nuoc-r55597243.epi",
+        publisher: "Chuyên trang An Ninh Thủ Đô - Báo Công an nhân dân"
       },
       {
         id: 2,
-        title: "Kiev rung chuyển sau vụ đội tàu Nga ở Azov bị tấn công",
-        category: "Quốc tế",
+        title: "Lý do bàn thắng của Bellingham lẽ ra không được công nhận",
+        category: "Thế giới",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_11_5_55593586/6da275f227b9cee797a8.jpg",
-        desc: "Kiev rung chuyển sau vụ đội tàu Nga ở Azov bị tấn công",
-        text: "<p>Kiev rung chuyển sau vụ đội tàu Nga ở Azov bị tấn công</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_23_55597041/770b770a2541cc1f9550.jpg",
+        desc: "Lý do bàn thắng của Bellingham lẽ ra không được công nhận",
+        text: "<p>Lý do bàn thắng của Bellingham lẽ ra không được công nhận</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 5250,
-        sourceUrl: "https://baomoi.com/kiev-rung-chuyen-sau-vu-doi-tau-nga-o-azov-bi-tan-cong-c55593586.epi"
+        sourceUrl: "https://baomoi.com/ly-do-ban-thang-cua-bellingham-le-ra-khong-duoc-cong-nhan-r55597041.epi",
+        publisher: "Báo VietnamNet"
       },
       {
         id: 3,
-        title: "Mãn nhãn màn khai hỏa hạ mục tiêu của học viên Pháo phòng không",
-        category: "Photo",
+        title: "Iran tuyên bố đóng cửa eo biển Hormuz cho đến khi có thông báo mới",
+        category: "Tài chính",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_11_94_55593211/5a483a0368488116d859.jpg",
-        desc: "Mãn nhãn màn khai hỏa hạ mục tiêu của học viên Pháo phòng không",
-        text: "<p>Mãn nhãn màn khai hỏa hạ mục tiêu của học viên Pháo phòng không</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_83_55597214/d6cd36c1648a8dd4d49b.jpg",
+        desc: "Iran tuyên bố đóng cửa eo biển Hormuz cho đến khi có thông báo mới",
+        text: "<p>Iran tuyên bố đóng cửa eo biển Hormuz cho đến khi có thông báo mới</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 5500,
-        sourceUrl: "https://baomoi.com/man-nhan-man-khai-hoa-ha-muc-tieu-cua-hoc-vien-phao-phong-khong-c55593211.epi"
+        sourceUrl: "https://baomoi.com/iran-tuyen-bo-dong-cua-eo-bien-hormuz-cho-den-khi-co-thong-bao-moi-r55597214.epi",
+        publisher: "Báo VTC News"
       },
       {
         id: 4,
-        title: "Chứng khoán Mỹ nhận 'cú hích' trước mùa báo cáo tài chính",
-        category: "Quốc tế",
+        title: "Trình duyệt 'gây chiến' với Google và YouTube",
+        category: "Công nghệ",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_11_294_55593530/1ed4df848dcf64913dde.jpg",
-        desc: "Chứng khoán Mỹ nhận 'cú hích' trước mùa báo cáo tài chính",
-        text: "<p>Chứng khoán Mỹ nhận 'cú hích' trước mùa báo cáo tài chính</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_119_55596973/c715fd15af5e46001f4f.jpg",
+        desc: "Trình duyệt 'gây chiến' với Google và YouTube",
+        text: "<p>Trình duyệt 'gây chiến' với Google và YouTube</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 5750,
-        sourceUrl: "https://baomoi.com/chung-khoan-my-nhan-cu-hich-truoc-mua-bao-cao-tai-chinh-c55593530.epi"
+        sourceUrl: "https://baomoi.com/trinh-duyet-gay-chien-voi-google-va-youtube-r55596973.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 5,
-        title: "Clip Haaland nói tiếng Việt bất ngờ 'sốt' trở lại",
-        category: "Giải trí",
+        title: "Jude Bellingham lập kỳ tích lịch sử sau màn tỏa sáng trước Na Uy",
+        category: "Đời sống",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_119_55594399/2c6a794b2b00c25e9b11.jpg",
-        desc: "Clip Haaland nói tiếng Việt bất ngờ 'sốt' trở lại",
-        text: "<p>Clip Haaland nói tiếng Việt bất ngờ 'sốt' trở lại</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_125_55597731/451f9315c15e2800714f.jpg",
+        desc: "Jude Bellingham lập kỳ tích lịch sử sau màn tỏa sáng trước Na Uy",
+        text: "<p>Jude Bellingham lập kỳ tích lịch sử sau màn tỏa sáng trước Na Uy</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 6000,
-        sourceUrl: "https://baomoi.com/clip-haaland-noi-tieng-viet-bat-ngo-sot-tro-lai-c55594399.epi"
+        sourceUrl: "https://baomoi.com/jude-bellingham-lap-ky-tich-lich-su-sau-man-toa-sang-truoc-na-uy-r55597731.epi",
+        publisher: "Báo Văn hóa"
       },
       {
         id: 6,
-        title: "Tứ kết World Cup 2026: Thụy Sĩ có thể tạo bất ngờ trước Argentina?",
-        category: "Giải trí",
+        title: "Bellingham lập cú đúp, tuyển Anh ngược dòng vào bán kết World Cup 2026",
+        category: "Văn hóa",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_8_55594265/1bb6d59287d96e8737c8.jpg",
-        desc: "Tứ kết World Cup 2026: Thụy Sĩ có thể tạo bất ngờ trước Argentina?",
-        text: "<p>Tứ kết World Cup 2026: Thụy Sĩ có thể tạo bất ngờ trước Argentina?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_8_55597863/862d9a26c86d2133787c.jpg",
+        desc: "Bellingham lập cú đúp, tuyển Anh ngược dòng vào bán kết World Cup",
+        text: "<p>Bellingham lập cú đúp, tuyển Anh ngược dòng vào bán kết World Cup</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 6250,
-        sourceUrl: "https://baomoi.com/tu-ket-world-cup-2026-thuy-si-co-the-tao-bat-ngo-truoc-argentina-c55594265.epi"
+        sourceUrl: "https://baomoi.com/bellingham-lap-cu-dup-tuyen-anh-nguoc-dong-vao-ban-ket-world-cup-2026-r55597863.epi",
+        publisher: "Báo Hà Nội Mới"
       },
       {
         id: 7,
-        title: "Tứ kết World Cup 2026: Na Uy thách thức bản lĩnh 'Tam sư'",
+        title: "Kết quả bóng đá World Cup 2026: Anh 2-1 Na Uy - Jude Bellingham đưa tuyển Anh vượt 'ải Haaland', thẳng đường vào bán kết",
         category: "Giải trí",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_8_55594264/7a47ac63fe2817764e39.jpg",
-        desc: "Tứ kết World Cup 2026: Na Uy thách thức bản lĩnh 'Tam sư'",
-        text: "<p>Tứ kết World Cup 2026: Na Uy thách thức bản lĩnh 'Tam sư'</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_194_55597579/56309038c2732b2d7262.jpg",
+        desc: "Kết quả bóng đá World Cup 2026: Anh 2-1 Na Uy - Jude Bellingham đưa tuyển Anh vượt 'ải Haaland', thẳng đường vào bán kết",
+        text: "<p>Kết quả bóng đá World Cup 2026: Anh 2-1 Na Uy - Jude Bellingham đưa tuyển Anh vượt 'ải Haaland', thẳng đường vào bán kết</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 6500,
-        sourceUrl: "https://baomoi.com/tu-ket-world-cup-2026-na-uy-thach-thuc-ban-linh-tam-su-c55594264.epi"
+        sourceUrl: "https://baomoi.com/ket-qua-bong-da-world-cup-2026-anh-2-1-na-uy-jude-bellingham-dua-tuyen-anh-vuot-ai-haaland-thang-duong-vao-ban-ket-r55597579.epi",
+        publisher: "Báo Thế Giới & Việt Nam"
       },
       {
         id: 8,
-        title: "Đôi giày độc bản Ronaldo tặng 'fan cuồng'",
-        category: "Công nghệ",
+        title: "Anh chấm dứt 'lời nguyền'",
+        category: "Thể thao",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_119_55594044/7b23e07bb2305b6e0221.jpg",
-        desc: "Đôi giày độc bản Ronaldo tặng 'fan cuồng'",
-        text: "<p>Đôi giày độc bản Ronaldo tặng 'fan cuồng'</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_119_55597574/301cca14985f7101284e.jpg",
+        desc: "Anh chấm dứt 'lời nguyền'",
+        text: "<p>Anh chấm dứt 'lời nguyền'</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 6750,
-        sourceUrl: "https://baomoi.com/doi-giay-doc-ban-ronaldo-tang-fan-cuong-c55594044.epi"
+        sourceUrl: "https://baomoi.com/anh-cham-dut-loi-nguyen-88-nam-cua-brazil-r55597574.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 9,
-        title: "Cảnh 'anh em văn phòng' Argentina thư giãn gây bão mạng",
-        category: "Dịch vụ",
+        title: "Tại sao Na Uy được đá lại phạt góc dù Haaland phạm lỗi?",
+        category: "Giáo dục",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_119_55593827/2d5d8700d54b3c15655a.jpg",
-        desc: "Cảnh 'anh em văn phòng' Argentina thư giãn gây bão mạng",
-        text: "<p>Cảnh 'anh em văn phòng' Argentina thư giãn gây bão mạng</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_119_55597575/3447cf4f9d04745a2d15.jpg",
+        desc: "Tại sao Na Uy được đá lại phạt góc dù Haaland phạm lỗi?",
+        text: "<p>Tại sao Na Uy được đá lại phạt góc dù Haaland phạm lỗi?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 7000,
-        sourceUrl: "https://baomoi.com/canh-anh-em-van-phong-argentina-thu-gian-gay-bao-mang-c55593827.epi"
+        sourceUrl: "https://baomoi.com/tai-sao-na-uy-duoc-da-lai-phat-goc-du-haaland-pham-loi-r55597575.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 10,
-        title: "Điều gì tạo nên 'quái vật' Haaland?",
-        category: "Giải trí",
+        title: "Video Bellingham trêu Haaland hút gần 6 triệu lượt xem",
+        category: "Video",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_119_55593828/d4638147d30c3a52631d.jpg",
-        desc: "Điều gì tạo nên 'quái vật' Haaland?",
-        text: "<p>Điều gì tạo nên 'quái vật' Haaland?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_119_55597549/548a618533ceda9083df.jpg",
+        desc: "Video Bellingham trêu Haaland hút gần 6 triệu lượt xem",
+        text: "<p>Video Bellingham trêu Haaland hút gần 6 triệu lượt xem</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 7250,
-        sourceUrl: "https://baomoi.com/dieu-gi-tao-nen-quai-vat-haaland-c55593828.epi"
+        sourceUrl: "https://baomoi.com/video-bellingham-treu-haaland-hut-gan-6-trieu-luot-xem-r55597549.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 11,
-        title: "Truy tố 4 bị can trong vụ buôn lậu hơn 700 viên kim cương",
+        title: "Người bệnh hiểm nghèo, cấp cứu không cần giấy chuyển viện",
         category: "Sức khỏe",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_11_17_55593565/8997d6c7848c6dd2349d.jpg",
-        desc: "Truy tố 4 bị can trong vụ buôn lậu hơn 700 viên kim cương",
-        text: "<p>Truy tố 4 bị can trong vụ buôn lậu hơn 700 viên kim cương</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_294_55596869/c8948e93dcd835866cc9.jpg",
+        desc: "Người bệnh hiểm nghèo, cấp cứu không cần giấy chuyển viện",
+        text: "<p>Người bệnh hiểm nghèo, cấp cứu không cần giấy chuyển viện</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 7500,
-        sourceUrl: "https://baomoi.com/truy-to-4-bi-can-trong-vu-buon-lau-hon-700-vien-kim-cuong-c55593565.epi"
+        sourceUrl: "https://baomoi.com/nguoi-benh-hiem-ngheo-cap-cuu-khong-can-giay-chuyen-vien-r55596869.epi",
+        publisher: "Báo Tin Tức TTXVN"
       },
       {
         id: 12,
-        title: "Cô gái đi tìm tín vật tình yêu của người lính hy sinh",
+        title: "Anh em ruột ở Thanh Hóa xây nhà chung sân, chung cổng trên mảnh đất hơn 1.000m2",
         category: "Photo",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_11_119_55593366/218d28d87a9393cdca82.jpg",
-        desc: "Cô gái đi tìm tín vật tình yêu của người lính hy sinh",
-        text: "<p>Cô gái đi tìm tín vật tình yêu của người lính hy sinh</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_23_55596931/743af03aa2714b2f1260.jpg",
+        desc: "Anh em ruột ở Thanh Hóa xây nhà chung sân, chung cổng trên mảnh đất hơn 1.000m",
+        text: "<p>Anh em ruột ở Thanh Hóa xây nhà chung sân, chung cổng trên mảnh đất hơn 1.000m</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 7750,
-        sourceUrl: "https://baomoi.com/co-gai-di-tim-tin-vat-tinh-yeu-cua-nguoi-linh-hy-sinh-c55593366.epi"
+        sourceUrl: "https://baomoi.com/anh-em-ruot-o-thanh-hoa-xay-nha-chung-san-chung-cong-tren-manh-dat-hon-1-000m2-r55596931.epi",
+        publisher: "Báo VietnamNet"
       },
       {
         id: 13,
-        title: "Công ty taxi hàng không Beta hoàn tất các chuyến bay thử nghiệm đầu tiên",
-        category: "Quốc tế",
+        title: "CEO SK hynix cảnh báo khủng hoảng chip vào năm 2027",
+        category: "Photo",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_11_293_55592720/2c8798caca8123df7a90.jpg",
-        desc: "Công ty taxi hàng không Beta hoàn tất các chuyến bay thử nghiệm đầu tiên",
-        text: "<p>Công ty taxi hàng không Beta hoàn tất các chuyến bay thử nghiệm đầu tiên</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_294_55597217/f205e238b2735b2d0262.jpg",
+        desc: "CEO SK hynix cảnh báo khủng hoảng chip vào năm",
+        text: "<p>CEO SK hynix cảnh báo khủng hoảng chip vào năm</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 8000,
-        sourceUrl: "https://baomoi.com/cong-ty-taxi-hang-khong-beta-hoan-tat-cac-chuyen-bay-thu-nghiem-dau-tien-c55592720.epi"
+        sourceUrl: "https://baomoi.com/ceo-sk-hynix-canh-bao-khung-hoang-chip-vao-nam-2027-r55597217.epi",
+        publisher: "Báo Tin Tức TTXVN"
       },
       {
         id: 14,
-        title: "Trận Na Uy và Anh rơi vào tình trạng báo động",
-        category: "Infographic",
+        title: "Chuyện gì xảy ra với Volkswagen?",
+        category: "Dịch vụ",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_11_23_55593336/e1ac63f931b2d8ec81a3.jpg",
-        desc: "Trận Na Uy và Anh rơi vào tình trạng báo động",
-        text: "<p>Trận Na Uy và Anh rơi vào tình trạng báo động</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_119_55597655/01d5dddc8f9766c93f86.jpg",
+        desc: "Chuyện gì xảy ra với Volkswagen?",
+        text: "<p>Chuyện gì xảy ra với Volkswagen?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 8250,
-        sourceUrl: "https://baomoi.com/tran-na-uy-va-anh-roi-vao-tinh-trang-bao-dong-c55593336.epi"
+        sourceUrl: "https://baomoi.com/chuyen-gi-xay-ra-voi-volkswagen-r55597655.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 15,
-        title: "Việt Nam đạt thành tích cao nhất từ trước đến nay tại Olympic Vật lí quốc tế 2026",
+        title: "Top ghi bàn tại World Cup 2026: Bellingham bứt phá",
         category: "Quốc tế",
         date: "11/07/2026",
-        image: "data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==",
-        desc: "Việt Nam đạt thành tích cao nhất từ trước đến nay tại Olympic Vật lí quốc tế",
-        text: "<p>Việt Nam đạt thành tích cao nhất từ trước đến nay tại Olympic Vật lí quốc tế</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80",
+        desc: "Top ghi bàn tại World Cup 2026: Bellingham bứt phá",
+        text: "<p>Top ghi bàn tại World Cup 2026: Bellingham bứt phá</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 8500,
-        sourceUrl: "https://baomoi.com/viet-nam-dat-thanh-tich-cao-nhat-tu-truoc-den-nay-tai-olympic-vat-li-quoc-te-2026-c55594570.epi"
+        sourceUrl: "https://baomoi.com/top-ghi-ban-tai-world-cup-2026-bellingham-but-pha-r55440578.epi",
+        publisher: "Báo VietnamNet"
       },
       {
         id: 16,
-        title: "Vì sao nhà đầu tư chứng khoán đang 'lười' giao dịch?",
-        category: "Quốc tế",
+        title: "Lịch chốt quyền trả cổ tức bằng tiền tuần tới (từ 13-16/7): BDG trả cổ tức cao nhất 50%",
+        category: "Thời sự",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_83_55594048/5e333c6b6e20877ede31.jpg",
-        desc: "Vì sao nhà đầu tư chứng khoán đang 'lười' giao dịch?",
-        text: "<p>Vì sao nhà đầu tư chứng khoán đang 'lười' giao dịch?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_324_55597799/9455485e1a15f34baa04.jpg",
+        desc: "Lịch chốt quyền trả cổ tức bằng tiền tuần tới (từ 13-16/7): BDG trả cổ tức cao nhất 50%",
+        text: "<p>Lịch chốt quyền trả cổ tức bằng tiền tuần tới (từ 13-16/7): BDG trả cổ tức cao nhất 50%</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 8750,
-        sourceUrl: "https://baomoi.com/vi-sao-nha-dau-tu-chung-khoan-dang-luoi-giao-dich-c55594048.epi"
+        sourceUrl: "https://baomoi.com/lich-chot-quyen-tra-co-tuc-bang-tien-tuan-toi-tu-13-16-7-bdg-tra-co-tuc-cao-nhat-50-r55597799.epi",
+        publisher: "Bnews"
       },
       {
         id: 17,
-        title: "",
-        category: "Công nghệ",
+        title: "Bí quyết tăng trưởng của những doanh nghiệp dẫn đầu nền kinh tế thuê bao",
+        category: "Thế giới",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_20_55593955/7ebd65e337a8def687b9.jpg",
-        desc: "",
-        text: "<p></p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_341_55597771/b27d8977db3c32626b2d.jpg",
+        desc: "Bí quyết tăng trưởng của những doanh nghiệp dẫn đầu nền kinh tế thuê bao",
+        text: "<p>Bí quyết tăng trưởng của những doanh nghiệp dẫn đầu nền kinh tế thuê bao</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 9000,
-        sourceUrl: "https://baomoi.com/4-thang-nguoi-viet-chi-hon-10-000-ty-mua-sam-do-dien-tu-online-c55593955.epi"
+        sourceUrl: "https://baomoi.com/bi-quyet-tang-truong-cua-nhung-doanh-nghiep-dan-dau-nen-kinh-te-thue-bao-r55597771.epi",
+        publisher: "Tạp chí Thương Gia"
       },
       {
         id: 18,
-        title: "Tốc độ già hóa dân số nhanh chóng thay đổi gu chọn nhà của người Việt",
-        category: "Dịch vụ",
+        title: "[Cập nhật] KQKD ngân hàng",
+        category: "Tài chính",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_83_55593950/e6d8f486a6cd4f9316dc.jpg",
-        desc: "Tốc độ già hóa dân số nhanh chóng thay đổi gu chọn nhà của người Việt",
-        text: "<p>Tốc độ già hóa dân số nhanh chóng thay đổi gu chọn nhà của người Việt</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_365_55597688/db9eaf97fddc14824dcd.jpg",
+        desc: "[Cập nhật] KQKD ngân hàng",
+        text: "<p>[Cập nhật] KQKD ngân hàng</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 9250,
-        sourceUrl: "https://baomoi.com/toc-do-gia-hoa-dan-so-nhanh-chong-thay-doi-gu-chon-nha-cua-nguoi-viet-c55593950.epi"
+        sourceUrl: "https://baomoi.com/cap-nhat-kqkd-ngan-hang-6-thang-dau-nam-hai-nha-bang-co-loi-nhuan-tang-79-80-r55597688.epi",
+        publisher: "Tạp chí Doanh Nhân VN"
       },
       {
         id: 19,
-        title: "Nguồn cung văn phòng Hà Nội dồi dào, đón đầu làn sóng doanh nghiệp FDI",
-        category: "Giải trí",
+        title: "Chủ tịch DIC Group cùng người nhà bị bán giải chấp thêm cổ phiếu DIG",
+        category: "Công nghệ",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_324_55593855/3f0d48501a1bf345aa0a.jpg",
-        desc: "Nguồn cung văn phòng Hà Nội dồi dào, đón đầu làn sóng doanh nghiệp FDIBnews",
-        text: "<p>Nguồn cung văn phòng Hà Nội dồi dào, đón đầu làn sóng doanh nghiệp FDIBnews</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_365_55597705/51387d312f7ac6249f6b.jpg",
+        desc: "Chủ tịch DIC Group cùng người nhà bị bán giải chấp thêm cổ phiếu DIG",
+        text: "<p>Chủ tịch DIC Group cùng người nhà bị bán giải chấp thêm cổ phiếu DIG</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 9500,
-        sourceUrl: "https://baomoi.com/nguon-cung-van-phong-ha-noi-doi-dao-don-dau-lan-song-doanh-nghiep-fdi-c55593855.epi"
+        sourceUrl: "https://baomoi.com/chu-tich-dic-group-cung-nguoi-nha-bi-ban-giai-chap-them-co-phieu-dig-r55597705.epi",
+        publisher: "Tạp chí Doanh Nhân VN"
       },
       {
         id: 20,
-        title: "Mua được nhà chưa chắc đã hết áp lực: Điều nhiều gia đình chỉ nhận ra sau những tháng đầu trả góp",
-        category: "Sức khỏe",
+        title: "Tổng Giám đốc PNJ đăng ký mua 1 triệu cổ phiếu",
+        category: "Đời sống",
         date: "11/07/2026",
-        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_629_55593888/aa7750290262eb3cb273.jpg",
-        desc: "Mua được nhà chưa chắc đã hết áp lực: Điều nhiều gia đình chỉ nhận ra sau những tháng đầu trả góp",
-        text: "<p>Mua được nhà chưa chắc đã hết áp lực: Điều nhiều gia đình chỉ nhận ra sau những tháng đầu trả góp</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_365_55597706/7666446f1624ff7aa635.jpg",
+        desc: "Tổng Giám đốc PNJ đăng ký mua 1 triệu cổ phiếu",
+        text: "<p>Tổng Giám đốc PNJ đăng ký mua 1 triệu cổ phiếu</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 9750,
-        sourceUrl: "https://baomoi.com/mua-duoc-nha-chua-chac-da-het-ap-luc-dieu-nhieu-gia-dinh-chi-nhan-ra-sau-nhung-thang-dau-tra-gop-c55593888.epi"
+        sourceUrl: "https://baomoi.com/tong-giam-doc-pnj-dang-ky-mua-1-trieu-co-phieu-r55597706.epi",
+        publisher: "Tạp chí Doanh Nhân VN"
       },
       {
         id: 21,
-        title: "Lễ hội văn hóa dân gian Phố Hiến: Nét đẹp di sản tâm linh xứ nhãn Hưng Yên",
-        category: "Di tích",
-        date: "10/07/2026",
-        image: "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=800&q=80",
-        desc: "Lễ hội dân gian Phố Hiến tôn vinh những giá trị lịch sử độc đáo từ thời kỳ thương cảng sầm uất đệ nhị danh lam kinh kỳ Bắc Bộ.",
-        text: "<p><strong>Phố Hiến</strong> từng được mệnh danh là thương cảng sầm uất bậc nhất nước ta vào thế kỷ XVI-XVII... (xem chi tiết ở bản đồ văn hóa Hưng Yên)</p>",
+        title: "Argentina 1-0 Thụy Sĩ: Messi đi vào lịch sử",
+        category: "Văn hóa",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_119_55597331/63a13ddf6c9485cadc85.jpg",
+        desc: "Argentina 1-0 Thụy Sĩ: Messi đi vào lịch sử",
+        text: "<p>Argentina 1-0 Thụy Sĩ: Messi đi vào lịch sử</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 10000,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/argentina-1-0-thuy-si-messi-di-vao-lich-su-r55597331.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 22,
-        title: "Nhãn lồng tiến vua Hưng Yên: Tinh hoa đặc sản ngọt ngào nổi tiếng gần xa",
-        category: "Đặc sản",
-        date: "09/07/2026",
-        image: "https://images.unsplash.com/photo-1619890831007-aa154f36df27?auto=format&fit=crop&w=800&q=80",
-        desc: "Mùa nhãn chín rộ khắp các nhà vườn Hưng Yên, mang lại quả nhãn lồng cùi dày ngọt lịm danh bất hư truyền.",
-        text: "<p>Nói đến Hưng Yên không thể không nhắc đến nhãn lồng tiến vua...</p>",
+        title: "'Ông lớn' quốc phòng Ukraine cất giấu vũ khí gần khu dân cư",
+        category: "Giải trí",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_23_55597215/31d9dbd5899e60c0398f.jpg",
+        desc: "'Ông lớn' quốc phòng Ukraine cất giấu vũ khí gần khu dân cư",
+        text: "<p>'Ông lớn' quốc phòng Ukraine cất giấu vũ khí gần khu dân cư</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 10250,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/ong-lon-quoc-phong-ukraine-cat-giau-vu-khi-gan-khu-dan-cu-r55597215.epi",
+        publisher: "Báo VietnamNet"
       },
       {
         id: 23,
-        title: "Chùa Chuông Hưng Yên: Mệnh danh đệ nhất danh lam cổ kính xứ Bắc",
-        category: "Di tích",
-        date: "08/07/2026",
-        image: "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=800&q=80",
-        desc: "Chùa Chuông cổ kính mang vẻ tĩnh lặng uy nghiêm cùng hệ thống tượng Phật điêu khắc cực kỳ đặc sắc.",
-        text: "<p>Tọa lạc tại phường Hiến Nam, Chùa Chuông là đệ nhất danh lam của xứ Bắc...</p>",
+        title: "Siêu trộm khiến nhiều chủ biệt thự mất tiền tỷ mà không biết bị đột nhập",
+        category: "Thể thao",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_20_55597511/a13b29347b7f9221cb6e.jpg",
+        desc: "Siêu trộm khiến nhiều chủ biệt thự mất tiền tỷ mà không biết bị đột nhập",
+        text: "<p>Siêu trộm khiến nhiều chủ biệt thự mất tiền tỷ mà không biết bị đột nhập</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 10500,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/sieu-trom-khien-nhieu-chu-biet-thu-mat-tien-ty-ma-khong-biet-bi-dot-nhap-r55597511.epi",
+        publisher: "Báo Tiền Phong"
       },
       {
         id: 24,
-        title: "Đặc sản tương Bần Hưng Yên: Tinh hoa ẩm thực hồn quê Việt",
-        category: "Đặc sản",
-        date: "07/07/2026",
-        image: "https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&w=800&q=80",
-        desc: "Tương Bần Hưng Yên ngọt đậm, thơm bùi, là loại gia vị truyền thống chấm gì cũng ngon nổi tiếng từ xưa.",
-        text: "<p>Tương Bần Mỹ Hào được chế biến rất công phu và là niềm tự hào ẩm thực...</p>",
+        title: "An Giang báo cáo gì về vụ lật cano trên biển Phú Quốc?",
+        category: "Giáo dục",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_106_55597698/2d07650e3745de1b8754.jpg",
+        desc: "An Giang báo cáo gì về vụ lật cano trên biển Phú Quốc?",
+        text: "<p>An Giang báo cáo gì về vụ lật cano trên biển Phú Quốc?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 10750,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/an-giang-bao-cao-gi-ve-vu-lat-cano-tren-bien-phu-quoc-r55597698.epi",
+        publisher: "Chuyên trang An Ninh Thủ Đô - Báo Công an nhân dân"
       },
       {
         id: 25,
-        title: "Làng nghề làm hương trầm Thôn Cao nhộn nhịp những ngày giáp Tết",
-        category: "Làng nghề",
-        date: "06/07/2026",
-        image: "https://images.unsplash.com/photo-1508807526345-15e98834cca0?auto=format&fit=crop&w=800&q=80",
-        desc: "Làng nghề làm hương trầm Thôn Cao rực rỡ sắc đỏ vàng của các bó hương phơi nắng chuẩn bị cho vụ Tết.",
-        text: "<p>Hương trầm Thôn Cao nổi tiếng thơm thanh khiết tự nhiên và an toàn sức khỏe...</p>",
+        title: "Tranh cãi tuyển Anh ghi 'bàn thắng ma' loại Na Uy: FIFA minh oan cho trọng tài",
+        category: "Sức khỏe",
+        date: "11/07/2026",
+        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
+        desc: "Tranh cãi tuyển Anh ghi 'bàn thắng ma' loại Na Uy: FIFA minh oan cho trọng tài",
+        text: "<p>Tranh cãi tuyển Anh ghi 'bàn thắng ma' loại Na Uy: FIFA minh oan cho trọng tài</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 11000,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/tranh-cai-tuyen-anh-ghi-ban-thang-ma-loai-na-uy-fifa-minh-oan-cho-trong-tai-r55597472.epi",
+        publisher: "Báo VTC News"
       },
       {
         id: 26,
-        title: "Danh nhân y học Hải Thượng Lãn Ông Lê Hữu Trác và dấu ấn tại Hưng Yên",
-        category: "Danh nhân",
-        date: "05/07/2026",
-        image: "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=800&q=80",
-        desc: "Cuộc đời và sự nghiệp y đức cả của đại danh y Hải Thượng Lãn Ông Lê Hữu Trác gắn liền với quê hương Hưng Yên.",
-        text: "<p>Lê Hữu Trác sinh tại huyện Yên Mỹ, là ông tổ của đông y học cổ truyền Việt Nam...</p>",
+        title: "Định độc thân cả đời, cảnh sát Nhật đổi ý khi gặp cô gái Việt",
+        category: "Photo",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_119_55596977/e48cee8cbcc755990cd6.jpg",
+        desc: "Định độc thân cả đời, cảnh sát Nhật đổi ý khi gặp cô gái Việt",
+        text: "<p>Định độc thân cả đời, cảnh sát Nhật đổi ý khi gặp cô gái Việt</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 11250,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/dinh-doc-than-ca-doi-canh-sat-nhat-doi-y-khi-gap-co-gai-viet-r55596977.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 27,
-        title: "Khai mạc Lễ hội văn hóa truyền thống Phố Hiến năm 2026",
-        category: "Di tích",
-        date: "04/07/2026",
-        image: "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=800&q=80",
-        desc: "Lễ hội tái hiện không gian văn hóa cảng thị sầm uất xưa với nhiều trò chơi dân gian hấp dẫn.",
-        text: "<p>Tái hiện lại thương cảng sầm uất Phố Hiến cổ kính thời nhà Lê...</p>",
+        title: "Tạ Ngọc Minh (Trung học phổ thông Chuyên Bắc Ninh)- 'Chàng trai vàng' Olympic Vật lí quốc tế 2026",
+        category: "Video",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_411_55595717/ce472a4c78079159c816.jpg",
+        desc: "Tạ Ngọc Minh (Trung học phổ thông Chuyên Bắc Ninh)- 'Chàng trai vàng' Olympic Vật lí quốc tế 2026",
+        text: "<p>Tạ Ngọc Minh (Trung học phổ thông Chuyên Bắc Ninh)- 'Chàng trai vàng' Olympic Vật lí quốc tế 2026</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 11500,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/ta-ngoc-minh-trung-hoc-pho-thong-chuyen-bac-ninh-chang-trai-vang-olympic-vat-li-quoc-te-2026-r55595717.epi",
+        publisher: "Báo Bắc Ninh"
       },
       {
         id: 28,
-        title: "Hưng Yên đẩy mạnh chuyển đổi số trong phát triển vườn nhãn lồng đặc sản",
-        category: "Sức khỏe",
-        date: "03/07/2026",
-        image: "https://images.unsplash.com/photo-1619890831007-aa154f36df27?auto=format&fit=crop&w=800&q=80",
-        desc: "Ứng dụng quét mã QR truy xuất nguồn gốc và bán hàng thương mại điện tử giúp nhãn lồng nâng cao giá trị.",
-        text: "<p>Bà con Khoái Châu nhiệt liệt ứng dụng mã QR cho cây nhãn lồng...</p>",
+        title: "Làng đảo bình yên được nhiều người đến 'chữa lành', vé tàu ra thăm chỉ 5 nghìn đồng",
+        category: "Du lịch",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_94_55595128/d29c80b4d2ff3ba162ee.jpg",
+        desc: "Làng đảo bình yên được nhiều người đến 'chữa lành', vé tàu ra thăm chỉ 5 nghìn đồng",
+        text: "<p>Làng đảo bình yên được nhiều người đến 'chữa lành', vé tàu ra thăm chỉ 5 nghìn đồng</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 11750,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/lang-dao-binh-yen-duoc-nhieu-nguoi-den-chua-lanh-ve-tau-ra-tham-chi-5-nghin-dong-r55595128.epi",
+        publisher: "Báo Sức Khỏe & Đời Sống"
       },
       {
         id: 29,
-        title: "Chùm ảnh: Cánh đồng hoa cải Văn Giang rực rỡ sắc vàng mê đắm",
-        category: "Photo",
-        date: "02/07/2026",
-        image: "https://images.unsplash.com/photo-1536257130722-ea1c983d7365?auto=format&fit=crop&w=800&q=80",
-        desc: "Cánh đồng hoa cải vàng rực bên bờ sông Hồng trở thành địa điểm check-in lý tưởng hút hồn giới trẻ du lịch.",
-        text: "<p>Mỗi dịp đông về, cải vàng nở rực rỡ cả triền đê Văn Giang thơ mộng...</p>",
+        title: "Khách Ấn Độ quay lưng với Maldives để chọn Việt Nam",
+        category: "Dịch vụ",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_119_55593933/fe42c87d9a3673682a27.jpg",
+        desc: "Khách Ấn Độ quay lưng với Maldives để chọn Việt Nam",
+        text: "<p>Khách Ấn Độ quay lưng với Maldives để chọn Việt Nam</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 12000,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/khach-an-do-quay-lung-voi-maldives-de-chon-viet-nam-r55593933.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 30,
-        title: "Khám phá vẻ đẹp yên bình của Đền Mẫu Hưng Yên bên hồ Bán Nguyệt",
-        category: "Di tích",
-        date: "01/07/2026",
-        image: "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=800&q=80",
-        desc: "Đền Mẫu Hưng Yên nổi tiếng linh thiêng sơn thủy hữu tình giữa lòng thành phố Hưng Yên cổ kính.",
-        text: "<p>Đền Mẫu thờ Dương Quý Phi, toạ lạc cạnh hồ Bán Nguyệt lộng gió...</p>",
+        title: "Mẹ Hà Nội đưa con 'học hè'",
+        category: "Quốc tế",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_23_55591280/23732b01794a9014c95b.jpg",
+        desc: "Mẹ Hà Nội đưa con 'học hè'",
+        text: "<p>Mẹ Hà Nội đưa con 'học hè'</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 12250,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/me-ha-noi-dua-con-hoc-he-30-ngay-o-5-lang-chai-2-buon-lang-tay-nguyen-r55591280.epi",
+        publisher: "Báo VietnamNet"
       },
       {
         id: 31,
-        title: "Lễ dâng hương tưởng niệm các vị khoa bảng tại Văn Miếu Xích Đằng",
-        category: "Di tích",
-        date: "30/06/2026",
-        image: "https://images.unsplash.com/photo-1590001155093-a3c66ab0c3ff?auto=format&fit=crop&w=800&q=80",
-        desc: "Hoạt động ý nghĩa nhằm tôn vinh truyền thống hiếu học và khoa bảng vẻ vang của quê hương Hưng Yên.",
-        text: "<p>Tôn vinh 9 bia tiến sĩ khoa bảng lừng lẫy tại Văn Miếu Xích Đằng...</p>",
+        title: "Đưa 70 du khách từ Hòn Mây Rút Ngoài về đảo Phú Quốc an toàn",
+        category: "Thời sự",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_119_55597767/42ff77f525becce095af.jpg",
+        desc: "Đưa 70 du khách từ Hòn Mây Rút Ngoài về đảo Phú Quốc an toàn",
+        text: "<p>Đưa 70 du khách từ Hòn Mây Rút Ngoài về đảo Phú Quốc an toàn</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 12500,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/dua-70-du-khach-tu-hon-may-rut-ngoai-ve-dao-phu-quoc-an-toan-r55597767.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 32,
-        title: "Cách làm long nhãn sấy khô truyền thống của người dân Phố Hiến",
-        category: "Đặc sản",
-        date: "29/06/2026",
-        image: "https://images.unsplash.com/photo-1619890831007-aa154f36df27?auto=format&fit=crop&w=800&q=80",
-        desc: "Bí quyết lựa chọn trái nhãn tươi, tách cùi sấy khô bằng lửa củi để giữ hương thơm đặc trưng.",
-        text: "<p>Sấy long nhãn bằng lửa củi giúp hương thơm giữ được bền lâu dịu nhẹ...</p>",
+        title: "Xử phạt một công ty bảo hiểm vì hành vi cạnh tranh không lành mạnh",
+        category: "Thế giới",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_106_55597668/4a6f9c66ce2d27737e3c.jpg",
+        desc: "Xử phạt một công ty bảo hiểm vì hành vi cạnh tranh không lành mạnh",
+        text: "<p>Xử phạt một công ty bảo hiểm vì hành vi cạnh tranh không lành mạnh</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 12750,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/xu-phat-mot-cong-ty-bao-hiem-vi-hanh-vi-canh-tranh-khong-lanh-manh-r55597668.epi",
+        publisher: "Chuyên trang An Ninh Thủ Đô - Báo Công an nhân dân"
       },
       {
         id: 33,
-        title: "Thưởng thức món ếch om Phượng Tường - Đặc sản tiến vua độc đáo",
-        category: "Đặc sản",
-        date: "28/06/2026",
-        image: "https://images.unsplash.com/photo-1619890831007-aa154f36df27?auto=format&fit=crop&w=800&q=80",
-        desc: "Hương vị béo ngọt của thịt ếch đồng hòa quyện với nước dùng sánh đặc kiểu truyền thống độc nhất vô nhị.",
-        text: "<p>Món ăn tiến vua trứ danh vùng Phượng Tường Khoái Châu...</p>",
+        title: "Haaland chịu thua ở cuộc đua Vua phá lưới World Cup 2026",
+        category: "Tài chính",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_106_55597582/ccba16b244f9ada7f4e8.jpg",
+        desc: "Haaland chịu thua ở cuộc đua Vua phá lưới World Cup",
+        text: "<p>Haaland chịu thua ở cuộc đua Vua phá lưới World Cup</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 13000,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/haaland-chiu-thua-o-cuoc-dua-vua-pha-luoi-world-cup-2026-r55597582.epi",
+        publisher: "Chuyên trang An Ninh Thủ Đô - Báo Công an nhân dân"
       },
       {
         id: 34,
-        title: "Chả gà Tiểu Quan - Món ăn truyền thống nức tiếng vùng đất Hưng Yên",
-        category: "Đặc sản",
-        date: "27/06/2026",
-        image: "https://images.unsplash.com/photo-1619890831007-aa154f36df27?auto=format&fit=crop&w=800&q=80",
-        desc: "Chả gà giã tay nướng bằng than hoa thơm lừng, dai giòn đậm đà, món ăn không thể thiếu trên mâm cỗ.",
-        text: "<p>Chả gà Tiểu Quan nướng than hoa thơm nức mũi ngày Tết đoàn viên...</p>",
+        title: "FIFA tung bằng chứng bàn thắng của Bellingham hợp lệ",
+        category: "Công nghệ",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_119_55597555/414f0640540bbd55e41a.jpg",
+        desc: "FIFA tung bằng chứng bàn thắng của Bellingham hợp lệ",
+        text: "<p>FIFA tung bằng chứng bàn thắng của Bellingham hợp lệ</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 13250,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/fifa-tung-bang-chung-ban-thang-cua-bellingham-hop-le-r55597555.epi",
+        publisher: "Tạp chí Tri thức"
       },
       {
         id: 35,
-        title: "Làng nghề đúc đồng Lộng Thượng giữ lửa nghề truyền thống trăm năm",
-        category: "Làng nghề",
-        date: "26/06/2026",
-        image: "https://images.unsplash.com/photo-1508807526345-15e98834cca0?auto=format&fit=crop&w=800&q=80",
-        desc: "Các nghệ nhân làng nghề đúc đồng Lộng Thượng tỉ mẩn thổi hồn vào từng sản phẩm đồng mỹ nghệ tinh xảo.",
-        text: "<p>Nghề đúc đồng cổ truyền gìn giữ tinh hoa rèn đúc hàng trăm năm qua...</p>",
+        title: "Mảnh đất cỏ tự nhiên của sân từ trận chung kết 'World Cup 2026' được bán với giá 450 đô la Mỹ",
+        category: "Photo",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_176_55597812/d8175b1c0957e009b946.jpg",
+        desc: "Mảnh đất cỏ tự nhiên của sân từ trận chung kết 'World Cup 2026' được bán với giá 450 đô la Mỹ",
+        text: "<p>Mảnh đất cỏ tự nhiên của sân từ trận chung kết 'World Cup 2026' được bán với giá 450 đô la Mỹ</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 13500,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/manh-dat-co-tu-nhien-cua-san-tu-tran-chung-ket-world-cup-2026-duoc-ban-voi-gia-450-do-la-my-r55597812.epi",
+        publisher: "Chuyên trang Sinh viên Việt Nam - Báo Tiền Phong"
       },
       {
         id: 36,
-        title: "Khai trương tuyến phố đi bộ Phố Hiến phục vụ người dân và du khách",
-        category: "Di tích",
-        date: "25/06/2026",
-        image: "https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80",
-        desc: "Không gian đi bộ mới tại Phố Cổ Hiến Nam mang lại nhiều hoạt động vui chơi giải trí lành mạnh dịp cuối tuần.",
-        text: "<p>Mở tuyến phố đi bộ giúp tăng thêm hoạt động kinh doanh mua bán địa phương...</p>",
+        title: "Motorola Edge 70 Max có thể là 'flagship killer' đáng chờ nhất năm nay",
+        category: "Văn hóa",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_296_55596775/01538f55dd1e34406d0f.jpg",
+        desc: "Motorola Edge 70 Max có thể là 'flagship killer' đáng chờ nhất năm nay",
+        text: "<p>Motorola Edge 70 Max có thể là 'flagship killer' đáng chờ nhất năm nay</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 13750,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/motorola-edge-70-max-co-the-la-flagship-killer-dang-cho-nhat-nam-nay-r55596775.epi",
+        publisher: "Tạp chí Người Đưa Tin"
       },
       {
         id: 37,
-        title: "Bánh răng bừa Thiên Phiến: Thức quà quê giản dị nức lòng người xứ Nhãn",
-        category: "Đặc sản",
-        date: "24/06/2026",
-        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
-        desc: "Chiếc bánh lá tẻ mộc mạc thơm dẻo mùi bột tẻ cùng nhân thịt mộc nhĩ giòn bùi làm say đắm lòng thực khách.",
-        text: "<p>Bánh răng bừa bột gạo tẻ gói lá dong thơm ngon nổi tiếng...</p>",
+        title: "FIFA bán mảnh cỏ sân chung kết World Cup 2026 với giá đắt đỏ",
+        category: "Photo",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_125_55596634/2a0e590a0b41e21fbb50.jpg",
+        desc: "FIFA bán mảnh cỏ sân chung kết World Cup 2026 với giá đắt đỏ",
+        text: "<p>FIFA bán mảnh cỏ sân chung kết World Cup 2026 với giá đắt đỏ</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 14000,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/fifa-ban-manh-co-san-chung-ket-world-cup-2026-voi-gia-dat-do-r55596634.epi",
+        publisher: "Báo Văn hóa"
       },
       {
         id: 38,
-        title: "Làng nghề làm nón lá Nghĩa Trụ nhộn nhịp quanh năm giữ gìn nét duyên Việt",
-        category: "Làng nghề",
-        date: "23/06/2026",
-        image: "https://images.unsplash.com/photo-1508807526345-15e98834cca0?auto=format&fit=crop&w=800&q=80",
-        desc: "Làng Nghĩa Trụ, Văn Giang lưu giữ nghề làm nón lá truyền thống hàng trăm năm, tôn vinh chiếc nón duyên dáng Việt Nam.",
-        text: "<p>Khâu nón lá Nghĩa Trụ che nắng che mưa mộc mạc duyên dáng...</p>",
+        title: "Trung Quốc siết quản lý AI đồng hành: Giải pháp công nghệ hay bài toán xã hội?",
+        category: "Thể thao",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_294_55596103/780fb732e5790c275568.jpg",
+        desc: "Trung Quốc siết quản lý AI đồng hành: Giải pháp công nghệ hay bài toán xã hội?",
+        text: "<p>Trung Quốc siết quản lý AI đồng hành: Giải pháp công nghệ hay bài toán xã hội?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 14250,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/trung-quoc-siet-quan-ly-ai-dong-hanh-giai-phap-cong-nghe-hay-bai-toan-xa-hoi-r55596103.epi",
+        publisher: "Báo Tin Tức TTXVN"
       },
       {
         id: 39,
-        title: "Tác dụng bảo vệ tim mạch và bổ máu bất ngờ từ đặc sản hạt sen Hưng Yên",
-        category: "Sức khỏe",
-        date: "22/06/2026",
-        image: "https://images.unsplash.com/photo-1619890831007-aa154f36df27?auto=format&fit=crop&w=800&q=80",
-        desc: "Nghiên cứu y học cho thấy hạt sen khô đất nhãn giàu chất chống oxy hóa, hỗ trợ giấc ngủ và bảo vệ tim mạch rất tốt.",
-        text: "<p>Hạt sen bổ khí huyết, an thần ngủ cực ngon bùi mát bổ dưỡng...</p>",
+        title: "Apple kiện OpenAI đánh cắp bí mật thương mại",
+        category: "Giáo dục",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_600_55595828/4d6ea95cfb1712494b06.jpg",
+        desc: "Apple kiện OpenAI đánh cắp bí mật thương mại",
+        text: "<p>Apple kiện OpenAI đánh cắp bí mật thương mại</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
         isHot: false,
         views: 14500,
-        sourceUrl: ""
+        sourceUrl: "https://baomoi.com/apple-kien-openai-danh-cap-bi-mat-thuong-mai-r55595828.epi",
+        publisher: "Đài Phát thanh và truyền hình Hà Nội"
       },
       {
         id: 40,
+        title: "Lùm xùm tranh cãi giữa Apple và OpenAI",
+        category: "Sức khỏe",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_11_194_55595638/2c18522f0064e93ab075.jpg",
+        desc: "Lùm xùm tranh cãi giữa Apple và OpenAI",
+        text: "<p>Lùm xùm tranh cãi giữa Apple và OpenAI</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 14750,
+        sourceUrl: "https://baomoi.com/lum-xum-tranh-cai-giua-apple-va-openai-r55595638.epi",
+        publisher: "Báo Thế Giới & Việt Nam"
+      },
+      {
+        id: 41,
+        title: "Thí sinh thấy gian lận thi cử nhưng không tố cáo trực tiếp thì có vi phạm pháp luật?",
+        category: "Photo",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_176_55597654/50d3a9dafb9112cf4b80.jpg",
+        desc: "Thí sinh thấy gian lận thi cử nhưng không tố cáo trực tiếp thì có vi phạm pháp luật?",
+        text: "<p>Thí sinh thấy gian lận thi cử nhưng không tố cáo trực tiếp thì có vi phạm pháp luật?</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 15000,
+        sourceUrl: "https://baomoi.com/thi-sinh-thay-gian-lan-thi-cu-nhung-khong-to-cao-truc-tiep-thi-co-vi-pham-phap-luat-r55597654.epi",
+        publisher: "Chuyên trang Sinh viên Việt Nam - Báo Tiền Phong"
+      },
+      {
+        id: 42,
+        title: "Ra mắt hai dự án an sinh dành cho người già neo đơn",
+        category: "Video",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_125_55597732/2d25f92fab64423a1b75.jpg",
+        desc: "Ra mắt hai dự án an sinh dành cho người già neo đơn",
+        text: "<p>Ra mắt hai dự án an sinh dành cho người già neo đơn</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 15250,
+        sourceUrl: "https://baomoi.com/ra-mat-hai-du-an-an-sinh-danh-cho-nguoi-gia-neo-don-r55597732.epi",
+        publisher: "Báo Văn hóa"
+      },
+      {
+        id: 43,
+        title: "Quá tải kéo dài, bệnh viện tỉnh tuyến cuối đề xuất tăng giường bệnh",
+        category: "Sức khỏe",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_293_55597718/d3a5cbac99e770b929f6.jpg",
+        desc: "Quá tải kéo dài, bệnh viện tỉnh tuyến cuối đề xuất tăng giường bệnh",
+        text: "<p>Quá tải kéo dài, bệnh viện tỉnh tuyến cuối đề xuất tăng giường bệnh</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 15500,
+        sourceUrl: "https://baomoi.com/qua-tai-keo-dai-benh-vien-tinh-tuyen-cuoi-de-xuat-tang-giuong-benh-r55597718.epi",
+        publisher: "Báo VietnamPlus"
+      },
+      {
+        id: 44,
+        title: "Quảng Ninh xúc tiến du lịch tại Nga, ký thêm 20 biên bản ghi nhớ hợp tác",
+        category: "Dịch vụ",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_194_55597721/f8be09b45bffb2a1ebee.jpg",
+        desc: "Quảng Ninh xúc tiến du lịch tại Nga, ký thêm 20 biên bản ghi nhớ hợp tác",
+        text: "<p>Quảng Ninh xúc tiến du lịch tại Nga, ký thêm 20 biên bản ghi nhớ hợp tác</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 15750,
+        sourceUrl: "https://baomoi.com/quang-ninh-xuc-tien-du-lich-tai-nga-ky-them-20-bien-ban-ghi-nho-hop-tac-r55597721.epi",
+        publisher: "Báo Thế Giới & Việt Nam"
+      },
+      {
+        id: 45,
+        title: "N'Golo Kante đã lặng lẽ 'biến mất' khỏi World Cup 2026",
+        category: "Quốc tế",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w250_r3x2/2026_07_12_294_55597752/2afa4bf019bbf0e5a9aa.jpg",
+        desc: "N'Golo Kante đã lặng lẽ 'biến mất' khỏi World Cup",
+        text: "<p>N'Golo Kante đã lặng lẽ 'biến mất' khỏi World Cup</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 16000,
+        sourceUrl: "https://baomoi.com/n-golo-kante-da-lang-le-bien-mat-khoi-world-cup-2026-r55597752.epi",
+        publisher: "Báo Tin Tức TTXVN"
+      },
+      {
+        id: 46,
+        title: "BMW vượt Tesla, giành lại vị trí số 2 xe điện tại Đức",
+        category: "Thời sự",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_324_55597602/fa3e9936cb7d22237b6c.jpg",
+        desc: "BMW vượt Tesla, giành lại vị trí số 2 xe điện tại ĐứcBnews",
+        text: "<p>BMW vượt Tesla, giành lại vị trí số 2 xe điện tại ĐứcBnews</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 16250,
+        sourceUrl: "https://baomoi.com/bmw-vuot-tesla-gianh-lai-vi-tri-so-2-xe-dien-tai-duc-r55597602.epi",
+        publisher: "Bnews"
+      },
+      {
+        id: 47,
+        title: "Trang bị vượt SH, xe ga 160cc của Honda giá 45 triệu đồng thiết kế sắc nét, trang bị đẳng cấp, rẻ hơn Air Blade",
+        category: "Thế giới",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_91_55597405/295ae454b61f5f41060e.jpg",
+        desc: "Trang bị vượt SH, xe ga 160cc của Honda giá 45 triệu đồng thiết kế sắc nét, trang bị đẳng cấp, rẻ hơn Air Blade",
+        text: "<p>Trang bị vượt SH, xe ga 160cc của Honda giá 45 triệu đồng thiết kế sắc nét, trang bị đẳng cấp, rẻ hơn Air Blade</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 16500,
+        sourceUrl: "https://baomoi.com/trang-bi-vuot-sh-xe-ga-160cc-cua-honda-gia-45-trieu-dong-thiet-ke-sac-net-trang-bi-dang-cap-re-hon-air-blade-r55597405.epi",
+        publisher: "Chuyên trang Gia Đình & Xã Hội - Báo Sức khỏe & Đời sống"
+      },
+      {
+        id: 48,
+        title: "Nio ES8 bản 5 chỗ: Tối ưu không gian và chiến lược giá trong phân khúc SUV điện hạng sang",
+        category: "Tài chính",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_419_55597366/b00461093342da1c8353.jpg",
+        desc: "Nio ES8 bản 5 chỗ: Tối ưu không gian và chiến lược giá trong phân khúc SUV điện hạng sang",
+        text: "<p>Nio ES8 bản 5 chỗ: Tối ưu không gian và chiến lược giá trong phân khúc SUV điện hạng sang</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 16750,
+        sourceUrl: "https://baomoi.com/nio-es8-ban-5-cho-toi-uu-khong-gian-va-chien-luoc-gia-trong-phan-khuc-suv-dien-hang-sang-r55597366.epi",
+        publisher: "Báo Đà Nẵng"
+      },
+      {
+        id: 49,
+        title: "Giải mã Nio ES8 phiên bản 5 chỗ: Chiến lược tối ưu không gian và giá bán của hãng xe điện Trung Quốc",
+        category: "Công nghệ",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_439_55597327/b00461093342da1c8353.jpg",
+        desc: "Giải mã Nio ES8 phiên bản 5 chỗ: Chiến lược tối ưu không gian và giá bán của hãng xe điện Trung Quốc",
+        text: "<p>Giải mã Nio ES8 phiên bản 5 chỗ: Chiến lược tối ưu không gian và giá bán của hãng xe điện Trung Quốc</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 17000,
+        sourceUrl: "https://baomoi.com/giai-ma-nio-es8-phien-ban-5-cho-chien-luoc-toi-uu-khong-gian-va-gia-ban-cua-hang-xe-dien-trung-quoc-r55597327.epi",
+        publisher: "Báo Lâm Đồng"
+      },
+      {
+        id: 50,
+        title: "1,6 triệu tài xế thua kiện khi cáo buộc hãng xe lắp thiết bị gian lận khí thải",
+        category: "Đời sống",
+        date: "11/07/2026",
+        image: "https://photo-baomoi.bmcdn.me/w500_r3x2/2026_07_12_23_55597042/a6b99bb8c9f320ad79e2.jpg",
+        desc: "1,6 triệu tài xế thua kiện khi cáo buộc hãng xe lắp thiết bị gian lận khí thải",
+        text: "<p>1,6 triệu tài xế thua kiện khi cáo buộc hãng xe lắp thiết bị gian lận khí thải</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
+        isHot: false,
+        views: 17250,
+        sourceUrl: "https://baomoi.com/1-6-trieu-tai-xe-thua-kien-khi-cao-buoc-hang-xe-lap-thiet-bi-gian-lan-khi-thai-r55597042.epi",
+        publisher: "Báo VietnamNet"
+      },
+      {
+        id: 51,
+        title: "Lễ hội văn hóa dân gian Phố Hiến: Nét đẹp di sản tâm linh xứ nhãn Hưng Yên",
+        category: "Di tích",
+        date: "10/07/2026",
+        image: "images/pho_hien_aerial.jpg",
+        desc: "Lễ hội dân gian Phố Hiến tôn vinh những giá trị lịch sử độc đáo từ thời kỳ thương cảng sầm uất đệ nhị danh lam kinh kỳ Bắc Bộ.",
+        text: "<p><strong>Phố Hiến</strong> từng được mệnh danh là thương cảng sầm uất bậc nhất nước ta vào thế kỷ XVI-XVII... (xem chi tiết ở bản đồ văn hóa Hưng Yên)</p>",
+        isHot: false,
+        views: 17500,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 52,
+        title: "Nhãn lồng tiến vua Hưng Yên: Tinh hoa đặc sản ngọt ngào nổi tiếng gần xa",
+        category: "Đặc sản",
+        date: "09/07/2026",
+        image: "images/longan_fruit.jpg",
+        desc: "Mùa nhãn chín rộ khắp các nhà vườn Hưng Yên, mang lại quả nhãn lồng cùi dày ngọt lịm danh bất hư truyền.",
+        text: "<p>Nói đến Hưng Yên không thể không nhắc đến nhãn lồng tiến vua...</p>",
+        isHot: false,
+        views: 17750,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 53,
+        title: "Chùa Chuông Hưng Yên: Mệnh danh đệ nhất danh lam cổ kính xứ Bắc",
+        category: "Di tích",
+        date: "08/07/2026",
+        image: "images/temple.jpg",
+        desc: "Chùa Chuông cổ kính mang vẻ tĩnh lặng uy nghiêm cùng hệ thống tượng Phật điêu khắc cực kỳ đặc sắc.",
+        text: "<p>Tọa lạc tại phường Hiến Nam, Chùa Chuông là đệ nhất danh lam của xứ Bắc...</p>",
+        isHot: false,
+        views: 18000,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 54,
+        title: "Đặc sản tương Bần Hưng Yên: Tinh hoa ẩm thực hồn quê Việt",
+        category: "Đặc sản",
+        date: "07/07/2026",
+        image: "images/soy_sauce.jpg",
+        desc: "Tương Bần Hưng Yên ngọt đậm, thơm bùi, là loại gia vị truyền thống chấm gì cũng ngon nổi tiếng từ xưa.",
+        text: "<p>Tương Bần Mỹ Hào được chế biến rất công phu và là niềm tự hào ẩm thực...</p>",
+        isHot: false,
+        views: 18250,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 55,
+        title: "Làng nghề làm hương trầm Thôn Cao nhộn nhịp những ngày giáp Tết",
+        category: "Làng nghề",
+        date: "06/07/2026",
+        image: "images/incense_drying.jpg",
+        desc: "Làng nghề làm hương trầm Thôn Cao rực rỡ sắc đỏ vàng của các bó hương phơi nắng chuẩn bị cho vụ Tết.",
+        text: "<p>Hương trầm Thôn Cao nổi tiếng thơm thanh khiết tự nhiên và an toàn sức khỏe...</p>",
+        isHot: false,
+        views: 18500,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 56,
+        title: "Danh nhân y học Hải Thượng Lãn Ông Lê Hữu Trác và dấu ấn tại Hưng Yên",
+        category: "Danh nhân",
+        date: "05/07/2026",
+        image: "images/banyan_tree.jpg",
+        desc: "Cuộc đời và sự nghiệp y đức cả của đại danh y Hải Thượng Lãn Ông Lê Hữu Trác gắn liền với quê hương Hưng Yên.",
+        text: "<p>Lê Hữu Trác sinh tại huyện Yên Mỹ, là ông tổ của đông y học cổ truyền Việt Nam...</p>",
+        isHot: false,
+        views: 18750,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 57,
+        title: "Khai mạc Lễ hội văn hóa truyền thống Phố Hiến năm 2026",
+        category: "Di tích",
+        date: "04/07/2026",
+        image: "https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?auto=format&fit=crop&w=800&q=80",
+        desc: "Lễ hội tái hiện không gian văn hóa cảng thị sầm uất xưa với nhiều trò chơi dân gian hấp dẫn.",
+        text: "<p>Tái hiện lại thương cảng sầm uất Phố Hiến cổ kính thời nhà Lê...</p>",
+        isHot: false,
+        views: 19000,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 58,
+        title: "Hưng Yên đẩy mạnh chuyển đổi số trong phát triển vườn nhãn lồng đặc sản",
+        category: "Sức khỏe",
+        date: "03/07/2026",
+        image: "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=800&q=80",
+        desc: "Ứng dụng quét mã QR truy xuất nguồn gốc và bán hàng thương mại điện tử giúp nhãn lồng nâng cao giá trị.",
+        text: "<p>Bà con Khoái Châu nhiệt liệt ứng dụng mã QR cho cây nhãn lồng...</p>",
+        isHot: false,
+        views: 19250,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 59,
+        title: "Chùm ảnh: Cánh đồng hoa cải Văn Giang rực rỡ sắc vàng mê đắm",
+        category: "Photo",
+        date: "02/07/2026",
+        image: "images/canola_field.jpg",
+        desc: "Cánh đồng hoa cải vàng rực bên bờ sông Hồng trở thành địa điểm check-in lý tưởng hút hồn giới trẻ du lịch.",
+        text: "<p>Mỗi dịp đông về, cải vàng nở rực rỡ cả triền đê Văn Giang thơ mộng...</p>",
+        isHot: false,
+        views: 19500,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 60,
+        title: "Khám phá vẻ đẹp yên bình của Đền Mẫu Hưng Yên bên hồ Bán Nguyệt",
+        category: "Di tích",
+        date: "01/07/2026",
+        image: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+        desc: "Đền Mẫu Hưng Yên nổi tiếng linh thiêng sơn thủy hữu tình giữa lòng thành phố Hưng Yên cổ kính.",
+        text: "<p>Đền Mẫu thờ Dương Quý Phi, toạ lạc cạnh hồ Bán Nguyệt lộng gió...</p>",
+        isHot: false,
+        views: 19750,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 61,
+        title: "Lễ dâng hương tưởng niệm các vị khoa bảng tại Văn Miếu Xích Đằng",
+        category: "Di tích",
+        date: "30/06/2026",
+        image: "https://images.unsplash.com/photo-1624413697926-d66a6a57cf01?auto=format&fit=crop&w=800&q=80",
+        desc: "Hoạt động ý nghĩa nhằm tôn vinh truyền thống hiếu học và khoa bảng vẻ vang của quê hương Hưng Yên.",
+        text: "<p>Tôn vinh 9 bia tiến sĩ khoa bảng lừng lẫy tại Văn Miếu Xích Đằng...</p>",
+        isHot: false,
+        views: 20000,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 62,
+        title: "Cách làm long nhãn sấy khô truyền thống của người dân Phố Hiến",
+        category: "Đặc sản",
+        date: "29/06/2026",
+        image: "https://images.unsplash.com/photo-1596003906949-67221c37965c?auto=format&fit=crop&w=800&q=80",
+        desc: "Bí quyết lựa chọn trái nhãn tươi, tách cùi sấy khô bằng lửa củi để giữ hương thơm đặc trưng.",
+        text: "<p>Sấy long nhãn bằng lửa củi giúp hương thơm giữ được bền lâu dịu nhẹ...</p>",
+        isHot: false,
+        views: 20250,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 63,
+        title: "Thưởng thức món ếch om Phượng Tường - Đặc sản tiến vua độc đáo",
+        category: "Đặc sản",
+        date: "28/06/2026",
+        image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",
+        desc: "Hương vị béo ngọt của thịt ếch đồng hòa quyện với nước dùng sánh đặc kiểu truyền thống độc nhất vô nhị.",
+        text: "<p>Món ăn tiến vua trứ danh vùng Phượng Tường Khoái Châu...</p>",
+        isHot: false,
+        views: 20500,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 64,
+        title: "Thưởng thức món chả gà Tiểu Quan - Đặc sản tiến vua nổi tiếng",
+        category: "Đặc sản",
+        date: "27/06/2026",
+        image: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=800&q=80",
+        desc: "Chả gà giã tay nướng bằng than hoa thơm lừng, dai giòn đậm đà, món ăn không thể thiếu trên mâm cỗ.",
+        text: "<p>Chả gà Tiểu Quan nướng than hoa thơm nức mũi ngày Tết đoàn viên...</p>",
+        isHot: false,
+        views: 20750,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 65,
+        title: "Làng nghề đúc đồng Lộng Thượng giữ lửa nghề truyền thống trăm năm",
+        category: "Làng nghề",
+        date: "26/06/2026",
+        image: "https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=800&q=80",
+        desc: "Các nghệ nhân làng nghề đúc đồng Lộng Thượng tỉ mẩn thổi hồn vào từng sản phẩm đồng mỹ nghệ tinh xảo.",
+        text: "<p>Nghề đúc đồng cổ truyền gìn giữ tinh hoa rèn đúc hàng trăm năm qua...</p>",
+        isHot: false,
+        views: 21000,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 66,
+        title: "Khai trương tuyến phố đi bộ Phố Hiến phục vụ người dân và du khách",
+        category: "Di tích",
+        date: "25/06/2026",
+        image: "https://images.unsplash.com/photo-1568090547743-ccdbca01ef2b?auto=format&fit=crop&w=800&q=80",
+        desc: "Không gian đi bộ mới tại Phố Cổ Hiến Nam mang lại nhiều hoạt động vui chơi giải trí lành mạnh dịp cuối tuần.",
+        text: "<p>Mở tuyến phố đi bộ giúp tăng thêm hoạt động kinh doanh mua bán địa phương...</p>",
+        isHot: false,
+        views: 21250,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 67,
+        title: "Bánh răng bừa Thiên Phiến: Thức quà quê giản dị nức lòng người xứ Nhãn",
+        category: "Đặc sản",
+        date: "24/06/2026",
+        image: "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&w=800&q=80",
+        desc: "Chiếc bánh lá tẻ mộc mạc thơm dẻo mùi bột tẻ cùng nhân thịt mộc nhĩ giòn bùi làm say đắm lòng thực khách.",
+        text: "<p>Bánh răng bừa bột gạo tẻ gói lá dong thơm ngon nổi tiếng...</p>",
+        isHot: false,
+        views: 21500,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 68,
+        title: "Làng nghề làm nón lá Nghĩa Trụ nhộn nhịp quanh năm giữ gìn nét duyên Việt",
+        category: "Làng nghề",
+        date: "23/06/2026",
+        image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80",
+        desc: "Làng Nghĩa Trụ, Văn Giang lưu giữ nghề làm nón lá truyền thống hàng trăm năm, tôn vinh chiếc nón duyên dáng Việt Nam.",
+        text: "<p>Khâu nón lá Nghĩa Trụ che nắng che mưa mộc mạc duyên dáng...</p>",
+        isHot: false,
+        views: 21750,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 69,
+        title: "Tác dụng bảo vệ tim mạch và bổ máu bất ngờ từ đặc sản hạt sen Hưng Yên",
+        category: "Sức khỏe",
+        date: "22/06/2026",
+        image: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=80",
+        desc: "Nghiên cứu y học cho thấy hạt sen khô đất nhãn giàu chất chống oxy hóa, hỗ trợ giấc ngủ và bảo vệ tim mạch rất tốt.",
+        text: "<p>Hạt sen bổ khí huyết, an thần ngủ cực ngon bùi mát bổ dưỡng...</p>",
+        isHot: false,
+        views: 22000,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
+      },
+      {
+        id: 70,
         title: "Vẻ đẹp thanh bình của làng cổ Đông Hòa những ngày nắng đẹp",
         category: "Photo",
         date: "21/06/2026",
-        image: "https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
         desc: "Mái ngói rêu phong, con đường gạch đỏ xưa cũ và giếng nước gốc đa bình yên của làng quê Hưng Yên.",
         text: "<p>Nhịp sống thanh bình làng quê cổ Kinh Bắc xưa cũ...</p>",
         isHot: false,
-        views: 14750,
-        sourceUrl: ""
+        views: 22250,
+        sourceUrl: "",
+        publisher: "Ban biên tập"
       }
     ];
     // --------------------------------------------------
-    // APP STATE & ROUTING
+
+
+
+    // APP STATE & ROUHƯNG YÊNG
+
+
+
     // --------------------------------------------------
+
+
+
     let currentTheme = localStorage.getItem('theme') || 'light';
+
+
+
     let activeMultiTab = 'Photo';
+
+
+
     
+
+
+
     // Set Dynamic Date in Top Header
+
+
+
     function updateHeaderDate() {
+
+
+
       const dateEl = document.getElementById('current-date');
+
+
+
       const months = ['tháng 1','tháng 2','tháng 3','tháng 4','tháng 5','tháng 6','tháng 7','tháng 8','tháng 9','tháng 10','tháng 11','tháng 12'];
+
+
+
       const myDays = ['Chủ nhật','Thứ Hai','Thứ Ba','Thứ Tư','Thứ Năm','Thứ Sáu','Thứ Bảy'];
+
+
+
       const date = new Date();
+
+
+
       const day = date.getDate();
+
+
+
       const month = date.getMonth();
+
+
+
       const thisDay = myDays[date.getDay()];
+
+
+
       const year = date.getFullYear();
+
+
+
       dateEl.innerText = `${thisDay}, ngày ${day} ${months[month]} năm ${year}`;
+
+
+
     }
+
+
+
+
+
+
 
     // Initialize App & Event Listeners
+
+
+
     document.addEventListener('DOMContentLoaded', function() {
+
+
+
       updateHeaderDate();
+
+
+
       setTheme(currentTheme);
 
+
+
+
+
+
+
       // Theme toggle click
+
+
+
       $('#theme-btn').click(function() {
+
+
+
         currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+
+
         setTheme(currentTheme);
+
+
+
       });
+
+
+
+
+
+
 
       // Mobile Menu drawers toggle
+
+
+
       $('#open-mobile-menu').click(function() {
+
+
+
         $('#mobile-drawer, #mobile-overlay').addClass('open');
+
+
+
       });
+
+
+
+
+
+
 
       $('#close-mobile-menu, #mobile-overlay').click(function() {
+
+
+
         closeMobileMenu();
+
+
+
       });
+
+
+
+
+
+
 
       // Back to Top Button logic
+
+
+
       $(window).scroll(function() {
+
+
+
         if ($(this).scrollTop() > 300) {
+
+
+
           $('#scroll-btn').addClass('show');
+
+
+
         } else {
+
+
+
           $('#scroll-btn').removeClass('show');
+
+
+
         }
+
+
+
       });
+
+
+
+
+
+
 
       $('#scroll-btn').click(function() {
+
+
+
         $('html, body').animate({ scrollTop: 0 }, 500);
+
+
+
       });
+
+
+
+
+
+
 
       // Load content
+
+
+
       loadTickerItems();
+
+
+
       renderHomeBlocks();
+
+
+
       renderPopularSidebar();
+
+
+
       initSliders();
 
+
+
+
+
+
+
       // Logo click handler to return to homepage
+
+
+
       document.querySelectorAll('.logo-container a').forEach(logoLink => {
+
+
+
         logoLink.addEventListener('click', function(e) {
+
+
+
           if (!window.location.hostname.includes('.blogspot.com')) {
+
+
+
             e.preventDefault();
+
+
+
             console.log("Local preview: logo clicked, returning to home");
+
+
+
             filterCategory('all');
+
+
+
           }
+
+
+
         });
+
+
+
       });
+
+
+
+
+
+
 
       // Intercept menu clicks for local preview compatibility
+
+
+
       document.querySelectorAll('.main-nav a, .sub-nav a, .footer-links a').forEach(link => {
+
+
+
         const href = link.getAttribute('href');
+
+
+
         if (href && (href.startsWith('/search/label/') || href.startsWith('/search'))) {
+
+
+
           // Extract label name from URL
+
+
+
           let category = '';
+
+
+
           if (href.startsWith('/search/label/')) {
+
+
+
             category = decodeURIComponent(href.split('/search/label/')[1].split('?')[0]);
+
+
+
           } else {
+
+
+
             category = 'all';
+
+
+
           }
+
+
+
           
+
+
+
           // Map Blogspot label names to local categories if they differ
+
+
+
           if (category.toLowerCase().includes('di tich') || category.toLowerCase().includes('di tích')) category = 'Di tích';
+
+
+
+          else if (category.toLowerCase().includes('diem den') || category.toLowerCase().includes('điểm đến')) category = 'Di tích';
+
+
+
           else if (category.toLowerCase().includes('dac san') || category.toLowerCase().includes('đặc sản')) category = 'Đặc sản';
+
+
+
           else if (category.toLowerCase().includes('lang nghe') || category.toLowerCase().includes('làng nghề')) category = 'Làng nghề';
+
+
+
           else if (category.toLowerCase().includes('danh nhan') || category.toLowerCase().includes('danh nhân')) category = 'Danh nhân';
+
+
+
           else if (category.toLowerCase().includes('suc khoe') || category.toLowerCase().includes('sức khỏe')) category = 'Sức khỏe';
+
+
+
           else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
           else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
           else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
+          else if (category.toLowerCase() === 'video') category = 'Video';
+
+
+
+          else if (category.toLowerCase() === 'infographic') category = 'Infographic';
+
+
+
+          else if (category.toLowerCase() === 'longform') category = 'Longform';
+
+
+
+          else if (category.toLowerCase() === 'photo') category = 'Photo';
+
+
+
           else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
           else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
           else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
           else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
           else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
           else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
+          else if (category.toLowerCase().includes('quoc te') || category.toLowerCase().includes('quốc tế')) category = 'Quốc tế';
+
+
+
+          else if (category.toLowerCase().includes('cong nghe') || category.toLowerCase().includes('công nghệ')) category = 'Công nghệ';
+
+
+
+          else if (category.toLowerCase().includes('dich vu') || category.toLowerCase().includes('dịch vụ')) category = 'Dịch vụ';
+
+
+
           
+
+
+
           link.addEventListener('click', function(e) {
+
+
+
             if (!window.location.hostname.includes('.blogspot.com')) {
+
+
+
               e.preventDefault();
+
+
+
               console.log("Local preview: filtering category by", category);
+
+
+
               filterCategory(category);
+
+
+
             }
+
+
+
           });
+
+
+
         } else if (href === '#' || href === '/' || href.includes('index.html') || href.includes('baomoi.html') || href.includes('home.html') || href.includes('main.html')) {
+
+
+
           // If it is home or logo link, trigger filterCategory('all')
+
+
+
           if (link.classList.contains('logo') || link.textContent.trim() === 'Trang chủ' || href === '#') {
+
+
+
             link.addEventListener('click', function(e) {
+
+
+
               if (!window.location.hostname.includes('.blogspot.com')) {
+
+
+
                 e.preventDefault();
+
+
+
                 console.log("Local preview: returning to home");
+
+
+
                 filterCategory('all');
+
+
+
               }
+
+
+
             });
+
+
+
           }
+
+
+
         }
+
+
+
       });
+
+
+
+
+
+
 
       // Intercept Top Header Submit Post click for local popup
+
+
+
       const sendBtn = document.querySelector('.btn-send');
+
+
+
       if (sendBtn) {
+
+
+
         sendBtn.addEventListener('click', function(e) {
+
+
+
           if (!window.location.hostname.includes('.blogspot.com')) {
+
+
+
             e.preventDefault();
+
+
+
             openPopup('form-submit');
+
+
+
           }
+
+
+
         });
+
+
+
       }
+
+
+
+
+
+
 
       // Hide suggestions when clicking outside
+
+
+
       $(document).click(function(e) {
+
+
+
         if (!$(e.target).closest('#search-enterprise-form').length) {
+
+
+
           $('#enterprise-suggest-list').hide();
+
+
+
         }
+
+
+
       });
+
+
+
     });
 
+
+
+
+
+
+
     // Theme setter
+
+
+
     function setTheme(theme) {
+
+
+
       document.documentElement.setAttribute('data-theme', theme);
+
+
+
       localStorage.setItem('theme', theme);
+
+
+
       const icon = $('#theme-btn i');
+
+
+
       if (theme === 'dark') {
+
+
+
         icon.removeClass('fa-moon').addClass('fa-sun');
+
+
+
       } else {
+
+
+
         icon.removeClass('fa-sun').addClass('fa-moon');
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     function closeMobileMenu() {
+
+
+
       $('#mobile-drawer, #mobile-overlay').removeClass('open');
+
+
+
     }
+
+
+
+
+
+
 
     function toggleMobileSubmenu(id) {
+
+
+
       $(`#${id}`).slideToggle(300);
+
+
+
     }
 
+
+
+
+
+
+
     // --------------------------------------------------
+
+
+
     // RENDER FUNCTIONS (HOMEPAGE & DYNAMIC FEEDS)
+
+
+
     // --------------------------------------------------
+
+
+
     
+
+
+
     // Ticker items
+
+
+
     function loadTickerItems() {
+
+
+
       const tickerContainer = document.getElementById('trending-items');
+
+
+
       const tickerNews = mockArticles.slice(0, 5);
+
+
+
       
+
+
+
       let html = '';
+
+
+
       // Double the array to ensure seamless looping
+
+
+
       [...tickerNews, ...tickerNews].forEach(art => {
+
+
+
         html += `<a href="#" onclick="viewArticleDetails(${art.id})">${art.title}</a>`;
+
+
+
       });
+
+
+
       tickerContainer.innerHTML = html;
+
+
+
     }
+
+
+
+
+
+
 
     // Main Homepage rendering
+
+
+
         function renderHomeBlocks() {
+
+
+
       // 1. Featured Left (1 Large Card + 3 text links of Hot articles)
+
+
+
       const hotArticles = mockArticles.filter(a => a.category === 'Di tích' || a.isHot);
+
+
+
       const featuredMain = document.getElementById('featured-main-art');
+
+
+
       
+
+
+
       if (hotArticles.length > 0) {
+
+
+
         const main = hotArticles[0];
+
+
+
         let relatedHtml = '';
+
+
+
         hotArticles.slice(1, 4).forEach(rel => {
+
+
+
           relatedHtml += `<a href="#" onclick="viewArticleDetails(${rel.id})">${rel.title}</a>`;
+
+
+
         });
+
+
+
+
+
+
 
         featuredMain.innerHTML = `
+
+
+
           <div class="block-title">
+
+
+
             <span>Tiêu điểm</span>
+
+
+
           </div>
+
+
+
           <div class="featured-editorial" onclick="viewArticleDetails(${main.id})">
+
+
+
             <div class="editorial-img-container">
+
+
+
               <span class="card-label" style="top: 12px; left: 12px; position: absolute;">Hot</span>
+
+
+
               <img src="${main.image}" alt="${main.title}">
+
+
+
             </div>
+
+
+
             <div class="editorial-content">
+
+
+
               <h3 class="editorial-title" style="font-size: 1.25rem; font-weight:800; line-height:1.3; margin-bottom:8px;">${main.title}</h3>
+
+
+
               <div class="card-meta" style="margin-bottom: 8px; font-size:0.75rem;">
+
+
+
                 <span><i class="far fa-folder"></i> ${main.category}</span>
+
+
+
                 <span><i class="far fa-clock"></i> ${main.date}</span>
+
+
+
               </div>
+
+
+
               <p class="editorial-desc" style="font-size:0.88rem; line-height:1.5; color:var(--text-muted); -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 12px;">${main.desc}</p>
+
+
+
               <div class="related-links-list" onclick="event.stopPropagation()">
+
+
+
                 ${relatedHtml}
+
+
+
               </div>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       }
+
+
+
+
+
+
 
       // 2. Featured Right (List of 4 articles for "Giải trí")
+
+
+
       const entertainmentArticles = mockArticles.filter(a => a.category === 'Giải trí');
+
+
+
       const featuredSubList = document.getElementById('featured-sub-list');
+
+
+
       let entHtml = '';
+
+
+
       entertainmentArticles.slice(0, 4).forEach(art => {
+
+
+
         entHtml += `
+
+
+
           <div class="news-mini-item" onclick="viewArticleDetails(${art.id})">
+
+
+
             <div class="news-mini-img">
+
+
+
               <img src="${art.image}" alt="${art.title}">
+
+
+
             </div>
+
+
+
             <div class="news-mini-info">
+
+
+
               <span class="card-meta" style="font-size:0.7rem;"><i class="far fa-clock"></i> ${art.date}</span>
+
+
+
               <h4 class="news-mini-title">${art.title}</h4>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       });
+
+
+
       featuredSubList.innerHTML = entHtml;
 
-      // 3. Slider 1 (Tin tức Hưng Yên nổi bật)
+
+
+
+
+
+
+      // 3. Slider 1 (Tin tức tổng hợp nổi bật)
+
+
+
       const slider1Wrapper = document.getElementById('slider1-wrapper');
+
+
+
       let slide1Html = '';
+
+
+
       mockArticles.slice(0, 8).forEach(art => {
+
+
+
         slide1Html += `
+
+
+
           <div class="swiper-slide">
+
+
+
             <div class="card" onclick="viewArticleDetails(${art.id})">
+
+
+
               <div class="card-thumb" style="aspect-ratio: 16 / 9;">
+
+
+
                 <img src="${art.image}" alt="${art.title}">
+
+
+
               </div>
+
+
+
               <div class="card-content" style="padding: 20px;">
+
+
+
                 <h4 class="card-title" style="font-size: 0.95rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; height: 2.7em;">${art.title}</h4>
+
+
+
               </div>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       });
+
+
+
       slider1Wrapper.innerHTML = slide1Html;
 
+
+
+
+
+
+
       // 4. Di tích Category Block (Left Column: Large card, Right: List)
+
+
+
       const ditichArticles = mockArticles.filter(a => a.category === 'Di tích');
+
+
+
       const ditichContainer = document.getElementById('cat-ditich-content');
+
+
+
       if (ditichArticles.length > 0) {
+
+
+
         const primary = ditichArticles[0];
+
+
+
         let subHtml = '';
+
+
+
         ditichArticles.slice(1, 3).forEach(art => {
+
+
+
           subHtml += `
+
+
+
             <div class="news-mini-item" onclick="viewArticleDetails(${art.id})">
+
+
+
               <div class="news-mini-img">
+
+
+
                 <img src="${art.image}" alt="${art.title}">
+
+
+
               </div>
+
+
+
               <div class="news-mini-info">
+
+
+
                 <h4 class="news-mini-title">${art.title}</h4>
+
+
+
               </div>
+
+
+
             </div>
+
+
+
           `;
+
+
+
         });
+
+
+
         ditichContainer.innerHTML = `
+
+
+
           <div class="label-block-grid">
+
+
+
             <div class="card" onclick="viewArticleDetails(${primary.id})">
+
+
+
               <div class="card-thumb" style="aspect-ratio: 16 / 9;">
+
+
+
                 <img src="${primary.image}" alt="${primary.title}">
+
+
+
               </div>
+
+
+
               <div class="card-content" style="padding: 20px;">
+
+
+
                 <h4 class="card-title" style="font-size: 0.95rem;">${primary.title}</h4>
+
+
+
               </div>
+
+
+
             </div>
+
+
+
             <div class="news-mini-list">${subHtml}</div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       }
+
+
+
+
+
+
 
       // 5. Đặc sản Category Block (Right List of 3 items)
+
+
+
       const dacsanArticles = mockArticles.filter(a => a.category === 'Đặc sản');
+
+
+
       const dacsanContainer = document.getElementById('cat-dacsan-content');
+
+
+
       let dacsanHtml = '';
+
+
+
       dacsanArticles.slice(0, 3).forEach(art => {
+
+
+
         dacsanHtml += `
+
+
+
           <div class="news-mini-item" onclick="viewArticleDetails(${art.id})">
+
+
+
             <div class="news-mini-img" style="width: 80px; height: 80px;">
+
+
+
               <img src="${art.image}" alt="${art.title}">
+
+
+
             </div>
+
+
+
             <div class="news-mini-info">
+
+
+
               <span class="card-meta" style="font-size: 0.7rem;"><i class="far fa-folder"></i> Đặc sản</span>
+
+
+
               <h4 class="news-mini-title" style="font-size: 0.9rem;">${art.title}</h4>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       });
+
+
+
       dacsanContainer.innerHTML = dacsanHtml;
 
+
+
+
+
+
+
       // 6. Làng nghề Block
+
+
+
       const langngheArticles = mockArticles.filter(a => a.category === 'Làng nghề');
+
+
+
       const langngheContainer = document.getElementById('cat-langnghe-content');
+
+
+
       if (langngheArticles.length > 0) {
+
+
+
         const primary = langngheArticles[0];
+
+
+
         let subHtml = '';
+
+
+
         langngheArticles.slice(1, 3).forEach(art => {
+
+
+
           subHtml += `
+
+
+
             <div class="news-mini-item" onclick="viewArticleDetails(${art.id})">
+
+
+
               <div class="news-mini-img">
+
+
+
                 <img src="${art.image}" alt="${art.title}">
+
+
+
               </div>
+
+
+
               <div class="news-mini-info">
+
+
+
                 <h4 class="news-mini-title">${art.title}</h4>
+
+
+
               </div>
+
+
+
             </div>
+
+
+
           `;
+
+
+
         });
+
+
+
         langngheContainer.innerHTML = `
+
+
+
           <div class="label-block-grid">
+
+
+
             <div class="card" onclick="viewArticleDetails(${primary.id})">
+
+
+
               <div class="card-thumb" style="aspect-ratio: 16 / 9;">
+
+
+
                 <img src="${primary.image}" alt="${primary.title}">
+
+
+
               </div>
+
+
+
               <div class="card-content" style="padding: 20px;">
+
+
+
                 <h4 class="card-title" style="font-size: 0.95rem;">${primary.title}</h4>
+
+
+
               </div>
+
+
+
             </div>
+
+
+
             <div class="news-mini-list">${subHtml}</div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       }
+
+
+
+
+
+
 
       // 7. Sức khỏe Block
+
+
+
       const suckhoeArticles = mockArticles.filter(a => a.category === 'Sức khỏe');
+
+
+
       const suckhoeContainer = document.getElementById('cat-suckhoe-content');
+
+
+
       let suckhoeHtml = '';
+
+
+
       suckhoeArticles.slice(0, 3).forEach(art => {
+
+
+
         suckhoeHtml += `
+
+
+
           <div class="news-mini-item" onclick="viewArticleDetails(${art.id})">
+
+
+
             <div class="news-mini-img" style="width: 80px; height: 80px;">
+
+
+
               <img src="${art.image}" alt="${art.title}">
+
+
+
             </div>
+
+
+
             <div class="news-mini-info">
+
+
+
               <span class="card-meta" style="font-size: 0.7rem;"><i class="far fa-folder"></i> Sức khỏe</span>
+
+
+
               <h4 class="news-mini-title" style="font-size: 0.9rem;">${art.title}</h4>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       });
+
+
+
       suckhoeContainer.innerHTML = suckhoeHtml;
 
+
+
+
+
+
+
       // 8. Multimedia Tab
+
+
+
       switchMultimediaTab('Photo');
 
+
+
+
+
+
+
       // 9. Slider 3 (Talk / Blog)
+
+
+
       const slider2Wrapper = document.getElementById('slider2-wrapper');
+
+
+
       let slide2Html = '';
+
+
+
       mockArticles.filter(a => a.category === 'Điểm đến' || a.category === 'Danh nhân').forEach(art => {
+
+
+
         slide2Html += `
+
+
+
           <div class="swiper-slide">
+
+
+
             <div class="card" onclick="viewArticleDetails(${art.id})">
+
+
+
               <div class="card-thumb" style="aspect-ratio: 16 / 9;">
+
+
+
                 <img src="${art.image}" alt="${art.title}">
+
+
+
               </div>
+
+
+
               <div class="card-content" style="padding: 20px;">
+
+
+
                 <span class="card-label" style="background-color: var(--secondary); top:unset; bottom:12px; font-size:0.65rem;">${art.category}</span>
+
+
+
                 <h4 class="card-title" style="font-size: 1rem; margin-top:5px;">${art.title}</h4>
+
+
+
                 <p class="card-desc" style="font-size:0.8rem; -webkit-line-clamp: 2;">${art.desc}</p>
+
+
+
               </div>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       });
+
+
+
       slider2Wrapper.innerHTML = slide2Html;
+
+
+
     }
+
+
+
+
+
+
 
     // Sidebar Read Many Most Viewed Posts
+
+
+
     function renderPopularSidebar() {
+
+
+
       const popularList = document.getElementById('popular-posts-list');
+
+
+
       const sorted = [...mockArticles].sort((a, b) => b.views - a.views);
+
+
+
       
+
+
+
       let html = '';
+
+
+
       sorted.slice(0, 4).forEach((art, index) => {
+
+
+
         html += `
+
+
+
           <div class="news-mini-item" onclick="viewArticleDetails(${art.id})">
+
+
+
             <div style="background-color: var(--border-color); color: var(--text-main); font-weight: 800; font-size: 1.2rem; width: 35px; height: 35px; border-radius: 50%; display:flex; justify-content:center; align-items:center; flex-shrink:0;">
+
+
+
               ${index + 1}
+
+
+
             </div>
+
+
+
             <div class="news-mini-info">
+
+
+
               <h4 class="news-mini-title" style="font-size: 0.88rem; font-weight:700;">${art.title}</h4>
+
+
+
               <span class="card-meta" style="font-size: 0.7rem;"><i class="far fa-eye"></i> ${art.views.toLocaleString()} lượt đọc</span>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
       });
+
+
+
       popularList.innerHTML = html;
+
+
+
     }
+
+
+
+
+
+
 
     // Multimedia Switch Category Tab Action
+
+
+
     function switchMultimediaTab(category, btnElement) {
+
+
+
       if (btnElement) {
+
+
+
         $('.multimedia-tab').removeClass('active');
+
+
+
         $(btnElement).addClass('active');
+
+
+
       }
+
+
+
       activeMultiTab = category;
 
+
+
+
+
+
+
       const leftPane = document.getElementById('multi-left-pane');
+
+
+
       const rightPane = document.getElementById('multi-right-pane');
+
+
+
       
+
+
+
       const filtered = mockArticles.filter(a => a.category === category);
+
+
+
       if (filtered.length > 0) {
+
+
+
         // Featured left
+
+
+
         const feat = filtered[0];
+
+
+
         leftPane.innerHTML = `
+
+
+
           <div class="card" onclick="viewArticleDetails(${feat.id})">
+
+
+
             <div class="card-content" style="padding: 20px;">
+
+
+
               <div class="card-meta" style="color: #94A3B8;">
+
+
+
                 <span><i class="far fa-clock"></i> ${feat.date}</span>
+
+
+
               </div>
+
+
+
               <h3 class="card-title" style="color: #FFFFFF;">${feat.title}</h3>
+
+
+
               <p class="card-desc" style="color: #94A3B8;">${feat.desc}</p>
+
+
+
             </div>
+
+
+
           </div>
+
+
+
         `;
+
+
+
+
+
+
 
         // List right
+
+
+
         let rightHtml = '';
+
+
+
         mockArticles.filter(a => a.category === 'Photo' || a.category === 'Video' || a.category === 'Infographic' || a.category === 'Longform').forEach(art => {
+
+
+
           if (art.id !== feat.id) {
+
+
+
             rightHtml += `
+
+
+
               <div class="multimedia-item" onclick="viewArticleDetails(${art.id})">
+
+
+
                 <img src="${art.image}" alt="${art.title}">
+
+
+
                 <div class="news-mini-info">
+
+
+
                   <span class="card-meta" style="color:#94A3B8; font-size:0.7rem;">
+
+
+
                     <i class="far fa-folder"></i> ${art.category}
+
+
+
                   </span>
+
+
+
                   <h4 class="multimedia-item-title">${art.title}</h4>
+
+
+
                 </div>
+
+
+
               </div>
+
+
+
             `;
+
+
+
           }
+
+
+
         });
+
+
+
         rightPane.innerHTML = rightHtml;
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     // Initialize Swiper Sliders
+
+
+
     function initSliders() {
+
+
+
       setTimeout(() => {
+
+
+
         if (typeof Swiper !== 'undefined') {
+
+
+
           new Swiper('#swiper1', {
+
+
+
           slidesPerView: 3,
+
+
+
           spaceBetween: 20,
+
+
+
           loop: true,
+
+
+
           autoplay: {
+
+
+
             delay: 4000,
+
+
+
             disableOnInteraction: false,
+
+
+
           },
+
+
+
           navigation: {
+
+
+
             nextEl: '#slide1-next',
+
+
+
             prevEl: '#slide1-prev',
+
+
+
           },
+
+
+
           breakpoints: {
+
+
+
             320: { slidesPerView: 1 },
+
+
+
             640: { slidesPerView: 2 },
+
+
+
             1024: { slidesPerView: 3 }
+
+
+
           }
+
+
+
         });
+
+
+
+
+
+
 
         new Swiper('#swiper2', {
+
+
+
           slidesPerView: 2,
+
+
+
           spaceBetween: 20,
+
+
+
           loop: true,
+
+
+
           autoplay: {
+
+
+
             delay: 5000,
+
+
+
             disableOnInteraction: false,
+
+
+
           },
+
+
+
           navigation: {
+
+
+
             nextEl: '#slide2-next',
+
+
+
             prevEl: '#slide2-prev',
+
+
+
           },
+
+
+
           breakpoints: {
+
+
+
             320: { slidesPerView: 1 },
+
+
+
             768: { slidesPerView: 2 }
+
+
+
           }
+
+
+
         });
+
+
+
         } else {
+
+
+
           console.warn("Swiper library not loaded. Displays statically.");
+
+
+
         }
+
+
+
       }, 500);
+
+
+
     }
+
+
+
+
+
+
 
     // Category Filter Navigation
+
+
+
     function filterCategory(category) {
+
+
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+
+
       
+
+
+
       const filterBox = document.getElementById('filter-info-box');
+
+
+
       const filterTitle = document.getElementById('filter-title-text');
+
+
+
       const homeBlocks = document.getElementById('home-blocks');
+
+
+
       const feedResults = document.getElementById('feed-results-area');
+
+
+
       const resultsGrid = document.getElementById('results-grid');
+
+
+
       const resultsTitle = document.getElementById('results-title');
+
+
+
+
+
+
 
       if (category === 'all') {
+
+
+
         filterBox.style.display = 'none';
+
+
+
         feedResults.style.display = 'none';
+
+
+
         homeBlocks.style.display = 'block';
+
+
+
       } else {
+
+
+
         homeBlocks.style.display = 'none';
+
+
+
         filterBox.style.display = 'block';
+
+
+
         filterTitle.innerText = `Chuyên mục: ${category}`;
+
+
+
         
+
+
+
         feedResults.style.display = 'block';
+
+
+
         resultsTitle.innerText = `Tin thuộc chuyên mục "${category}"`;
 
+
+
+
+
+
+
         const filtered = mockArticles.filter(a => a.category === category);
+
+
+
         if (filtered.length > 0) {
+
+
+
           let html = '';
+
+
+
           filtered.forEach(art => {
-            html += `
-              <div class="card" onclick="viewArticleDetails(${art.id})">
+
+
+
+            html += `              <div class="card" onclick="viewArticleDetails(${art.id})">
+
                 ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+
                 <div class="card-content" style="padding: 20px;">
+
                   <div class="card-meta">
+
                     <span><i class="far fa-folder"></i> ${art.category}</span>
+
                     <span><i class="far fa-clock"></i> ${art.date}</span>
+
+                    <span><i class="far fa-newspaper"></i> ${art.publisher || 'Tin tức'}</span>
+
                   </div>
+
                   <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+
                   <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+
                 </div>
-              </div>
-            `;
+
+              </div>`;
+
+
+
           });
+
+
+
           resultsGrid.innerHTML = html;
+
+
+
         } else {
+
+
+
           resultsGrid.innerHTML = `<div style="grid-column: 1/-1; padding: 40px; text-align:center; color: var(--text-muted);">Không có bài viết nào thuộc chuyên mục này.</div>`;
+
+
+
         }
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     // Real-time Search Logic
+
+
+
     function handleSearch(event) {
+
+
+
       const q = event.target.value.trim().toLowerCase();
+
+
+
       const homeBlocks = document.getElementById('home-blocks');
+
+
+
       const feedResults = document.getElementById('feed-results-area');
+
+
+
       const resultsGrid = document.getElementById('results-grid');
+
+
+
       const resultsTitle = document.getElementById('results-title');
+
+
+
       const filterBox = document.getElementById('filter-info-box');
 
+
+
+
+
+
+
       if (q === '') {
+
+
+
         filterCategory('all');
+
+
+
         return;
+
+
+
       }
+
+
+
+
+
+
 
       homeBlocks.style.display = 'none';
+
+
+
       filterBox.style.display = 'none';
+
+
+
       feedResults.style.display = 'block';
+
+
+
       resultsTitle.innerText = `Kết quả tìm kiếm cho: "${q}"`;
 
+
+
+
+
+
+
       const matches = mockArticles.filter(a => 
+
+
+
         a.title.toLowerCase().includes(q) || 
+
+
+
         a.desc.toLowerCase().includes(q) || 
+
+
+
         a.category.toLowerCase().includes(q)
+
+
+
       );
 
+
+
+
+
+
+
       if (matches.length > 0) {
+
+
+
         let html = '';
+
+
+
         matches.forEach(art => {
-          html += `
-            <div class="card" onclick="viewArticleDetails(${art.id})">
-              <div class="card-content" style="padding: 20px;">
-                <div class="card-meta">
-                  <span><i class="far fa-folder"></i> ${art.category}</span>
-                  <span><i class="far fa-clock"></i> ${art.date}</span>
+
+
+
+          html += `              <div class="card" onclick="viewArticleDetails(${art.id})">
+
+                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+
+                <div class="card-content" style="padding: 20px;">
+
+                  <div class="card-meta">
+
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+
+                    <span><i class="far fa-newspaper"></i> ${art.publisher || 'Tin tức'}</span>
+
+                  </div>
+
+                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+
+                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+
                 </div>
-                <h3 class="card-title">${art.title}</h3>
-                <p class="card-desc">${art.desc}</p>
-              </div>
-            </div>
-          `;
+
+              </div>`;
+
+
+
         });
+
+
+
         resultsGrid.innerHTML = html;
+
+
+
       } else {
+
+
+
         resultsGrid.innerHTML = `<div style="grid-column: 1/-1; padding: 40px; text-align:center; color: var(--text-muted);"><i class="fas fa-search" style="font-size:2rem; margin-bottom:10px;"></i><br/>Không tìm thấy bài viết nào phù hợp.</div>`;
+
+
+
       }
+
+
+
     }
 
+
+
+
+
+
+
     // --------------------------------------------------
+
+
+
     // MODALS & EVENT HANDLERS
+
+
+
     // --------------------------------------------------
+
+
+
     
+
+
+
     // View Article details inside standard modal popup
+
+
+
             // View Article details inside standard modal popup
+
+
+
     viewArticleDetails = function(id) {
+
       const art = mockArticles.find(a => a.id === id);
+
       if (!art) return;
 
-      // If the article has a live external source URL from Báo Mới, open it in a new tab
-      if (art.sourceUrl && art.sourceUrl.startsWith('http')) {
-        window.open(art.sourceUrl, '_blank');
-        return;
-      }
+      
 
       const body = document.getElementById('modal-article-body');
+
+      
+
+      let sourceBtnHtml = '';
+
+      if (art.sourceUrl && art.sourceUrl.startsWith('http')) {
+
+        sourceBtnHtml = `
+
+          <div style="margin-top:25px; border-top:1px solid var(--border-color); padding-top:20px; text-align:center;">
+
+            <button class="btn btn-primary" onclick="window.open('${art.sourceUrl}', '_blank')" style="background:var(--primary); color:white; border:none; padding:12px 24px; border-radius:6px; font-weight:700; cursor:pointer; font-size:0.95rem; width:100%; display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 12px rgba(225,29,72,0.15); transition:all 0.3s ease;">
+
+              <i class="fas fa-external-link-alt"></i> Đọc bài viết gốc trên ${art.publisher || 'Nguồn báo'}
+
+            </button>
+
+          </div>
+
+        `;
+
+      }
+
+
+
       body.innerHTML = `
+
         <div class="modal-image">
+
           <img src="${art.image}" alt="${art.title}">
+
         </div>
+
         <div class="modal-meta">
+
           <span class="modal-category">${art.category}</span>
+
           <span><i class="far fa-clock"></i> ${art.date}</span>
+
+          <span><i class="far fa-newspaper"></i> Nguồn: ${art.publisher || 'Tin tức'}</span>
+
           <span><i class="far fa-eye"></i> ${art.views.toLocaleString()} lượt xem</span>
+
         </div>
+
         <h2 class="modal-title">${art.title}</h2>
-        <div class="modal-desc">${art.desc}</div>
+
+        <div class="modal-desc" style="font-weight:700; margin-bottom:15px; color:var(--text-dark);">${art.desc}</div>
+
         <div class="modal-text">${art.text}</div>
-        <div class="modal-share">
+
+        ${sourceBtnHtml}
+
+        <div class="modal-share" style="margin-top:20px;">
+
           <span class="modal-share-title">Chia sẻ bài viết:</span>
+
           <a href="#" class="modal-share-btn fb" onclick="event.preventDefault(); showToast('Chia sẻ Facebook thành công!')"><i class="fab fa-facebook-f"></i></a>
+
           <a href="#" class="modal-share-btn tw" onclick="event.preventDefault(); showToast('Chia sẻ Twitter thành công!')"><i class="fab fa-twitter"></i></a>
+
         </div>
+
       `;
 
-      const artModal = document.getElementById('article-modal'); if (artModal) artModal.classList.add('show');
+
+
+      const modal = document.getElementById('article-modal');
+
+      modal.classList.add('active');
+
       document.body.style.overflow = 'hidden';
+
     }
+
+
+
+
+
+
 
     function closeArticleModal() {
+
+
+
       const artModal = document.getElementById('article-modal'); if (artModal) artModal.classList.remove('show');
+
+
+
       document.body.style.overflow = 'auto';
+
+
+
     }
+
+
+
+
+
+
 
     // Submit Article Popup Dialog Form
+
+
+
     function openPopup(action) {
+
+
+
       if (action === 'form-submit') {
+
+
+
         const body = document.getElementById('modal-article-body');
+
+
+
         body.innerHTML = `
+
+
+
           <h2 class="modal-title" style="margin-top:20px; font-size:1.5rem; text-align:center;"><i class="fas fa-edit"></i> Gửi bài viết của bạn</h2>
-          <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:20px;">Chia sẻ những câu chuyện, hình ảnh đẹp về danh lam thắng cảnh, con người Hưng Yên cùng độc giả cả nước.</p>
+
+
+
+          <p style="font-size:0.85rem; color:var(--text-muted); text-align:center; margin-bottom:20px;">Chia sẻ những câu chuyện, hình ảnh đẹp về danh lam thắng cảnh, con người Việt Nam cùng độc giả cả nước.</p>
+
+
+
           <form style="display:flex; flex-direction:column; gap:15px;" onsubmit="event.preventDefault(); handleArticleSubmit();">
+
+
+
             <div>
+
+
+
               <label style="font-weight:700; font-size:0.85rem; display:block; margin-bottom:5px;">Họ và tên của bạn *</label>
+
+
+
               <input type="text" placeholder="Nhập họ tên của bạn..." required="required" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background-color:var(--bg-body); color:var(--text-main);" />
+
+
+
             </div>
+
+
+
             <div>
+
+
+
               <label style="font-weight:700; font-size:0.85rem; display:block; margin-bottom:5px;">Tiêu đề bài viết *</label>
+
+
+
               <input type="text" placeholder="Nhập tiêu đề..." required="required" style="width:100%; padding:10px; border-radius:6px; border:1px solid var(--border-color); background-color:var(--bg-body); color:var(--text-main);" />
+
+
+
             </div>
+
+
+
             <div>
+
+
+
               <label style="font-weight:700; font-size:0.85rem; display:block; margin-bottom:5px;">Nội dung bài viết *</label>
+
+
+
               <textarea placeholder="Viết nội dung bài viết ở đây..." required="required" style="width:100%; height:150px; padding:10px; border-radius:6px; border:1px solid var(--border-color); background-color:var(--bg-body); color:var(--text-main); font-family:inherit; resize:vertical;"></textarea>
+
+
+
             </div>
+
+
+
             <button type="submit" style="background-color:var(--primary); color:white; border:none; padding:12px; border-radius:6px; font-weight:700; cursor:pointer;">Gửi bài viết</button>
+
+
+
           </form>
+
+
+
         `;
+
+
+
         const artModal = document.getElementById('article-modal'); if (artModal) artModal.classList.add('show');
+
+
+
         document.body.style.overflow = 'hidden';
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     function handleArticleSubmit() {
+
+
+
       closeArticleModal();
+
+
+
       showToast("Bài viết của bạn đã được gửi và đang chờ ban biên tập phê duyệt!");
+
+
+
     }
+
+
+
+
+
+
 
     // Subscribe Email Newsletter Form Handler
+
+
+
     function handleSubscribe(event) {
+
+
+
       event.preventDefault();
+
+
+
       const input = event.target.querySelector('input');
+
+
+
       const email = input.value;
+
+
+
       input.value = '';
+
+
+
       showToast(`Đăng ký email "${email}" thành công! Cảm ơn bạn.`);
+
+
+
     }
+
+
+
+
+
+
 
     // Toast notification displayer
+
+
+
     function showToast(text) {
+
+
+
       const toast = document.getElementById('toast-notif');
+
+
+
       const toastText = document.getElementById('toast-text');
+
+
+
       toastText.innerText = text;
+
+
+
       
+
+
+
       toast.classList.add('show');
+
+
+
       setTimeout(() => {
+
+
+
         toast.classList.remove('show');
+
+
+
       }, 3500);
+
+
+
     }
+
+
+
+
+
+
 
     // Autocomplete corporate search widget
+
+
+
     function suggestEnterprise(val) {
+
+
+
       const suggestList = document.getElementById('enterprise-suggest-list');
+
+
+
       const q = val.trim().toLowerCase();
 
+
+
+
+
+
+
       if (q === '') {
+
+
+
         suggestList.style.display = 'none';
+
+
+
         return;
+
+
+
       }
+
+
+
+
+
+
 
       const matches = mockBusinesses.filter(b => 
+
+
+
         b.code.toLowerCase().includes(q) || 
+
+
+
         b.name.toLowerCase().includes(q)
+
+
+
       );
 
+
+
+
+
+
+
       if (matches.length > 0) {
+
+
+
         let html = '';
+
+
+
         matches.forEach(b => {
+
+
+
           html += `<li onclick="selectEnterprise('${b.code} - ${b.name}')"><strong>${b.code}</strong> - ${b.name}</li>`;
+
+
+
         });
+
+
+
         suggestList.innerHTML = html;
+
+
+
         suggestList.style.display = 'block';
+
+
+
       } else {
+
+
+
         suggestList.style.display = 'none';
+
+
+
       }
+
+
+
     }
+
+
+
+
+
+
 
     function selectEnterprise(text) {
+
+
+
       document.getElementById('enterprise-input').value = text;
+
+
+
       document.getElementById('enterprise-suggest-list').style.display = 'none';
+
+
+
       showToast(`Bạn đã chọn tra cứu doanh nghiệp: ${text}`);
+
+
+
     }
+
+
+
     //]]>
+
+
+
   </script>
+
+
+
+
+
+
 
   <!-- Blogger dynamic feed loader API emulation -->
+
+
+
   <script type='text/javascript'>
+
+
+
     //<![CDATA[
+
+
+
     // --------------------------------------------------
+
+
+
     // BLOGGER WIDGET API INTEGRATION
+
+
+
     // --------------------------------------------------
+
+
+
     // When uploaded to actual Blogger/Blogspot website,
+
+
+
     // this script queries the live Blogspot JSON API to pull fresh posts.
+
+
+
     if (window.location.hostname.includes('.blogspot.com') || window.location.hostname.includes('tinhhungyen') || window.location.hostname.includes('hungyen')) {
+
+
+
       console.log("Live Blogspot environment detected. Emulating Fetch API feeds...");
+
+
+
       
+
+
+
       fetch("/feeds/posts/default?alt=json&max-results=30")
+
+
+
         .then(response => {
+
+
+
           if (!response.ok) throw new Error("HTTP error " + response.status);
+
+
+
           return response.json();
+
+
+
         })
+
+
+
         .then(data => {
+
+
+
           if (data.feed && data.feed.entry) {
+
+
+
              console.log("Successfully fetched live Blogger posts!");
+
+
+
              const entries = data.feed.entry;
+
+
+
              mockArticles.length = 0; // Clear local mock database
+
+
+
              
+
+
+
              entries.forEach((entry, idx) => {
+
+
+
                 let id = idx + 1;
+
+
+
                 let title = entry.title.$t;
+
+
+
                 let dateStr = new Date(entry.published.$t).toLocaleDateString('vi-VN');
+
+
+
                 
+
+
+
                 let desc = "";
+
+
+
                 if (entry.summary) desc = entry.summary.$t;
+
+
+
                 else if (entry.content) desc = entry.content.$t.replace(/<[^>]*>/g, '').substring(0, 150);
+
+
+
                 
+
+
+
                 let text = entry.content ? entry.content.$t : desc;
+
+
+
                 
+
+
+
                 let image = "https://images.unsplash.com/photo-1619890831007-aa154f36df27?auto=format&fit=crop&w=800&q=80"; // Default fallback
+
+
+
                 if (entry.media$thumbnail) {
+
+
+
                    image = entry.media$thumbnail.url.replace("s72-c", "s600").replace("s72-", "");
+
+
+
                 }
+
+
+
                 
+
+
+
                 let category = "Tin tức";
+
+
+
                 if (entry.category && entry.category.length > 0) {
+
+
+
                    category = entry.category[0].term;
+
+
+
                 }
+
+
+
                 
+
+
+
                 let sourceUrl = "";
+
+
+
                 if (entry.link) {
+
+
+
                    const altLink = entry.link.find(l => l.rel === "alternate");
+
+
+
                    if (altLink) sourceUrl = altLink.href;
+
+
+
                 }
+
+
+
                 
+
+
+
                 mockArticles.push({
+
+
+
                    id: id,
+
+
+
                    title: title,
+
+
+
                    category: category,
+
+
+
                    date: dateStr,
+
+
+
                    image: image,
+
+
+
                    desc: desc,
+
+
+
                    text: text,
+
+
+
                    isHot: idx === 0,
+
+
+
                    views: Math.floor(Math.random() * 5000) + 500,
+
+
+
                    sourceUrl: sourceUrl
+
+
+
                 });
+
+
+
              });
+
+
+
              
+
+
+
              // Re-render blocks with fresh live Blogger articles!
+
+
+
              loadTickerItems();
+
+
+
              renderHomeBlocks();
+
+
+
              renderPopularSidebar();
+
+
+
              initSliders();
+
+
+
           }
+
+
+
         })
+
+
+
         .catch(err => {
+
+
+
           console.warn("Could not load Blogger JSON Feed. Using built-in local database fallback instead:", err);
+
+
+
         });
+
+
+
     }
+
+
+
     //]]>
+
+
+
   </script>
 
+
+
+
+
+
+
 </body>
+
+
+
 </html>
+
+
+
