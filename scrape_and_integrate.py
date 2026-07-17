@@ -1,748 +1,969 @@
-import urllib.request
-
-from bs4 import BeautifulSoup
-
-import re
-
-import json
-
-# 1. Fetch baomoi.com homepage (using BeautifulSoup) & Hưng Yên tag feed (using JSON)
-import urllib.request
-import re
-import json
-import os
-from bs4 import BeautifulSoup
-from concurrent.futures import ThreadPoolExecutor
-
-raw_scraped_articles = []
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-}
-
-# A. Fetch Homepage using BeautifulSoup
-print("Fetching live articles from baomoi.com homepage...")
-try:
-    req = urllib.request.Request("https://baomoi.com/", headers=headers)
-    with urllib.request.urlopen(req, timeout=15) as response:
-        html = response.read().decode('utf-8')
-    print(f"  Fetched successfully. Length: {len(html)}")
-
-    soup = BeautifulSoup(html, "html.parser")
-    story_divs = soup.find_all(class_=re.compile(r'story|card|item', re.IGNORECASE))
-    for div in story_divs:
-        title_el = div.find(class_=re.compile(r'title|heading|subject', re.IGNORECASE))
-        if not title_el and div.name == 'a':
-            title_el = div
-        if not title_el:
-            for a in div.find_all('a'):
-                if a.text.strip() and len(a.text.strip()) > 15:
-                    title_el = a
-                    break
-        if not title_el:
-            continue
-        title = title_el.text.strip()
-        if not title or len(title) < 15:
-            continue
-        link_el = div.find('a') if div.name != 'a' else div
-        if not link_el and title_el.name == 'a':
-            link_el = title_el
-        link = link_el.get('href', '') if link_el else ''
-        if not link.startswith('http'):
-            link = "https://baomoi.com" + link
-        img = div.find('img')
-        img_src = ''
-        if img:
-            img_src = img.get('src') or img.get('data-src') or img.get('srcset') or ''
-            if 'gif' in img_src or 'base64' in img_src:
-                img_src = img.get('data-src') or img.get('srcset') or img_src
-        if not img_src:
-            continue
-        desc_el = div.find(class_=re.compile(r'desc|summary|abstract|content', re.IGNORECASE))
-        desc = desc_el.text.strip() if desc_el else ''
-        if not desc:
-            desc = title
-        source_el = div.find(class_='bm-card-source')
-        source_name = ""
-        if source_el:
-            source_name = source_el.get('title') or ""
-            if not source_name:
-                source_img = source_el.find('img')
-                source_name = source_img.get('alt') if source_img else ""
-        if not source_name:
-            source_name = "Báo Mới"
-
-        title = re.sub(r'\d+\s*(giờ|phút|ngày|tháng|năm|liên quan).*$', '', title).strip()
-        desc = re.sub(r'\d+\s*(giờ|phút|ngày|tháng|năm|liên quan).*$', '', desc).strip()
-
-        raw_scraped_articles.append({
-            'title': title,
-            'link': link,
-            'image': img_src,
-            'desc': desc,
-            'publisher': source_name,
-            'is_hungyen': False
-        })
-    print(f"  Parsed {len(raw_scraped_articles)} articles from homepage.")
-except Exception as e:
-    print(f"  Error crawling homepage: {e}")
-
-# B. Fetch Hưng Yên Tag Feed using JSON
-print("Fetching live articles from baomoi.com Hung Yen tag feed...")
-try:
-    req = urllib.request.Request("https://baomoi.com/tag/Hung-Yen.epi", headers=headers)
-    with urllib.request.urlopen(req, timeout=15) as response:
-        html = response.read().decode('utf-8')
-
-    match = re.search(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', html)
-    if match:
-        data = json.loads(match.group(1))
-        props = data.get('props', {})
-        pageProps = props.get('pageProps', {})
-        resp = pageProps.get('resp', {})
-        resp_data = resp.get('data', {})
-        items = resp_data.get('content', {}).get('items', [])
-
-        print(f"  Found {len(items)} items in Hung Yen tag feed.")
-        tag_count = 0
-        for item in items:
-            title = item.get('title', '').strip()
-            link = item.get('url', '') or item.get('redirectUrl', '') or item.get('link', '')
-            desc = item.get('description', '').strip() or title
-
-            # Image
-            img_src = item.get('thumb') or item.get('thumbL') or ''
-            if isinstance(img_src, dict):
-                img_src = img_src.get('url') or ''
-
-            # Publisher
-            publisher_obj = item.get('publisher')
-            pub_name = "Báo Mới"
-            if isinstance(publisher_obj, dict):
-                pub_name = publisher_obj.get('name') or "Báo Mới"
-            elif isinstance(publisher_obj, str):
-                pub_name = publisher_obj
-
-            if not title or len(title) < 15 or not img_src:
-                continue
-
-            if not link.startswith('http'):
-                link = "https://baomoi.com" + link
-
-            title = re.sub(r'\d+\s*(giờ|phút|ngày|tháng|năm|liên quan).*$', '', title).strip()
-            desc = re.sub(r'\d+\s*(giờ|phút|ngày|tháng|năm|liên quan).*$', '', desc).strip()
-
-            raw_scraped_articles.append({
-                'title': title,
-                'link': link,
-                'image': img_src,
-                'desc': desc,
-                'publisher': pub_name,
-                'is_hungyen': True
-            })
-            tag_count += 1
-        print(f"  Parsed {tag_count} articles from Hung Yen tag feed.")
-except Exception as e:
-    print(f"  Error crawling tag feed: {e}")
-
-# 2. Categorize and convert Báo Mới links to direct original newspaper URLs
-def classify_category(title, desc):
-    title_lower = title.lower()
-    desc_lower = desc.lower()
-    if any(k in title_lower or k in desc_lower for k in ['đền', 'chùa', 'lễ hội', 'di tích', 'tâm linh', 'cổ kính', 'phố hiến', 'khảo cổ', 'lịch sử']):
-        return 'Di tích'
-    if any(k in title_lower or k in desc_lower for k in ['nhãn lồng', 'gà đông tảo', 'đặc sản', 'tương bần', 'ẩm thực', 'món ăn', 'hạt sen', 'bánh răng bừa', 'bánh tẻ']):
-        return 'Đặc sản'
-    if any(k in title_lower or k in desc_lower for k in ['làng nghề', 'mây tre', 'đan đó', 'xuân quan', 'bát tràng', 'đúc đồng', 'thủ sỹ', 'làm hoa', 'làm hương']):
-        return 'Làng nghề'
-    if any(k in title_lower or k in desc_lower for k in ['danh nhân', 'lê hữu trác', 'trạng nguyên', 'tướng quân', 'anh hùng', 'nhà thơ']):
-        return 'Danh nhân'
-    if any(k in title_lower or k in desc_lower for k in ['du lịch', 'tour', 'khách sạn', 'homestay', 'xe khách', 'limousine', 'nhà hàng', 'quán cà phê', 'vận tải']):
-        return 'Dịch vụ'
-    if any(k in title_lower or k in desc_lower for k in ['sức khỏe', 'y tế', 'bệnh viện', 'dịch bệnh', 'bác sĩ', 'thuốc', 'chữa trị']):
-        return 'Sức khỏe'
-    if any(k in title_lower or k in desc_lower for k in ['công nghệ', 'điện thoại', 'máy tính', 'ai', 'trí tuệ nhân tạo', 'chuyển đổi số']):
-        return 'Công nghệ'
-    if any(k in title_lower or k in desc_lower for k in ['thế giới', 'quốc tế', 'nước ngoài', 'mỹ', 'trung quốc', 'nga', 'châu âu']):
-        return 'Quốc tế'
-    return 'Di tích'
-
-# Remove scraped duplicates and categorise
-seen_titles = set()
-seen_urls = set()
-unique_scraped = []
-
-for art in raw_scraped_articles:
-    t_clean = art['title'].strip().lower()
-    l_clean = art['link'].strip().lower()
-    if t_clean not in seen_titles and l_clean not in seen_urls:
-        seen_titles.add(t_clean)
-        seen_urls.add(l_clean)
-        unique_scraped.append(art)
-
-print(f"Extracted {len(unique_scraped)} unique live crawled articles.")
-
-baomoi_articles_final = []
-categories_pool = ["Thời sự", "Thế giới", "Tài chính", "Công nghệ", "Đời sống", "Văn hóa", "Giải trí", "Thể thao", "Giáo dục", "Sức khỏe", "Photo", "Video", "Du lịch", "Dịch vụ", "Quốc tế"]
-
-for idx, art in enumerate(unique_scraped):
-    title_lower = art['title'].lower()
-    if art['is_hungyen']:
-        category = classify_category(art['title'], art['desc'])
-    else:
-        if "sức khỏe" in title_lower or "y học" in title_lower or "bệnh" in title_lower or "thuốc" in title_lower or "dịch" in title_lower:
-            category = "Sức khỏe"
-        elif "ảnh" in title_lower or "chùm ảnh" in title_lower:
-            category = "Photo"
-        elif "video" in title_lower or "clip" in title_lower:
-            category = "Video"
-        elif "infographic" in title_lower:
-            category = "Infographic"
-        elif "chuyên sâu" in title_lower or "longform" in title_lower:
-            category = "Longform"
-        else:
-            category = categories_pool[idx % len(categories_pool)]
-
-    img_url = art['image']
-    redirect_url = re.sub(r'-c(\d+)', r'-r\g<1>', art['link'])
-
-    baomoi_articles_final.append({
-        'title': art['title'],
-        'category': category,
-        'date': "15/07/2026",
-        'image': img_url,
-        'desc': art['desc'],
-        'text': f"<p>{art['desc']}</p><p>Đọc bài viết gốc đầy đủ trên Báo Mới tại đường dẫn dưới đây.</p>",
-        'sourceUrl': redirect_url,
-        'publisher': art.get('publisher', 'Báo Mới')
-    })
-
-# 3. Resolve redirect_urls to original URLs in parallel
-if baomoi_articles_final:
-    print(f"  Resolving {len(baomoi_articles_final)} Bao Moi redirect URLs to direct original URLs...")
-    def resolve_single_article_url(item):
-        url = item['sourceUrl']
-        if not url.startswith('http'):
-            return
-        try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
-            with urllib.request.urlopen(req, timeout=5) as response:
-                html_res = response.read().decode('utf-8')
-                match_json = re.search(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', html_res)
-                if match_json:
-                    data_json = json.loads(match_json.group(1))
-                    orig = data_json['props']['pageProps']['resp']['data']['content']['originalUrl']
-                    if orig.startswith('http'):
-                        item['sourceUrl'] = orig
-        except Exception:
-            pass
-
-    with ThreadPoolExecutor(max_workers=20) as executor:
-        executor.map(resolve_single_article_url, baomoi_articles_final)
-    print("  Successfully resolved all redirect URLs to direct publisher URLs!")
-
-# 4. Merging with History and Extra Premium Articles (No empty link articles!)
-final_articles = []
-
-def parse_articles_regex(content_str):
-    match_arr = re.search(r'const\s+mockArticles\s*=\s*\[([\s\S]*?)\];', content_str)
-    if not match_arr:
-        return []
-    array_content = match_arr.group(1)
-    blocks = re.findall(r'\{([\s\S]*?)\}', array_content)
-    parsed_articles = []
-    for block in blocks:
-        art = {}
-        matches = re.finditer(r'(\w+):\s*("([^"\\]*(?:\\.[^"\\]*)*)"|\'([^\'\\]*(?:\\.[^\'\\]*)*)\'|(\d+)|true|false)', block)
-        for m in matches:
-            key = m.group(1)
-            double_val = m.group(3)
-            single_val = m.group(4)
-            int_val = m.group(5)
-            raw_val = m.group(2)
-            if double_val is not None:
-                art[key] = double_val.replace('\\"', '"').replace('\\\\', '\\')
-            elif single_val is not None:
-                art[key] = single_val.replace("\\'", "'").replace('\\\\', '\\')
-            elif int_val is not None:
-                art[key] = int(int_val)
-            else:
-                art[key] = raw_val == 'true'
-        if art:
-            parsed_articles.append(art)
-    return parsed_articles
-
-# Load existing database to accumulate history
-existing_baomoi_articles = []
-index_path = r"d:\Xây web\hungyen_24h\index.html"
-if os.path.exists(index_path):
-    try:
-        with open(index_path, "r", encoding="utf-8") as f_idx:
-            idx_content = f_idx.read()
-        all_existing = parse_articles_regex(idx_content)
-        # Keep ONLY articles that have a valid sourceUrl (no empty links!)
-        existing_baomoi_articles = [a for a in all_existing if a.get('sourceUrl') and a.get('sourceUrl').startswith('http')]
-        print(f"  Loaded {len(existing_baomoi_articles)} existing articles with valid links from index.html.")
-    except Exception as e:
-        print(f"  Warning: Failed to load existing articles: {e}")
-
-# Merge and deduplicate by title AND url
-combined_baomoi = baomoi_articles_final + existing_baomoi_articles
-seen_titles = set()
-seen_urls = set()
-deduped_baomoi = []
-
-for art in combined_baomoi:
-    t_clean = art['title'].strip().lower()
-    u_clean = art.get('sourceUrl', '').strip().lower()
-
-    # Filter out empty sourceUrl
-    if not u_clean.startswith('http'):
-         continue
-
-    if t_clean not in seen_titles and u_clean not in seen_urls:
-        seen_titles.add(t_clean)
-        seen_urls.add(u_clean)
-        deduped_baomoi.append(art)
-
-# Limit to latest 180 articles to keep the page lightweight
-deduped_baomoi = deduped_baomoi[:180]
-print(f"  Accumulated total of {len(deduped_baomoi)} unique articles with valid links (including history).")
-
-# 15 Premium extra articles (Only keep those that have external links!)
-extra_articles = [
-    {
-        "title": "Nhãn lồng Hưng Yên: Loại quả tiến vua nức tiếng gần xa",
-        "category": "Đặc sản",
-        "date": "15/07/2026",
-        "image": "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?auto=format&fit=crop&w=800&q=80",
-        "desc": "Khám phá câu chuyện về nhãn lồng Hưng Yên tiến vua với vị ngọt lịm đặc trưng, cùi dày giòn thơm nức tiếng cả nước.",
-        "text": "<p>Nhãn lồng Hưng Yên: Loại quả tiến vua nức tiếng gần xa</p>",
-        "sourceUrl": "https://vnexpress.net/nhan-long-hung-yen-tien-vua-nuc-tieng-gan-xa-4645231.html",
-        "publisher": "VnExpress"
-    },
-    {
-        "title": "Làng cổ Nôm: Điểm đến bình yên đậm chất đồng bằng Bắc Bộ",
-        "category": "Di tích",
-        "date": "14/07/2026",
-        "image": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80",
-        "desc": "Hành trình tìm về làng cổ Nôm Hưng Yên mang vẻ đẹp mộc mạc yên bình với mái đình cổ kính, cây cầu đá hơn 200 năm tuổi.",
-        "text": "<p>Làng cổ Nôm: Điểm đến bình yên đậm chất đồng bằng Bắc Bộ</p>",
-        "sourceUrl": "https://vietnamnet.vn/lang-co-nom-hung-yen-diem-den-binh-yen-dam-chat-bac-bo-2165241.html",
-        "publisher": "VietnamNet"
-    },
-    {
-        "title": "Chùa Chuông Hưng Yên - Phố Hiến đệ nhất danh lam cổ tự",
-        "category": "Di tích",
-        "date": "13/07/2026",
-        "image": "https://images.unsplash.com/photo-1598977123418-45f04b616a0e?auto=format&fit=crop&w=800&q=80",
-        "desc": "Chiêm ngưỡng kiến trúc uy nghi tráng lệ cùng không gian thanh tịnh tĩnh lặng của ngôi chùa danh tiếng số một Phố Hiến xưa.",
-        "text": "<p>Chùa Chuông Hưng Yên - Phố Hiến đệ nhất danh lam cổ tự</p>",
-        "sourceUrl": "https://nhandan.vn/chua-chuong-hung-yen-pho-hien-de-nhat-danh-lam-2154321.html",
-        "publisher": "Báo Nhân Dân"
-    },
-    {
-        "title": "Đặc sản gà Đông Tảo Hưng Yên đắt đỏ, săn đón dịp Tết",
-        "category": "Đặc sản",
-        "date": "12/07/2026",
-        "image": "https://images.unsplash.com/photo-1548812240-cf9858398270?auto=format&fit=crop&w=800&q=80",
-        "desc": "Cận cảnh giống gà chân to Đông Tảo độc nhất vô nhị vùng đất Khoái Châu, Hưng Yên được săn lùng làm quà biếu Tết xa xỉ.",
-        "text": "<p>Đặc sản gà Đông Tảo Hưng Yên đắt đỏ, săn đón dịp Tết</p>",
-        "sourceUrl": "https://dantri.com.vn/kinh-doanh/dac-san-ga-dong-tao-hung-yen-dat-do-san-don-dip-tet-202312151240321.htm",
-        "publisher": "Dân Trí"
-    },
-    {
-        "title": "Đền Mẫu Hưng Yên: Ngôi đền thiêng bên hồ Bán Nguyệt thơ mộng",
-        "category": "Di tích",
-        "date": "11/07/2026",
-        "image": "https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=800&q=80",
-        "desc": "Tìm hiểu giá trị lịch sử văn hóa tâm linh lâu đời của Đền Mẫu thờ bà Dương Quý Phi tọa lạc bên danh thắng hồ Bán Nguyệt xinh đẹp.",
-        "text": "<p>Đền Mẫu Hưng Yên: Ngôi đền thiêng bên hồ Bán Nguyệt thơ mộng</p>",
-        "sourceUrl": "https://vnexpress.net/den-mau-hung-yen-ngoi-den-thieng-ben-ho-ban-nguyet-4654321.html",
-        "publisher": "VnExpress"
-    },
-    {
-        "title": "Hưng Yên đẩy mạnh phát triển du lịch làng nghề truyền thống",
-        "category": "Làng nghề",
-        "date": "10/07/2026",
-        "image": "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?auto=format&fit=crop&w=800&q=80",
-        "desc": "Đề án thúc đẩy du lịch sinh thái kết hợp trải nghiệm các làng nghề mây tre đan, đúc đồng, làm nhang xạ tại tỉnh Hưng Yên.",
-        "text": "<p>Hưng Yên đẩy mạnh phát triển du lịch làng nghề truyền thống</p>",
-        "sourceUrl": "https://baotintuc.vn/du-lich/hung-yen-day-manh-phat-trien-du-lich-lang-nghe-truyen-thong-202310151122334.htm",
-        "publisher": "Thông tấn xã Việt Nam"
-    },
-    {
-        "title": "Bánh răng bừa Phố Phủ: Món quà quê giản dị mà níu chân du khách",
-        "category": "Đặc sản",
-        "date": "09/07/2026",
-        "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=800&q=80",
-        "desc": "Thưởng thức món bánh tẻ răng bừa Phố Phủ dẻo thơm, nhân thịt mộc nhĩ đậm đà đậm đà tình quê xứ nhãn.",
-        "text": "<p>Bánh răng bừa Phố Phủ: Món quà quê giản dị mà níu chân du khách</p>",
-        "sourceUrl": "https://vnexpress.net/banh-rang-bua-hung-yen-mon-qua-que-gian-di-4612345.html",
-        "publisher": "VnExpress"
-    },
-    {
-        "title": "Làng nghề đan đó Thủ Sỹ: Nét vẽ mộc mạc của làng quê Việt",
-        "category": "Làng nghề",
-        "date": "08/07/2026",
-        "image": "https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=800&q=80",
-        "desc": "Chiêm ngưỡng những chiếc đó đánh cá bằng tre đan nghệ thuật xếp như những đóa hoa khổng lồ tại làng nghề Thủ Sỹ Hưng Yên.",
-        "text": "<p>Làng nghề đan đó Thủ Sỹ: Nét vẽ mộc mạc của làng quê Việt</p>",
-        "sourceUrl": "https://vnexpress.net/lang-nghe-dan-do-thu-sy-hung-yen-4623456.html",
-        "publisher": "VnExpress"
-    },
-    {
-        "title": "Tương bần Hưng Yên: Hương vị đậm đà trong ẩm thực Việt",
-        "category": "Đặc sản",
-        "date": "07/07/2026",
-        "image": "https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?auto=format&fit=crop&w=800&q=80",
-        "desc": "Quy trình làm tương bần thủ công truyền thống kỳ công từ xôi nếp, đỗ tương, mốc tương của thị trấn Bần Yên Nhân nổi danh.",
-        "text": "<p>Tương bần Hưng Yên: Hương vị đậm đà trong ẩm thực Việt</p>",
-        "sourceUrl": "https://vietnamnet.vn/tuong-ban-hung-yen-huong-vi-dam-da-am-thuc-viet-2143210.html",
-        "publisher": "VietnamNet"
-    },
-    {
-        "title": "Danh nhân Hải Thượng Lãn Ông Lê Hữu Trác và quê hương Hưng Yên",
-        "category": "Danh nhân",
-        "date": "06/07/2026",
-        "image": "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80",
-        "desc": "Tìm hiểu về cuộc đời và sự nghiệp y học lừng lẫy của đại danh y Lê Hữu Trác gắn liền với quê mẹ Yên Mỹ, Hưng Yên.",
-        "text": "<p>Danh nhân Hải Thượng Lãn Ông Lê Hữu Trác và quê hương Hưng Yên</p>",
-        "sourceUrl": "https://suckhoedoisong.vn/danh-nhan-hai-thuong-lan-ong-le-huu-trac-va-que-huong-hung-yen-169231215.htm",
-        "publisher": "Sức khỏe & Đời sống"
-    },
-    {
-        "title": "Đền Chử Đồng Tử - Tiên Dung: Bản tình ca bất tử bên dòng sông Hồng",
-        "category": "Di tích",
-        "date": "05/07/2026",
-        "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80",
-        "desc": "Huyền thoại tình yêu đôi lứa bất tử giữa chàng trai nghèo Chử Đồng Tử và nàng công chúa Tiên Dung tại đền thờ Đa Hòa Hưng Yên.",
-        "text": "<p>Đền Chử Đồng Tử - Tiên Dung: Bản tình ca bất tử bên dòng sông Hồng</p>",
-        "sourceUrl": "http://baovanhoa.vn/du-lich/den-chu-dong-tu-tien-dung-ban-tinh-ca-bat-tu-245123.html",
-        "publisher": "Báo Văn Hóa"
-    },
-    {
-        "title": "Sen hồ Bán Nguyệt Hưng Yên vào mùa nở rộ tuyệt đẹp",
-        "category": "Photo",
-        "date": "04/07/2026",
-        "image": "https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=800&q=80",
-        "desc": "Ngắm nhìn đầm sen hồng ngát hương thơm lãng mạn bên hồ Bán Nguyệt thu hút đông đảo du khách chụp ảnh kỷ niệm.",
-        "text": "<p>Sen hồ Bán Nguyệt Hưng Yên vào mùa nở rộ tuyệt đẹp</p>",
-        "sourceUrl": "https://vnexpress.net/sen-ho-ban-nguyet-hung-yen-vao-mua-no-ro-4634567.html",
-        "publisher": "VnExpress"
-    },
-    {
-        "title": "Làng hoa Xuân Quan Hưng Yên nhộn nhịp những chuyến xe ngày cận Tết",
-        "category": "Làng nghề",
-        "date": "03/07/2026",
-        "image": "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=800&q=80",
-        "desc": "Hàng ngàn chậu hoa dạ yến thảo, cúc, đồng tiền rực rỡ sắc màu được vận chuyển đi khắp các tỉnh thành từ vựa hoa Xuân Quan.",
-        "text": "<p>Làng hoa Xuân Quan Hưng Yên nhộn nhịp những chuyến xe ngày cận Tết</p>",
-        "sourceUrl": "https://vietnamnet.vn/lang-hoa-xuan-quan-hung-yen-nhon-nhip-can-tet-2156789.html",
-        "publisher": "VietnamNet"
-    },
-    {
-        "title": "Dịch vụ tour du lịch sinh thái miệt vườn nhãn lồng đắt khách tại Hưng Yên",
-        "category": "Dịch vụ",
-        "date": "02/07/2026",
-        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
-        "desc": "Khách du lịch thích thú khi tự tay hái nhãn lồng chín ngọt lịm trĩu quả ngay tại vườn và thưởng thức các món ăn đồng quê.",
-        "text": "<p>Dịch vụ tour du lịch sinh thái miệt vườn nhãn lồng đắt khách tại Hưng Yên</p>",
-        "sourceUrl": "https://baodautu.vn/dich-vu-tour-du-lich-sinh-thai-miet-vuon-nhan-long-hung-yen-198765.html",
-        "publisher": "Báo Đầu tư"
-    },
-    {
-        "title": "Khám phá các homestay, nhà cổ chuẩn kiến trúc Việt xưa tại làng cổ Nôm Hưng Yên",
-        "category": "Dịch vụ",
-        "date": "01/07/2026",
-        "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
-        "desc": "Trải nghiệm kỳ nghỉ homestay trong lòng những ngôi nhà gỗ cổ kính ba gian năm gian đậm đà hồn cốt vùng Bắc Bộ.",
-        "text": "<p>Khám phá các homestay, nhà cổ chuẩn kiến trúc Việt xưa tại làng cổ Nôm Hưng Yên</p>",
-        "sourceUrl": "https://vnexpress.net/homestay-nha-co-viet-xua-lang-nom-hung-yen-4647890.html",
-        "publisher": "VnExpress"
-    }
-]
-
-# Ensure extra_articles has unique titles and urls
-filtered_extra_articles = []
-for art in extra_articles:
-    t_clean = art['title'].strip().lower()
-    u_clean = art['sourceUrl'].strip().lower()
-    if t_clean not in seen_titles and u_clean not in seen_urls:
-        seen_titles.add(t_clean)
-        seen_urls.add(u_clean)
-        filtered_extra_articles.append(art)
-
-# Final mix (strictly only articles with valid URLs!)
-combined_final_articles = deduped_baomoi + filtered_extra_articles
-
-for idx, art in enumerate(combined_final_articles):
-
-    final_articles.append({
-
-        'id': idx + 1,
-
-        'title': art['title'],
-
-        'category': art['category'],
-
-        'date': art['date'],
-
-        'image': art['image'],
-
-        'desc': art['desc'],
-
-        'text': art['text'],
-
-        'isHot': idx == 0,
-
-        'views': 5000 + (idx * 250),
-
-        'sourceUrl': art['sourceUrl'],
-
-        'publisher': art.get('publisher', 'Ban biên tập')
-
-    })
-
-# Format as JavaScript array
-
-js_array_content = "const mockArticles = [\n"
-
-for art in final_articles:
-
-    js_array_content += f"      {{\n"
-
-    js_array_content += f"        id: {art['id']},\n"
-
-    js_array_content += f"        title: {json.dumps(art['title'], ensure_ascii=False)},\n"
-
-    js_array_content += f"        category: {json.dumps(art['category'], ensure_ascii=False)},\n"
-
-    js_array_content += f"        date: {json.dumps(art['date'], ensure_ascii=False)},\n"
-
-    js_array_content += f"        image: {json.dumps(art['image'], ensure_ascii=False)},\n"
-
-    js_array_content += f"        desc: {json.dumps(art['desc'], ensure_ascii=False)},\n"
-
-    js_array_content += f"        text: {json.dumps(art['text'], ensure_ascii=False)},\n"
-
-    js_array_content += f"        isHot: {'true' if art['isHot'] else 'false'},\n"
-
-    js_array_content += f"        views: {art['views']},\n"
-
-    js_array_content += f"        sourceUrl: {json.dumps(art['sourceUrl'], ensure_ascii=False)},\n"
-
-    js_array_content += f"        publisher: {json.dumps(art['publisher'], ensure_ascii=False)}\n"
-
-    js_array_content += f"      }},\n"
-
-js_array_content = js_array_content.rstrip(",\n") + "\n    ];"
-
-# 6. Apply to all 4 HTML files
-
-files = [
-
-    r"d:\Xây web\hungyen_24h\main.html",
-
-    r"d:\Xây web\hungyen_24h\home.html",
-
-    r"d:\Xây web\hungyen_24h\index.html",
-
-    r"d:\Xây web\hungyen_24h\baomoi.html"
-
-]
-
-for file_path in files:
-
-    print(f"Integrating live Baomoi articles in: {file_path}")
-
-    try:
-
-        with open(file_path, "r", encoding="utf-8") as f:
-
-            content = f.read()
-
-        # Update mockArticles definition block
-
-        pattern_articles = r'const\s*mockArticles\s*=\s*\[[\s\S]*?\];\s*//'
-
-        content, count_art = re.subn(pattern_articles, js_array_content + "\n    //", content)
-
-        if count_art == 0:
-
-            pattern_articles_alt = r'const\s*mockArticles\s*=\s*\[[\s\S]*?\];'
-
-            content, count_art = re.subn(pattern_articles_alt, js_array_content, content)
-
-        print(f"  Updated mockArticles block: {count_art}")
-
-        # Update viewArticleDetails logic to handle sourceUrl opening in new tab
-
-        # 3. Update viewArticleDetails function inside HTML using robust regex
-
-        pattern_view = r'viewArticleDetails\s*=\s*function\s*\(\s*id\s*\)\s*\{[\s\S]*?document\.body\.style\.overflow\s*=\s*\'hidden\';\s*\}'
-
-        replacement_view = """viewArticleDetails = function(id) {
-
-      const art = mockArticles.find(a => a.id === id);
-
-      if (!art) return;
-
-      // If the article has a live external source URL, open it in a new tab
-
-      if (art.sourceUrl && art.sourceUrl.startsWith('http')) {
-
-        window.open(art.sourceUrl, '_blank');
-
-        return;
-
-      }
-
-      const body = document.getElementById('modal-article-body');
-
-      let sourceBtnHtml = '';
-
-      if (art.sourceUrl && art.sourceUrl.startsWith('http')) {
-
-        sourceBtnHtml = `
-
-          <div style="margin-top:25px; border-top:1px solid var(--border-color); padding-top:20px; text-align:center;">
-
-            <button class="btn btn-primary" onclick="window.open('${art.sourceUrl}', '_blank')" style="background:var(--primary); color:white; border:none; padding:12px 24px; border-radius:6px; font-weight:700; cursor:pointer; font-size:0.95rem; width:100%; display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 12px rgba(225,29,72,0.15); transition:all 0.3s ease;">
-
-              <i class="fas fa-external-link-alt"></i> Đọc bài viết gốc trên ${art.publisher || 'Nguồn báo'}
-
-            </button>
-
-          </div>
-
-        `;
-
-      }
-
-      body.innerHTML = `
-
-        <div class="modal-image">
-
-          <img src="${art.image}" alt="${art.title}">
-
-        </div>
-
-        <div class="modal-meta">
-
-          <span class="modal-category">${art.category}</span>
-
-          <span><i class="far fa-clock"></i> ${art.date}</span>
-
-          <span><i class="far fa-newspaper"></i> Nguồn: ${art.publisher || 'Tin tức'}</span>
-
-          <span><i class="far fa-eye"></i> ${art.views.toLocaleString()} lượt xem</span>
-
-        </div>
-
-        <h2 class="modal-title">${art.title}</h2>
-
-        <div class="modal-desc" style="font-weight:700; margin-bottom:15px; color:var(--text-dark);">${art.desc}</div>
-
-        <div class="modal-text">${art.text}</div>
-
-        ${sourceBtnHtml}
-
-        <div class="modal-share" style="margin-top:20px;">
-
-          <span class="modal-share-title">Chia sẻ bài viết:</span>
-
-          <a href="#" class="modal-share-btn fb" onclick="event.preventDefault(); showToast('Chia sẻ Facebook thành công!')"><i class="fab fa-facebook-f"></i></a>
-
-          <a href="#" class="modal-share-btn tw" onclick="event.preventDefault(); showToast('Chia sẻ Twitter thành công!')"><i class="fab fa-twitter"></i></a>
-
-        </div>
-
-      `;
-
-      const modal = document.getElementById('article-modal');
-
-      modal.classList.add('show');
-
-      document.body.style.overflow = 'hidden';
-
-    }"""
-
-        content, count_view = re.subn(pattern_view, replacement_view, content)
-
-        print(f"  Regex viewArticleDetails update: {count_view}")
-
-        # 4. Update filterCategory card template inside HTML using robust regex
-
-        pattern_filter = r'(filtered\.forEach\(\s*art\s*=>\s*\{\s*html\s*\+=\s*`)([\s\S]*?)(`;\s*\}\s*\);\s*resultsGrid\.innerHTML\s*=\s*html;)'
-
-        replacement_filter = """              <div class="card" onclick="viewArticleDetails(${art.id})">
-
-                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
-
-                <div class="card-content" style="padding: 20px;">
-
-                  <div class="card-meta">
-
-                    <span><i class="far fa-folder"></i> ${art.category}</span>
-
-                    <span><i class="far fa-clock"></i> ${art.date}</span>
-
-                    <span><i class="far fa-newspaper"></i> ${art.publisher || 'Tin tức'}</span>
-
-                  </div>
-
-                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
-
-                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
-
-                </div>
-
-              </div>"""
-
-        content, count_filter = re.subn(pattern_filter, lambda m: m.group(1) + replacement_filter + m.group(3), content)
-
-        print(f"  Regex filterCategory card update: {count_filter}")
-
-        # 5. Update handleSearch card template inside HTML using robust regex
-
-        pattern_search = r'(matches\.forEach\(\s*art\s*=>\s*\{\s*html\s*\+=\s*`)([\s\S]*?)(`;\s*\}\s*\);\s*resultsGrid\.innerHTML\s*=\s*html;)'
-
-        replacement_search = """              <div class="card" onclick="viewArticleDetails(${art.id})">
-
-                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
-
-                <div class="card-content" style="padding: 20px;">
-
-                  <div class="card-meta">
-
-                    <span><i class="far fa-folder"></i> ${art.category}</span>
-
-                    <span><i class="far fa-clock"></i> ${art.date}</span>
-
-                    <span><i class="far fa-newspaper"></i> ${art.publisher || 'Tin tức'}</span>
-
-                  </div>
-
-                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
-
-                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
-
-                </div>
-
-              </div>"""
-
-        content, count_search = re.subn(pattern_search, lambda m: m.group(1) + replacement_search + m.group(3), content)
-
-        print(f"  Regex handleSearch card update: {count_search}")
-
-        with open(file_path, "w", encoding="utf-8") as f:
-
-            f.write(content)
-
-        print("  Saved successfully.")
-
-    except Exception as e:
-
-        print(f"  Error on {file_path}: {e}")
-
+import urllib.request
+
+from bs4 import BeautifulSoup
+
+import re
+
+import json
+
+# 1. Fetch baomoi.com homepage & category feeds
+
+import urllib.request
+
+import re
+
+import json
+
+import os
+
+from bs4 import BeautifulSoup
+
+from concurrent.futures import ThreadPoolExecutor
+
+baomoi_urls = [
+    ("https://baomoi.com/", "Tin Nóng"),
+    ("https://baomoi.com/kinh-doanh.epi", "Kinh doanh"),
+    ("https://baomoi.com/khoa-hoc-cong-nghe.epi", "Khoa học công nghệ"),
+    ("https://baomoi.com/nha-dat.epi", "Bất động sản"),
+    ("https://baomoi.com/suc-khoe-y-te.epi", "Sức khỏe"),
+    ("https://baomoi.com/giai-tri.epi", "Giải trí"),
+    ("https://baomoi.com/the-thao.epi", "Thể thao"),
+    ("https://baomoi.com/xe-co.epi", "Xe"),
+    ("https://baomoi.com/du-lich.epi", "Du lịch")
+]
+
+raw_scraped_articles = []
+
+headers = {
+
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+
+}
+
+for url, default_cat in baomoi_urls:
+
+    print(f"Fetching live articles from {url}...")
+
+    try:
+
+        req = urllib.request.Request(url, headers=headers)
+
+        with urllib.request.urlopen(req, timeout=15) as response:
+
+            html = response.read().decode('utf-8')
+
+        print(f"  Fetched successfully. Length: {len(html)}")
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        story_divs = soup.find_all(class_=re.compile(r'story|card|item', re.IGNORECASE))
+
+        count_added = 0
+
+        for div in story_divs:
+
+            title_el = div.find(class_=re.compile(r'title|heading|subject', re.IGNORECASE))
+
+            if not title_el and div.name == 'a':
+
+                title_el = div
+
+            if not title_el:
+
+                for a in div.find_all('a'):
+
+                    if a.text.strip() and len(a.text.strip()) > 15:
+
+                        title_el = a
+
+                        break
+
+            if not title_el:
+
+                continue
+
+            title = title_el.text.strip()
+
+            if not title or len(title) < 15:
+
+                continue
+
+            link_el = div.find('a') if div.name != 'a' else div
+
+            if not link_el and title_el.name == 'a':
+
+                link_el = title_el
+
+            link = link_el.get('href', '') if link_el else ''
+
+            if not link.startswith('http'):
+
+                link = "https://baomoi.com" + link
+
+            img = div.find('img')
+
+            img_src = ''
+
+            if img:
+
+                img_src = img.get('src') or img.get('data-src') or img.get('srcset') or ''
+
+                if 'gif' in img_src or 'base64' in img_src:
+
+                    img_src = img.get('data-src') or img.get('srcset') or img_src
+
+            if not img_src:
+
+                continue
+
+            desc_el = div.find(class_=re.compile(r'desc|summary|abstract|content', re.IGNORECASE))
+
+            desc = desc_el.text.strip() if desc_el else ''
+
+            if not desc:
+
+                desc = title
+
+            source_el = div.find(class_='bm-card-source')
+
+            source_name = ""
+
+            if source_el:
+
+                source_name = source_el.get('title') or ""
+
+                if not source_name:
+
+                    source_img = source_el.find('img')
+
+                    source_name = source_img.get('alt') if source_img else ""
+
+            if not source_name:
+
+                source_name = "Báo Mới"
+
+            title = re.sub(r'\d+\s*(giờ|phút|ngày|tháng|năm|liên quan).*$', '', title).strip()
+
+            desc = re.sub(r'\d+\s*(giờ|phút|ngày|tháng|năm|liên quan).*$', '', desc).strip()
+
+            raw_scraped_articles.append({
+
+                'title': title,
+
+                'link': link,
+
+                'image': img_src,
+
+                'desc': desc,
+
+                'publisher': source_name,
+
+                'default_cat': default_cat
+
+            })
+
+            count_added += 1
+
+        print(f"  Parsed {count_added} articles from BeautifulSoup.")
+
+    except Exception as e:
+
+        print(f"  Error crawling {url}: {e}")
+
+# 2. Categorize using strict keyword rules
+
+def classify_category(title, desc, default_cat):
+
+    title_lower = title.lower()
+
+    desc_lower = desc.lower()
+
+    # If the article is from homepage or general business feed, classify it dynamically
+
+    if default_cat in ["Kinh doanh", "homepage", "Tin Nóng"]:
+
+        # Check "Bất động sản" first
+
+        if any(k in title_lower or k in desc_lower for k in ['bất động sản', 'nhà đất', 'chung cư', 'dự án đô thị', 'căn hộ', 'đất nền', 'địa ốc', 'nhà phố', 'biệt thự', 'quy hoạch đất']):
+
+            return 'Bất động sản'
+
+        if any(k in title_lower or k in desc_lower for k in ['công nghệ', 'khoa học', 'ai', 'trí tuệ nhân tạo', 'phần mềm', 'điện thoại', 'máy tính', 'smartphone', 'mạng xã hội', 'facebook', 'google', 'apple', 'bán dẫn', 'vi mạch', 'robot']):
+
+            return 'Khoa học công nghệ'
+
+        if any(k in title_lower or k in desc_lower for k in ['sức khỏe', 'y tế', 'bệnh viện', 'dịch bệnh', 'bác sĩ', 'điều trị', 'dinh dưỡng', 'thuốc', 'phòng bệnh', 'tim mạch', 'ung thư']):
+
+            return 'Sức khỏe'
+
+        if any(k in title_lower or k in desc_lower for k in ['giải trí', 'điện ảnh', 'phim', 'showbiz', 'nghệ sĩ', 'ca sĩ', 'diễn viên', 'âm nhạc', 'thời trang', 'hoa hậu', 'văn hóa', 'concert', 'album']):
+
+            return 'Giải trí'
+
+        if any(k in title_lower or k in desc_lower for k in ['thể thao', 'bóng đá', 'euro', 'world cup', 'ngoại hạng anh', 'tennis', 'vận động viên', 'olympic', 'huy chương', 'bơi lội', 'cầu lông', 'điền kinh']):
+
+            return 'Thể thao'
+
+        if any(k in title_lower or k in desc_lower for k in ['ô tô', 'xe máy', 'xe điện', 'vinfast', 'honda', 'toyota', 'siêu xe', 'xe hơi', 'động cơ', 'tesla', 'hãng xe', 'suv', 'sedan']):
+
+            return 'Xe'
+
+        if any(k in title_lower or k in desc_lower for k in ['du lịch', 'tour', 'khách sạn', 'homestay', 'bãi biển', 'khám phá', 'resort', 'kỳ nghỉ', 'hành trình du lịch']):
+
+            return 'Du lịch'
+
+    return default_cat
+
+# Remove scraped duplicates and categorise
+
+seen_titles = set()
+
+seen_urls = set()
+
+unique_scraped = []
+
+for art in raw_scraped_articles:
+
+    t_clean = art['title'].strip().lower()
+
+    l_clean = art['link'].strip().lower()
+
+    if t_clean not in seen_titles and l_clean not in seen_urls:
+
+        seen_titles.add(t_clean)
+
+        seen_urls.add(l_clean)
+
+        unique_scraped.append(art)
+
+print(f"Extracted {len(unique_scraped)} unique live crawled articles.")
+
+baomoi_articles_final = []
+
+for art in unique_scraped:
+
+    # Skip political articles
+
+    title_lower = art['title'].lower()
+
+    desc_lower = art['desc'].lower()
+
+    politics_keywords = ['chính trị', 'bộ chính trị', 'tổng bí thư', 'chủ tịch nước', 'thủ tướng', 'quốc hội', 'chính phủ', 'bầu cử', 'đại biểu quốc hội', 'trung ương đảng', 'tỉnh ủy', 'thành ủy', 'đảng cộng sản', 'chính trị viên', 'họp đảng', 'báo cáo đảng']
+
+    if any(k in title_lower or k in desc_lower for k in politics_keywords):
+
+        continue
+
+    category = classify_category(art['title'], art['desc'], art['default_cat'])
+
+    img_url = art['image']
+
+    redirect_url = re.sub(r'-c(\d+)', r'-r\g<1>', art['link'])
+
+    baomoi_articles_final.append({
+
+        'title': art['title'],
+
+        'category': category,
+
+        'date': "16/07/2026",
+
+        'image': img_url,
+
+        'desc': art['desc'],
+
+        'text': f"<p>{art['desc']}</p><p>Đọc bài viết gốc đầy đủ trên nguồn phát hành tại đường dẫn dưới đây.</p>",
+
+        'sourceUrl': redirect_url,
+
+        'publisher': art.get('publisher', 'Báo Mới')
+
+    })
+
+# 3. Resolve redirect_urls to original URLs in parallel
+
+if baomoi_articles_final:
+
+    print(f"  Resolving {len(baomoi_articles_final)} Bao Moi redirect URLs to direct original URLs...")
+
+    def resolve_single_article_url(item):
+
+        url = item['sourceUrl']
+
+        if not url.startswith('http'):
+
+            return
+
+        try:
+
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
+
+            with urllib.request.urlopen(req, timeout=5) as response:
+
+                html_res = response.read().decode('utf-8')
+
+                match_json = re.search(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', html_res)
+
+                if match_json:
+
+                    data_json = json.loads(match_json.group(1))
+
+                    orig = data_json['props']['pageProps']['resp']['data']['content']['originalUrl']
+
+                    if orig.startswith('http'):
+
+                        item['sourceUrl'] = orig
+
+        except Exception:
+
+            pass
+
+    with ThreadPoolExecutor(max_workers=25) as executor:
+
+        executor.map(resolve_single_article_url, baomoi_articles_final)
+
+    print("  Successfully resolved all redirect URLs to direct publisher URLs!")
+
+# 4. Merging with History (No empty link articles!)
+
+final_articles = []
+
+def parse_articles_regex(content_str):
+
+    match_arr = re.search(r'const\s+mockArticles\s*=\s*\[([\s\S]*?)\];', content_str)
+
+    if not match_arr:
+
+        return []
+
+    array_content = match_arr.group(1)
+
+    blocks = re.findall(r'\{([\s\S]*?)\}', array_content)
+
+    parsed_articles = []
+
+    for block in blocks:
+
+        art = {}
+
+        matches = re.finditer(r'(\w+):\s*("([^"\\]*(?:\\.[^"\\]*)*)"|\'([^\'\\]*(?:\\.[^\'\\]*)*)\'|(\d+)|true|false)', block)
+
+        for m in matches:
+
+            key = m.group(1)
+
+            double_val = m.group(3)
+
+            single_val = m.group(4)
+
+            int_val = m.group(5)
+
+            raw_val = m.group(2)
+
+            if double_val is not None:
+
+                art[key] = double_val.replace('\\"', '"').replace('\\\\', '\\')
+
+            elif single_val is not None:
+
+                art[key] = single_val.replace("\\'", "'").replace('\\\\', '\\')
+
+            elif int_val is not None:
+
+                art[key] = int(int_val)
+
+            else:
+
+                art[key] = raw_val == 'true'
+
+        if art:
+
+            parsed_articles.append(art)
+
+    return parsed_articles
+
+# Load existing database to accumulate history
+
+existing_baomoi_articles = []
+
+index_path = r"d:\Xây web\hungyen_24h\index.html"
+
+if os.path.exists(index_path):
+
+    try:
+
+        with open(index_path, "r", encoding="utf-8") as f_idx:
+
+            idx_content = f_idx.read()
+
+        all_existing = parse_articles_regex(idx_content)
+
+        # Keep ONLY articles that have a valid sourceUrl (no empty links!) and map to our new categories
+
+        valid_categories = {"Tin Nóng", "Kinh doanh", "Khoa học công nghệ", "Bất động sản", "Sức khỏe", "Giải trí", "Thể thao", "Xe", "Du lịch"}
+
+        existing_baomoi_articles = []
+
+        for a in all_existing:
+
+            if a.get('sourceUrl') and a.get('sourceUrl').startswith('http'):
+
+                # Skip political articles from history
+
+                title_lower = a.get('title', '').lower()
+
+                desc_lower = a.get('desc', '').lower()
+
+                politics_keywords = ['chính trị', 'bộ chính trị', 'tổng bí thư', 'chủ tịch nước', 'thủ tướng', 'quốc hội', 'chính phủ', 'bầu cử', 'đại biểu quốc hội', 'trung ương đảng', 'tỉnh ủy', 'thành ủy', 'đảng cộng sản', 'chính trị viên', 'họp đảng', 'báo cáo đảng']
+
+                if any(k in title_lower or k in desc_lower for k in politics_keywords):
+
+                    continue
+
+                cat = a.get('category', '')
+
+                if cat not in valid_categories:
+
+                    cat = classify_category(a.get('title', ''), a.get('desc', ''), 'Tin Nóng')
+
+                a['category'] = cat
+
+                existing_baomoi_articles.append(a)
+
+        print(f"  Loaded {len(existing_baomoi_articles)} existing articles with valid links from index.html.")
+
+    except Exception as e:
+
+        print(f"  Warning: Failed to load existing articles: {e}")
+
+# 5. Merge, group and persist history using a local JSON database scraped_history.json
+
+# This prevents duplication and allows accumulative infinite scroll of older articles!
+
+import json
+
+# Fallback high quality Unsplash stock images categorized by topic
+
+fallback_images = {
+
+    'Tin Nóng': [
+
+        'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1495020689067-958852a6565d?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Kinh doanh': [
+
+        'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Khoa học công nghệ': [
+
+        'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Bất động sản': [
+
+        'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Sức khỏe': [
+
+        'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Giải trí': [
+
+        'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Thể thao': [
+
+        'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Xe': [
+
+        'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=600&q=80'
+
+    ],
+
+    'Du lịch': [
+
+        'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=600&q=80',
+
+        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80'
+
+    ]
+
+}
+
+def get_matching_image(category, title):
+
+    title_lower = title.lower()
+
+    if any(k in title_lower for k in ['bóng đá', 'world cup', 'messi', 'ronaldo', 'mu', 'chelsea', 'argentina', 'hướng dẫn đá', 'sân vận động']):
+
+        return 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80'
+
+    if any(k in title_lower for k in ['vàng', 'sjc', 'doji', 'tỷ giá', 'usd', 'ngân hàng', 'lãi suất', 'tài chính', 'cổ phiếu']):
+
+        return 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=600&q=80'
+
+    if any(k in title_lower for k in ['iphone', 'điện thoại', 'smartphone', 'máy tính', 'chip', 'bán dẫn', 'trí tuệ nhân tạo', 'chạy thử ai']):
+
+        return 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80'
+
+    if any(k in title_lower for k in ['biệt thự', 'villa', 'chung cư', 'nhà đất', 'homestay', 'khách sạn', 'phòng nghỉ', 'dọn phòng']):
+
+        return 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'
+
+    if any(k in title_lower for k in ['ẩm thực', 'ăn uống', 'quán', 'hủ tiếu', 'buffet', 'sáng miễn phí', 'bữa ăn']):
+
+        return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80'
+
+    if any(k in title_lower for k in ['xe điện', 'vinfast', 'ô tô', 'tesla', 'honda', 'hãng xe', 'vf 2', 'xe hơi']):
+
+        return 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80'
+
+        
+
+    images = fallback_images.get(category, fallback_images['Tin Nóng'])
+
+    idx = len(title) % len(images)
+
+    return images[idx]
+
+def is_image_empty(img_str):
+
+    if not img_str:
+
+        return True
+
+    img_lower = img_str.strip().lower()
+
+    return img_lower.startswith('data:image/') or 'base64' in img_lower or '1x1' in img_lower or img_lower == 'no image'
+
+history_db_path = r"d:\Xây web\hungyen_24h\scraped_history.json"
+
+history_pool = []
+
+if os.path.exists(history_db_path):
+
+    try:
+
+        with open(history_db_path, "r", encoding="utf-8") as f_db:
+
+            history_pool = json.load(f_db)
+
+        print(f"  Loaded {len(history_pool)} historical articles from scraped_history.json.")
+
+    except Exception as e:
+
+        print(f"  Warning: Failed to load scraped_history.json: {e}")
+
+# Merge newly crawled, history db, and index.html history
+
+all_candidates = baomoi_articles_final + history_pool + existing_baomoi_articles
+
+seen_titles = set()
+
+seen_urls = set()
+
+deduped_pool = []
+
+valid_categories = {"Tin Nóng", "Kinh doanh", "Khoa học công nghệ", "Bất động sản", "Sức khỏe", "Giải trí", "Thể thao", "Xe", "Du lịch"}
+
+politics_keywords = ['chính trị', 'bộ chính trị', 'tổng bí thư', 'chủ tịch nước', 'thủ tướng', 'quốc hội', 'chính phủ', 'bầu cử', 'đại biểu quốc hội', 'trung ương đảng', 'tỉnh ủy', 'thành ủy', 'đảng cộng sản', 'chính trị viên', 'họp đảng', 'báo cáo đảng']
+
+for art in all_candidates:
+
+    title = art.get('title', '').strip()
+
+    url = art.get('sourceUrl', '').strip()
+
+    
+
+    if not title or not url.startswith('http'):
+
+        continue
+
+        
+
+    t_clean = title.lower()
+
+    u_clean = url.lower()
+
+    
+
+    # Filter political news
+
+    if any(k in t_clean or k in art.get('desc', '').lower() for k in politics_keywords):
+
+        continue
+
+        
+
+    if t_clean not in seen_titles and u_clean not in seen_urls:
+
+        seen_titles.add(t_clean)
+
+        seen_urls.add(u_clean)
+
+        
+
+        # Keep original category or classify
+
+        cat = art.get('category', 'Tin Nóng')
+
+        if cat not in valid_categories:
+
+            cat = classify_category(title, art.get('desc', ''), 'Tin Nóng')
+
+        art['category'] = cat
+
+        
+
+        deduped_pool.append(art)
+
+# Save the updated persistent database
+
+try:
+
+    with open(history_db_path, "w", encoding="utf-8") as f_db:
+
+        json.dump(deduped_pool, f_db, ensure_ascii=False, indent=2)
+
+    print(f"  Persisted {len(deduped_pool)} unique articles to scraped_history.json.")
+
+except Exception as e:
+
+    print(f"  Warning: Failed to save scraped_history.json: {e}")
+
+# Sort articles to prioritize 'Tin Nóng' at the top of the list
+
+# This guarantees that the homepage featured slots will display actual hot topics!
+
+hot_articles = [a for a in deduped_pool if a['category'] == 'Tin Nóng']
+
+other_articles = [a for a in deduped_pool if a['category'] != 'Tin Nóng']
+
+combined_final_articles = hot_articles + other_articles
+
+# Cap final mockArticles at 300 to keep the page load optimal while providing vast history
+
+combined_final_articles = combined_final_articles[:400]
+
+print(f"  Total balanced articles loaded: {len(combined_final_articles)}")
+
+for idx, art in enumerate(combined_final_articles):
+
+    final_articles.append({
+
+        'id': idx + 1,
+
+        'title': art['title'],
+
+        'category': art['category'],
+
+        'date': art['date'],
+
+        'image': get_matching_image(art['category'], art['title']) if is_image_empty(art['image']) else art['image'],
+
+        'desc': art['desc'],
+
+        'text': art['text'],
+
+        'isHot': idx == 0,
+
+        'views': 5000 + (idx * 250),
+
+        'sourceUrl': art['sourceUrl'],
+
+        'publisher': art.get('publisher', 'Ban biên tập')
+
+    })
+
+# Format as JavaScript array
+
+js_array_content = "const mockArticles = [\n"
+
+for art in final_articles:
+
+    js_array_content += f"      {{\n"
+
+    js_array_content += f"        id: {art['id']},\n"
+
+    js_array_content += f"        title: {json.dumps(art['title'], ensure_ascii=False)},\n"
+
+    js_array_content += f"        category: {json.dumps(art['category'], ensure_ascii=False)},\n"
+
+    js_array_content += f"        date: {json.dumps(art['date'], ensure_ascii=False)},\n"
+
+    js_array_content += f"        image: {json.dumps(art['image'], ensure_ascii=False)},\n"
+
+    js_array_content += f"        desc: {json.dumps(art['desc'], ensure_ascii=False)},\n"
+
+    js_array_content += f"        text: {json.dumps(art['text'], ensure_ascii=False)},\n"
+
+    js_array_content += f"        isHot: {'true' if art['isHot'] else 'false'},\n"
+
+    js_array_content += f"        views: {art['views']},\n"
+
+    js_array_content += f"        sourceUrl: {json.dumps(art['sourceUrl'], ensure_ascii=False)},\n"
+
+    js_array_content += f"        publisher: {json.dumps(art['publisher'], ensure_ascii=False)}\n"
+
+    js_array_content += f"      }},\n"
+
+js_array_content = js_array_content.rstrip(",\n") + "\n    ];"
+
+# 6. Apply to all 4 HTML files
+
+files = [
+
+    r"d:\Xây web\hungyen_24h\main.html",
+
+    r"d:\Xây web\hungyen_24h\home.html",
+
+    r"d:\Xây web\hungyen_24h\index.html",
+
+    r"d:\Xây web\hungyen_24h\baomoi.html"
+
+]
+
+for file_path in files:
+
+    print(f"Integrating live Baomoi articles in: {file_path}")
+
+    try:
+
+        with open(file_path, "r", encoding="utf-8") as f:
+
+            content = f.read()
+
+        # Update mockArticles definition block
+
+        pattern_articles = r'const\s*mockArticles\s*=\s*\[[\s\S]*?\];\s*//'
+
+        content, count_art = re.subn(pattern_articles, js_array_content + "\n    //", content)
+
+        if count_art == 0:
+
+            pattern_articles_alt = r'const\s*mockArticles\s*=\s*\[[\s\S]*?\];'
+
+            content, count_art = re.subn(pattern_articles_alt, js_array_content, content)
+
+        print(f"  Updated mockArticles block: {count_art}")
+
+        # Update viewArticleDetails logic to handle sourceUrl opening in new tab
+
+        # 3. Update viewArticleDetails function inside HTML using robust regex
+
+        pattern_view = r'viewArticleDetails\s*=\s*function\s*\(\s*id\s*\)\s*\{[\s\S]*?document\.body\.style\.overflow\s*=\s*\'hidden\';\s*\}'
+
+        replacement_view = """viewArticleDetails = function(id) {
+
+      const art = mockArticles.find(a => a.id === id);
+
+      if (!art) return;
+
+      // If the article has a live external source URL, open it in a new tab
+
+      if (art.sourceUrl && art.sourceUrl.startsWith('http')) {
+
+        window.open(art.sourceUrl, '_blank');
+
+        return;
+
+      }
+
+      const body = document.getElementById('modal-article-body');
+
+      let sourceBtnHtml = '';
+
+      if (art.sourceUrl && art.sourceUrl.startsWith('http')) {
+
+        sourceBtnHtml = `
+
+          <div style="margin-top:25px; border-top:1px solid var(--border-color); padding-top:20px; text-align:center;">
+
+            <button class="btn btn-primary" onclick="window.open('${art.sourceUrl}', '_blank')" style="background:var(--primary); color:white; border:none; padding:12px 24px; border-radius:6px; font-weight:700; cursor:pointer; font-size:0.95rem; width:100%; display:inline-flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 4px 12px rgba(225,29,72,0.15); transition:all 0.3s ease;">
+
+              <i class="fas fa-external-link-alt"></i> Đọc bài viết gốc trên ${art.publisher || 'Nguồn báo'}
+
+            </button>
+
+          </div>
+
+        `;
+
+      }
+
+      body.innerHTML = `
+
+        <div class="modal-image">
+
+          <img src="${art.image}" alt="${art.title}">
+
+        </div>
+
+        <div class="modal-meta">
+
+          <span class="modal-category">${art.category}</span>
+
+          <span><i class="far fa-clock"></i> ${art.date}</span>
+
+          <span><i class="far fa-newspaper"></i> Nguồn: ${art.publisher || 'Tin tức'}</span>
+
+          <span><i class="far fa-eye"></i> ${art.views.toLocaleString()} lượt xem</span>
+
+        </div>
+
+        <h2 class="modal-title">${art.title}</h2>
+
+        <div class="modal-desc" style="font-weight:700; margin-bottom:15px; color:var(--text-dark);">${art.desc}</div>
+
+        <div class="modal-text">${art.text}</div>
+
+        ${sourceBtnHtml}
+
+        <div class="modal-share" style="margin-top:20px;">
+
+          <span class="modal-share-title">Chia sẻ bài viết:</span>
+
+          <a href="#" class="modal-share-btn fb" onclick="event.preventDefault(); showToast('Chia sẻ Facebook thành công!')"><i class="fab fa-facebook-f"></i></a>
+
+          <a href="#" class="modal-share-btn tw" onclick="event.preventDefault(); showToast('Chia sẻ Twitter thành công!')"><i class="fab fa-twitter"></i></a>
+
+        </div>
+
+      `;
+
+      const modal = document.getElementById('article-modal');
+
+      modal.classList.add('show');
+
+      document.body.style.overflow = 'hidden';
+
+    }"""
+
+        content, count_view = re.subn(pattern_view, replacement_view, content)
+
+        print(f"  Regex viewArticleDetails update: {count_view}")
+
+        # 4. Update filterCategory card template inside HTML using robust regex
+
+        pattern_filter = r'(filtered\.forEach\(\s*art\s*=>\s*\{\s*html\s*\+=\s*`)([\s\S]*?)(`;\s*\}\s*\);\s*resultsGrid\.innerHTML\s*=\s*html;)'
+
+        replacement_filter = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+
+                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+
+                <div class="card-content" style="padding: 20px;">
+
+                  <div class="card-meta">
+
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+
+                    <span><i class="far fa-newspaper"></i> ${art.publisher || 'Tin tức'}</span>
+
+                  </div>
+
+                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+
+                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+
+                </div>
+
+              </div>"""
+
+        content, count_filter = re.subn(pattern_filter, lambda m: m.group(1) + replacement_filter + m.group(3), content)
+
+        print(f"  Regex filterCategory card update: {count_filter}")
+
+        # 5. Update handleSearch card template inside HTML using robust regex
+
+        pattern_search = r'(matches\.forEach\(\s*art\s*=>\s*\{\s*html\s*\+=\s*`)([\s\S]*?)(`;\s*\}\s*\);\s*resultsGrid\.innerHTML\s*=\s*html;)'
+
+        replacement_search = """              <div class="card" onclick="viewArticleDetails(${art.id})">
+
+                ${art.image ? `<div class="card-thumb" style="aspect-ratio: 16 / 9;"><img src="${art.image}" alt="${art.title}"></div>` : ''}
+
+                <div class="card-content" style="padding: 20px;">
+
+                  <div class="card-meta">
+
+                    <span><i class="far fa-folder"></i> ${art.category}</span>
+
+                    <span><i class="far fa-clock"></i> ${art.date}</span>
+
+                    <span><i class="far fa-newspaper"></i> ${art.publisher || 'Tin tức'}</span>
+
+                  </div>
+
+                  <h3 class="card-title" style="font-size: 1rem; margin-top:5px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">${art.title}</h3>
+
+                  <p class="card-desc" style="font-size: 0.8rem; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; margin-top:5px;">${art.desc}</p>
+
+                </div>
+
+              </div>"""
+
+        content, count_search = re.subn(pattern_search, lambda m: m.group(1) + replacement_search + m.group(3), content)
+
+        print(f"  Regex handleSearch card update: {count_search}")
+
+        with open(file_path, "w", encoding="utf-8") as f:
+
+            f.write(content)
+
+        print("  Saved successfully.")
+
+    except Exception as e:
+
+        print(f"  Error on {file_path}: {e}")
+
 print("All done!")
