@@ -7,21 +7,15 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 
 baomoi_urls = [
-    ("https://baomoi.com/", "Tin Nóng"),
+    ("https://baomoi.com/", "Tin N\u00f3ng"),
     ("https://baomoi.com/kinh-doanh.epi", "Kinh doanh"),
-    ("https://baomoi.com/khoa-hoc-cong-nghe.epi", "Khoa học công nghệ"),
-    ("https://baomoi.com/nha-dat.epi", "Bất động sản"),
-
-    ("https://baomoi.com/suc-khoe-y-te.epi", "Sức khỏe"),
-
-    ("https://baomoi.com/giai-tri.epi", "Giải trí"),
-
-    ("https://baomoi.com/the-thao.epi", "Thể thao"),
-
+    ("https://baomoi.com/khoa-hoc-cong-nghe.epi", "Khoa h\u1ecdc c\u00f4ng ngh\u1ec7"),
+    ("https://baomoi.com/nha-dat.epi", "B\u1ea5t \u0111\u1ed9ng s\u1ea3n"),
+    ("https://baomoi.com/suc-khoe-y-te.epi", "S\u1ee9c kh\u1ecfe"),
+    ("https://baomoi.com/giai-tri.epi", "Gi\u1ea3i tr\u00ed"),
+    ("https://baomoi.com/the-thao.epi", "Th\u1ec3 thao"),
     ("https://baomoi.com/xe-co.epi", "Xe"),
-
-    ("https://baomoi.com/du-lich.epi", "Du lịch")
-
+    ("https://baomoi.com/du-lich.epi", "Du l\u1ecbch")
 ]
 
 
@@ -526,65 +520,35 @@ if baomoi_articles_final:
 
 
     def resolve_single_article_url(item):
-
-
-
         url = item['sourceUrl']
-
-
-
         if not url.startswith('http'):
-
-
-
             return
-
-
-
         try:
-
-
-
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
-
-
-
             with urllib.request.urlopen(req, timeout=5) as response:
-
-
-
-                html_res = response.read().decode('utf-8')
-
-
-
+                html_res = response.read().decode('utf-8', errors='ignore')
                 match_json = re.search(r'<script id="__NEXT_DATA__" type="application/json">(.*?)</script>', html_res)
-
-
-
                 if match_json:
-
-
-
                     data_json = json.loads(match_json.group(1))
-
-
-
                     orig = data_json['props']['pageProps']['resp']['data']['content']['originalUrl']
-
-
-
                     if orig.startswith('http'):
-
-
-
                         item['sourceUrl'] = orig
-
-
-
+                        
+                        # Fetch the direct publisher page to extract high-quality og:image
+                        try:
+                            req_orig = urllib.request.Request(orig, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
+                            with urllib.request.urlopen(req_orig, timeout=5) as res_orig:
+                                html_orig = res_orig.read().decode('utf-8', errors='ignore')
+                            match_og = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']', html_orig)
+                            if not match_og:
+                                match_og = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', html_orig)
+                            if match_og:
+                                og_url = match_og.group(1).strip()
+                                if og_url.startswith('http'):
+                                    item['image'] = og_url
+                        except Exception:
+                            pass
         except Exception:
-
-
-
             pass
 
 
@@ -1317,31 +1281,25 @@ except Exception as e:
 
 
 
-# Sort articles to prioritize 'Tin Nóng' at the top of the list
+# Sort and balance articles to prevent 'Tin Nóng' starvation across other categories
+cats_grouped = {}
+for art in deduped_pool:
+    cat = art['category']
+    if cat not in cats_grouped:
+        cats_grouped[cat] = []
+    cats_grouped[cat].append(art)
 
+balanced_pool = []
+for cat, arts in cats_grouped.items():
+    limit = 120 if cat == 'Tin N\u00f3ng' else 40
+    balanced_pool.extend(arts[:limit])
 
-
-# This guarantees that the homepage featured slots will display actual hot topics!
-
-
-
-hot_articles = [a for a in deduped_pool if a['category'] == 'Tin Nóng']
-
-
-
-other_articles = [a for a in deduped_pool if a['category'] != 'Tin Nóng']
-
-
-
+hot_articles = [a for a in balanced_pool if a['category'] == 'Tin N\u00f3ng']
+other_articles = [a for a in balanced_pool if a['category'] != 'Tin N\u00f3ng']
 combined_final_articles = hot_articles + other_articles
-
-
-
-# Cap final mockArticles at 300 to keep the page load optimal while providing vast history
-
-
-
 combined_final_articles = combined_final_articles[:400]
+
+print(f"  Total balanced articles loaded: {len(combined_final_articles)}")
 
 
 
