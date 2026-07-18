@@ -1033,36 +1033,66 @@ fallback_images = {
 def get_matching_image(category, title):
     title_lower = title.lower()
 
-    # Topic-specific advanced matching
-    if any(k in title_lower for k in ['bóng đá', 'world cup', 'messi', 'ronaldo', 'mu', 'chelsea', 'argentina', 'hướng dẫn đá', 'sân vận động', 'fifa', 'vô địch', 'trận đấu']):
+    # 1. Agriculture / Farming / Animal husbandry (nuôi, trồng, nông dân, nông nghiệp, ao, ốc, bò, lợn, lúa, trái cây, làm ruộng)
+    if any(k in title_lower for k in ['nuôi', 'trồng', 'nông dân', 'nông nghiệp', 'ao ', 'ốc ', 'cá ', 'bò ', 'lợn ', 'lúa ', 'trái cây', 'hợp tác xã', 'vườn', 'trang trại', 'chuồng', 'thả vườn']):
+        farm_images = [
+            'https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=600&q=80', # Farm field
+            'https://images.unsplash.com/photo-1570042225831-d98fa7577f1e?auto=format&fit=crop&w=600&q=80', # Cows
+            'https://images.unsplash.com/photo-1605000797499-95a51c7e09ae?auto=format&fit=crop&w=600&q=80'  # Agriculture
+        ]
+        return farm_images[sum(ord(c) for c in title) % len(farm_images)]
+
+    # 2. Military / War / Defense / Veterans (cựu chiến binh, người lính, chiến sĩ, thương binh, xung phong, quân đội, phòng không, phòng thủ, tên lửa, Ukraine, tập kích, đánh chiếm)
+    if any(k in title_lower for k in ['cựu chiến binh', 'người lính', 'chiến sĩ', 'thương binh', 'xung phong', 'quân đội', 'quân nhân', 'phòng không', 'phòng thủ', 'tên lửa', 'ukraine', 'tập kích', 'đánh chiếm', 'bắn rơi', 'chiến tranh', 'quân sự', 'bahrain', 'căn cứ mỹ', 'tổ hợp phòng']):
+        military_images = [
+            'https://images.unsplash.com/photo-1579705745811-a32be7bfdb0a?auto=format&fit=crop&w=600&q=80', # Camouflage / Soldier
+            'https://images.unsplash.com/photo-1519074002996-a69e7ac46a42?auto=format&fit=crop&w=600&q=80', # Helicopter / Military
+            'https://images.unsplash.com/photo-1508849789987-4e5333c12b78?auto=format&fit=crop&w=600&q=80'  # National defense
+        ]
+        return military_images[sum(ord(c) for c in title) % len(military_images)]
+
+    # 3. China / Chinese Cities (trung quốc, bắc kinh, thượng hải)
+    if any(k in title_lower for k in ['trung quốc', 'bắc kinh', 'thượng hải']):
+        china_images = [
+            'https://images.unsplash.com/photo-1524396309943-e03f5ee77974?auto=format&fit=crop&w=600&q=80', # Pagoda
+            'https://images.unsplash.com/photo-1540759786422-c60d5ecd5633?auto=format&fit=crop&w=600&q=80'  # Shanghai skyline
+        ]
+        return china_images[sum(ord(c) for c in title) % len(china_images)]
+
+    # 4. Wealth / Wealth management / Billionaires (người giàu, gia sản, tài sản, triệu phú, tỷ phú, thừa kế, quản lý gia sản, tích lũy tiền)
+    if any(k in title_lower for k in ['người giàu', 'gia sản', 'tài sản', 'triệu phú', 'tỷ phú', 'thừa kế', 'quản lý gia sản', 'tích lũy tiền']):
+        wealth_images = [
+            'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80', # Financial advisory
+            'https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=600&q=80'  # Gold coins/savings
+        ]
+        return wealth_images[sum(ord(c) for c in title) % len(wealth_images)]
+
+    # 5. Sports / Football (bóng đá, world cup, messi, ronaldo, mu, chelsea, vô địch, trận đấu, fifa)
+    if any(k in title_lower for k in ['bóng đá', 'world cup', 'messi', 'ronaldo', 'mu', 'chelsea', 'argentina', 'hướng dẫn đá', 'sân vận động', 'fifa', 'vô địch', 'trận đấu', 'thể thao', 'cup']):
         return 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80'
 
-    if any(k in title_lower for k in ['vàng', 'sjc', 'doji', 'tỷ giá', 'usd', 'ngân hàng', 'lãi suất', 'tài chính', 'cổ phiếu', 'chứng khoán', 'đầu tư']):
+    # 6. Finance / Banks / Gold / SJC (vàng, sjc, doji, tỷ giá, usd, ngân hàng, lãi suất, cổ phiếu, chứng khoán, đầu tư, doanh nghiệp, kinh tế)
+    if any(k in title_lower for k in ['vàng', 'sjc', 'doji', 'tỷ giá', 'usd', 'ngân hàng', 'lãi suất', 'cổ phiếu', 'chứng khoán', 'đầu tư', 'doanh nghiệp', 'kinh tế', 'thị trường']):
         return 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=600&q=80'
 
+    # 7. Tech / Phones / AI (iphone, điện thoại, smartphone, máy tính, chip, bán dẫn, trí tuệ nhân tạo, chạy thử ai, robot, khoa học, công nghệ)
     if any(k in title_lower for k in ['iphone', 'điện thoại', 'smartphone', 'máy tính', 'chip', 'bán dẫn', 'trí tuệ nhân tạo', 'chạy thử ai', 'robot', 'khoa học', 'công nghệ']):
         return 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80'
 
-    if any(k in title_lower for k in ['biệt thự', 'villa', 'chung cư', 'nhà đất', 'homestay', 'khách sạn', 'phòng nghỉ', 'dọn phòng', 'bất động sản', 'dự án đô thị', 'căn hộ']):
+    # 8. Real Estate (biệt thự, villa, chung cư, nhà đất, homestay, khách sạn, phòng nghỉ, căn hộ)
+    if any(k in title_lower for k in ['biệt thự', 'villa', 'chung cư', 'nhà đất', 'homestay', 'khách sạn', 'phòng nghỉ', 'căn hộ']):
         return 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'
 
+    # 9. Food / Cuisine (ẩm thực, ăn uống, quán, hủ tiếu, buffet, sáng miễn phí, bữa ăn, nhà hàng, nấu ăn, món ăn)
     if any(k in title_lower for k in ['ẩm thực', 'ăn uống', 'quán', 'hủ tiếu', 'buffet', 'sáng miễn phí', 'bữa ăn', 'nhà hàng', 'nấu ăn', 'món ăn']):
         return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80'
 
-    if any(k in title_lower for k in ['xe điện', 'vinfast', 'ô tô', 'tesla', 'honda', 'hãng xe', 'vf 2', 'xe hơi', 'xe khách', 'giảm nguy cơ tai nạn']):
+    # 10. Automotive (xe điện, vinfast, ô tô, tesla, honda, hãng xe, vf 2, xe hơi, xe khách, xe máy)
+    if any(k in title_lower for k in ['xe điện', 'vinfast', 'ô tô', 'tesla', 'honda', 'hãng xe', 'vf 2', 'xe hơi', 'xe khách', 'xe máy']):
         return 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80'
 
-    if any(k in title_lower for k in ['cựu chiến binh', 'người lính', 'chiến sĩ', 'thương binh', 'xung phong', 'quân đội', 'quân nhân']):
-        return 'https://images.unsplash.com/photo-1590079019458-0eb5b40a3371?auto=format&fit=crop&w=600&q=80'
-
-    if any(k in title_lower for k in ['người giàu', 'gia sản', 'tài sản', 'triệu phú', 'tỷ phú', 'thừa kế', 'quản lý gia sản']):
-        return 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80'
-
-    if any(k in title_lower for k in ['trung quốc', 'thủ đô', 'bắc kinh', 'thượng hải', 'lớn ở trung quốc']):
-        return 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=600&q=80'
-
+    # Fallback to category defaults
     images = fallback_images.get(category, fallback_images['Tin Nóng'])
-    # Use hash code of title string to uniformly distribute images and avoid visual duplicate collision
     hash_code = sum(ord(c) for c in title)
     idx = hash_code % len(images)
     return images[idx]
@@ -1253,6 +1283,12 @@ for art in all_candidates:
 
 
 
+# Clean and re-evaluate all fallback images in the pool before saving
+for art in deduped_pool:
+    img = art.get('image', '')
+    if is_image_empty(img) or (img and img.startswith('https://images.unsplash.com')):
+        art['image'] = get_matching_image(art['category'], art['title'])
+
 # Save the updated persistent database
 
 
@@ -1337,7 +1373,7 @@ for idx, art in enumerate(combined_final_articles):
 
 
 
-        'image': get_matching_image(art['category'], art['title']) if is_image_empty(art['image']) else art['image'],
+        'image': get_matching_image(art['category'], art['title']) if (is_image_empty(art['image']) or (art['image'] and art['image'].startswith('https://images.unsplash.com'))) else art['image'],
 
 
 
