@@ -1,29 +1,15 @@
-import urllib.request
-
-from bs4 import BeautifulSoup
-
-import re
-
-import json
-
-# 1. Fetch baomoi.com homepage & category feeds
-
-import urllib.request
-
-import re
-
-import json
-
-import os
-
-from bs4 import BeautifulSoup
-
-from concurrent.futures import ThreadPoolExecutor
-
-baomoi_urls = [
-    ("https://baomoi.com/", "Tin Nóng"),
-    ("https://baomoi.com/kinh-doanh.epi", "Kinh doanh"),
-    ("https://baomoi.com/khoa-hoc-cong-nghe.epi", "Khoa học công nghệ"),
+import re
+import json
+import os
+import urllib.request
+from bs4 import BeautifulSoup
+from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
+
+baomoi_urls = [
+    ("https://baomoi.com/", "Tin Nóng"),
+    ("https://baomoi.com/kinh-doanh.epi", "Kinh doanh"),
+    ("https://baomoi.com/khoa-hoc-cong-nghe.epi", "Khoa học công nghệ"),
     ("https://baomoi.com/nha-dat.epi", "Bất động sản"),
     ("https://baomoi.com/suc-khoe-y-te.epi", "Sức khỏe"),
     ("https://baomoi.com/giai-tri.epi", "Giải trí"),
@@ -266,7 +252,7 @@ for art in unique_scraped:
 
         'category': category,
 
-        'date': "16/07/2026",
+        'date': datetime.now().strftime("%d/%m/%Y"),
 
         'image': img_url,
 
