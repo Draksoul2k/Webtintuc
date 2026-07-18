@@ -291,6 +291,91 @@ for url, default_cat in baomoi_urls:
 
 
 
+# 1.1 Crawl direct RSS feeds (VnExpress, Tuoi Tre, Thanh Nien) using regex-based RSS parser
+direct_feeds = [
+    # VnExpress
+    ("https://vnexpress.net/rss/tin-noi-bat.rss", "Tin N\u00f3ng", "VnExpress"),
+    ("https://vnexpress.net/rss/kinh-doanh.rss", "Kinh doanh", "VnExpress"),
+    ("https://vnexpress.net/rss/so-hoa.rss", "Khoa h\u1ecdc c\u00f4ng ngh\u1ec7", "VnExpress"),
+    ("https://vnexpress.net/rss/bat-dong-san.rss", "B\u1ea5t \u0111\u1ed9ng s\u1ea3n", "VnExpress"),
+    ("https://vnexpress.net/rss/suc-khoe.rss", "S\u1ee9c kh\u1ecfe", "VnExpress"),
+    ("https://vnexpress.net/rss/giai-tri.rss", "Gi\u1ea3i tr\u00ed", "VnExpress"),
+    ("https://vnexpress.net/rss/the-thao.rss", "Th\u1ec3 thao", "VnExpress"),
+    ("https://vnexpress.net/rss/oto-xe-may.rss", "Xe", "VnExpress"),
+    ("https://vnexpress.net/rss/du-lich.rss", "Du l\u1ecbch", "VnExpress"),
+    
+    # Tuoi Tre
+    ("https://tuoitre.vn/rss/tin-moi-nhat.rss", "Tin N\u00f3ng", "Tu\u1ed5i Tr\u1ebb"),
+    ("https://tuoitre.vn/rss/kinh-doanh.rss", "Kinh doanh", "Tu\u1ed5i Tr\u1ebb"),
+    ("https://tuoitre.vn/rss/khoa-hoc.rss", "Khoa h\u1ecdc c\u00f4ng ngh\u1ec7", "Tu\u1ed5i Trẻ"),
+    ("https://tuoitre.vn/rss/nha-dat.rss", "B\u1ea5t \u0111\u1ed9ng s\u1ea3n", "Tu\u1ed5i Tr\u1ebb"),
+    ("https://tuoitre.vn/rss/suc-khoe.rss", "S\u1ee9c kh\u1ecfe", "Tu\u1ed5i Tr\u1ebb"),
+    ("https://tuoitre.vn/rss/giai-tri.rss", "Gi\u1ea3i tr\u00ed", "Tu\u1ed5i Tr\u1ebb"),
+    ("https://tuoitre.vn/rss/the-thao.rss", "Th\u1ec3 thao", "Tu\u1ed5i Tr\u1ebb"),
+    ("https://tuoitre.vn/rss/xe.rss", "Xe", "Tu\u1ed5i Tr\u1ebb"),
+    ("https://tuoitre.vn/rss/du-lich.rss", "Du l\u1ecbch", "Tu\u1ed5i Tr\u1ebb"),
+
+    # Thanh Nien
+    ("https://thanhnien.vn/rss/home.rss", "Tin N\u00f3ng", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/kinh-te.rss", "Kinh doanh", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/cong-nghe-game.rss", "Khoa h\u1ecdc c\u00f4ng ngh\u1ec7", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/kinh-te/dan-sinh-nha-dat.rss", "B\u1ea5t \u0111\u1ed9ng s\u1ea3n", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/suc-khoe.rss", "S\u1ee9c kh\u1ecfe", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/giai-tri.rss", "Gi\u1ea3i tr\u00ed", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/the-thao.rss", "Th\u1ec3 thao", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/xe.rss", "Xe", "Thanh Ni\u00ean"),
+    ("https://thanhnien.vn/rss/du-lich.rss", "Du l\u1ecbch", "Thanh Ni\u00ean")
+]
+
+print("Fetching live articles from direct RSS feeds (VnExpress, Tuoi Tre, Thanh Nien)...")
+for url, default_cat, publisher in direct_feeds:
+    try:
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
+        with urllib.request.urlopen(req, timeout=10) as res:
+            xml = res.read().decode('utf-8', errors='ignore')
+        
+        items = re.findall(r'<item>([\s\S]*?)</item>', xml)
+        count_added = 0
+        for item in items:
+            title_match = re.search(r'<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</title>', item, re.DOTALL)
+            title = title_match.group(1).strip() if title_match else ''
+            
+            link_match = re.search(r'<link>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</link>', item, re.DOTALL)
+            link = link_match.group(1).strip() if link_match else ''
+            
+            desc_match = re.search(r'<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</description>', item, re.DOTALL)
+            desc_raw = desc_match.group(1).strip() if desc_match else ''
+            
+            img_url = ''
+            enc_match = re.search(r'<enclosure[^>]+url=["\']([^"\']+)["\']', item)
+            if enc_match:
+                img_url = enc_match.group(1).strip()
+                
+            desc_soup = BeautifulSoup(desc_raw, 'html.parser')
+            if not img_url:
+                img_tag = desc_soup.find('img')
+                img_url = img_tag['src'] if img_tag else ''
+                
+            desc_text = desc_soup.get_text().strip()
+            
+            # Clean title/link CDATA markers
+            title = re.sub(r'^<!\[CDATA\[(.*?)\]\]>$', lambda m: m.group(1), title, flags=re.DOTALL).strip()
+            link = re.sub(r'^<!\[CDATA\[(.*?)\]\]>$', lambda m: m.group(1), link, flags=re.DOTALL).strip()
+            
+            if title and link:
+                raw_scraped_articles.append({
+                    'title': title,
+                    'link': link,
+                    'image': img_url,
+                    'desc': desc_text,
+                    'publisher': publisher,
+                    'default_cat': default_cat
+                })
+                count_added += 1
+    except Exception as e:
+        pass
+
+
 def classify_category(title, desc, default_cat):
 
 
@@ -420,6 +505,10 @@ for art in raw_scraped_articles:
 
 
 print(f"Extracted {len(unique_scraped)} unique live crawled articles.")
+if len(unique_scraped) == 0:
+    print("Warning: 0 live articles crawled. This usually means the crawler IP was blocked by the source site (e.g. on GitHub Actions runners). Aborting integration to protect existing database!")
+    import sys
+    sys.exit(0)
 
 
 
@@ -522,6 +611,8 @@ if baomoi_articles_final:
     def resolve_single_article_url(item):
         url = item['sourceUrl']
         if not url.startswith('http'):
+            return
+        if 'baomoi.com' not in url:
             return
         try:
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'})
