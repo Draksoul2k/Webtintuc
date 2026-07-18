@@ -2,7 +2,7 @@ name: Auto Update News from Bao Moi
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Tự động chạy cào tin mới mỗi 5 phút
+    - cron: '*/30 * * * *' # Chạy tự động đều đặn mỗi 30 phút
   workflow_dispatch: # Nút chạy thủ công khi cần gấp
 
 jobs:
