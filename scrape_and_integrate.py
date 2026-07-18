@@ -163,33 +163,24 @@ for url, default_cat in baomoi_urls:
 
 
             img = div.find('img')
-
-
-
             img_src = ''
-
-
-
             if img:
-
-
-
-                img_src = img.get('src') or img.get('data-src') or img.get('srcset') or ''
-
-
-
-                if 'gif' in img_src or 'base64' in img_src:
-
-
-
-                    img_src = img.get('data-src') or img.get('srcset') or img_src
-
-
+                # Prioritize data-src since Báo Mới uses lazy-loading with base64 spacer in src!
+                img_src = img.get('data-src') or img.get('src') or img.get('srcset') or ''
+                if 'gif' in img_src or 'base64' in img_src or '1x1' in img_src:
+                    img_src = img.get('data-src') or img.get('srcset') or ''
+            
+            # If still empty or spacer, try to look for <source> element in the picture wrapper
+            if not img_src or 'gif' in img_src or 'base64' in img_src or '1x1' in img_src:
+                source_el = div.find('source')
+                if source_el:
+                    img_src = source_el.get('srcset') or source_el.get('data-srcset') or ''
+            
+            # If URL is protocol-relative, add https:
+            if img_src and img_src.startswith('//'):
+                img_src = 'https:' + img_src
 
             if not img_src:
-
-
-
                 continue
 
 
@@ -1040,73 +1031,40 @@ fallback_images = {
 
 
 def get_matching_image(category, title):
-
-
-
     title_lower = title.lower()
 
-
-
-    if any(k in title_lower for k in ['bóng đá', 'world cup', 'messi', 'ronaldo', 'mu', 'chelsea', 'argentina', 'hướng dẫn đá', 'sân vận động']):
-
-
-
+    # Topic-specific advanced matching
+    if any(k in title_lower for k in ['bóng đá', 'world cup', 'messi', 'ronaldo', 'mu', 'chelsea', 'argentina', 'hướng dẫn đá', 'sân vận động', 'fifa', 'vô địch', 'trận đấu']):
         return 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=600&q=80'
 
-
-
-    if any(k in title_lower for k in ['vàng', 'sjc', 'doji', 'tỷ giá', 'usd', 'ngân hàng', 'lãi suất', 'tài chính', 'cổ phiếu']):
-
-
-
+    if any(k in title_lower for k in ['vàng', 'sjc', 'doji', 'tỷ giá', 'usd', 'ngân hàng', 'lãi suất', 'tài chính', 'cổ phiếu', 'chứng khoán', 'đầu tư']):
         return 'https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=600&q=80'
 
-
-
-    if any(k in title_lower for k in ['iphone', 'điện thoại', 'smartphone', 'máy tính', 'chip', 'bán dẫn', 'trí tuệ nhân tạo', 'chạy thử ai']):
-
-
-
+    if any(k in title_lower for k in ['iphone', 'điện thoại', 'smartphone', 'máy tính', 'chip', 'bán dẫn', 'trí tuệ nhân tạo', 'chạy thử ai', 'robot', 'khoa học', 'công nghệ']):
         return 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=600&q=80'
 
-
-
-    if any(k in title_lower for k in ['biệt thự', 'villa', 'chung cư', 'nhà đất', 'homestay', 'khách sạn', 'phòng nghỉ', 'dọn phòng']):
-
-
-
+    if any(k in title_lower for k in ['biệt thự', 'villa', 'chung cư', 'nhà đất', 'homestay', 'khách sạn', 'phòng nghỉ', 'dọn phòng', 'bất động sản', 'dự án đô thị', 'căn hộ']):
         return 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'
 
-
-
-    if any(k in title_lower for k in ['ẩm thực', 'ăn uống', 'quán', 'hủ tiếu', 'buffet', 'sáng miễn phí', 'bữa ăn']):
-
-
-
+    if any(k in title_lower for k in ['ẩm thực', 'ăn uống', 'quán', 'hủ tiếu', 'buffet', 'sáng miễn phí', 'bữa ăn', 'nhà hàng', 'nấu ăn', 'món ăn']):
         return 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80'
 
-
-
-    if any(k in title_lower for k in ['xe điện', 'vinfast', 'ô tô', 'tesla', 'honda', 'hãng xe', 'vf 2', 'xe hơi']):
-
-
-
+    if any(k in title_lower for k in ['xe điện', 'vinfast', 'ô tô', 'tesla', 'honda', 'hãng xe', 'vf 2', 'xe hơi', 'xe khách', 'giảm nguy cơ tai nạn']):
         return 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80'
 
+    if any(k in title_lower for k in ['cựu chiến binh', 'người lính', 'chiến sĩ', 'thương binh', 'xung phong', 'quân đội', 'quân nhân']):
+        return 'https://images.unsplash.com/photo-1590079019458-0eb5b40a3371?auto=format&fit=crop&w=600&q=80'
 
+    if any(k in title_lower for k in ['người giàu', 'gia sản', 'tài sản', 'triệu phú', 'tỷ phú', 'thừa kế', 'quản lý gia sản']):
+        return 'https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=600&q=80'
 
-        
-
-
+    if any(k in title_lower for k in ['trung quốc', 'thủ đô', 'bắc kinh', 'thượng hải', 'lớn ở trung quốc']):
+        return 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=600&q=80'
 
     images = fallback_images.get(category, fallback_images['Tin Nóng'])
-
-
-
-    idx = len(title) % len(images)
-
-
-
+    # Use hash code of title string to uniformly distribute images and avoid visual duplicate collision
+    hash_code = sum(ord(c) for c in title)
+    idx = hash_code % len(images)
     return images[idx]
 
 
