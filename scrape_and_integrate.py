@@ -1382,13 +1382,13 @@ for art in deduped_pool:
 
 balanced_pool = []
 for cat, arts in cats_grouped.items():
-    limit = 120 if cat == 'Tin N\u00f3ng' else 40
+    limit = 120 if cat == 'Tin N\u00f3ng' else 70
     balanced_pool.extend(arts[:limit])
 
 hot_articles = [a for a in balanced_pool if a['category'] == 'Tin N\u00f3ng']
 other_articles = [a for a in balanced_pool if a['category'] != 'Tin N\u00f3ng']
 combined_final_articles = hot_articles + other_articles
-combined_final_articles = combined_final_articles[:400]
+combined_final_articles = combined_final_articles[:800]
 
 print(f"  Total balanced articles loaded: {len(combined_final_articles)}")
 
